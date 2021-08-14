@@ -59,10 +59,24 @@ const BusinessProfileDetails = (props) => {
   return (
     <form autoComplete="off" noValidate {...props}>
       <Card>
-        <CardHeader
-          subheader="The information can be edited"
-          title="Business Register"
-        />
+        <Grid container spacing={3}>
+          <Grid item md={6} xs={8}>
+            <CardHeader subheader="Profile" title="Business Register" />
+          </Grid>
+          <Grid item md={6} xs={4}>
+            <div
+              style={{
+                padding: 16,
+                display: 'flex',
+                justifyContent: 'flex-end'
+              }}
+            >
+              <Button variant="outlined">
+                Edit
+              </Button>
+            </div>
+          </Grid>
+        </Grid>
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
@@ -91,7 +105,7 @@ const BusinessProfileDetails = (props) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Email Address"
+                label="Email"
                 name="email"
                 onChange={handleChange}
                 required
@@ -136,10 +150,12 @@ const BusinessProfileDetails = (props) => {
                 type="text"
                 value={values.business_description}
                 variant="outlined"
+                multiline
+                rows={3}
               />
             </Grid>
 
-            <Grid item md={6} xs={12}>
+            <Grid item md={12} xs={12}>
               <TextField
                 fullWidth
                 label="Culture Information"
@@ -149,6 +165,8 @@ const BusinessProfileDetails = (props) => {
                 type="text"
                 value={values.cluture_information}
                 variant="outlined"
+                multiline
+                rows={3}
               />
             </Grid>
 
@@ -199,7 +217,7 @@ const BusinessProfileDetails = (props) => {
             </Grid>
           </Grid>
         </CardContent>
-        <Divider />
+        {/* <Divider />
         <Box
           sx={{
             display: 'flex',
@@ -210,7 +228,7 @@ const BusinessProfileDetails = (props) => {
           <Button color="primary" variant="contained">
             Save details
           </Button>
-        </Box>
+        </Box> */}
       </Card>
     </form>
   );
