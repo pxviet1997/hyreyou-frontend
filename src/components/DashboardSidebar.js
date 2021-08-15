@@ -19,14 +19,15 @@ import {
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
   UserPlus as UserPlusIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  LogOut as LogOutIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
+  avatar: '/static/images/avatars/avatar_7.png',
   jobTitle: 'Senior Developer',
-  name: 'Katarina Smith'
+  name: 'John Doe'
 };
 
 const items = [
@@ -36,40 +37,65 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/app/customers',
-    icon: UsersIcon,
-    title: 'Customers'
-  },
-  {
-    href: '/app/products',
-    icon: ShoppingBagIcon,
-    title: 'Products'
-  },
-  {
-    href: '/app/account',
-    icon: UserIcon,
-    title: 'Account'
-  },
-  {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
-  },
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Login'
-  },
-  {
-    href: '/register',
+    href: '/app/talent-profile',
     icon: UserPlusIcon,
-    title: 'Register'
+    title: 'Talent Register'
   },
   {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error'
+    href: '/app/business-profile',
+    icon: UserPlusIcon,
+    title: 'Profile'
+  },
+  {
+    href: '/app/role',
+    icon: UserPlusIcon,
+    title: 'Role'
+  },
+  {
+    href: '/app/short-list',
+    icon: UserPlusIcon,
+    title: 'Short List'
+  },
+  {
+    href: '/app/interview',
+    icon: UserPlusIcon,
+    title: 'Interview'
   }
+  // {
+  //   href: '/app/customers',
+  //   icon: UsersIcon,
+  //   title: 'Customers'
+  // },
+  // {
+  //   href: '/app/products',
+  //   icon: ShoppingBagIcon,
+  //   title: 'Products'
+  // },
+  // {
+  //   href: '/app/account',
+  //   icon: UserIcon,
+  //   title: 'Account'
+  // },
+  // {
+  //   href: '/app/settings',
+  //   icon: SettingsIcon,
+  //   title: 'Settings'
+  // },
+  // {
+  //   href: '/login',
+  //   icon: LockIcon,
+  //   title: 'Login'
+  // },
+  // {
+  //   href: '/register',
+  //   icon: UserPlusIcon,
+  //   title: 'Register'
+  // },
+  // {
+  //   href: '/404',
+  //   icon: AlertCircleIcon,
+  //   title: 'Error'
+  // }
 ];
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
@@ -105,20 +131,23 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             width: 64,
             height: 64
           }}
-          to="/app/account"
+          to="/app/business-profile"
         />
         <Typography
           color="textPrimary"
           variant="h5"
+          sx={{
+            p: 2
+          }}
         >
           {user.name}
         </Typography>
-        <Typography
+        {/* <Typography
           color="textSecondary"
           variant="body2"
         >
           {user.jobTitle}
-        </Typography>
+        </Typography> */}
       </Box>
       <Divider />
       <Box sx={{ p: 2 }}>
@@ -132,9 +161,13 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             />
           ))}
         </List>
+
+        <List style={{ marginTop: 'auto' }}>
+          <NavItem href="/login" title="Logout" icon={LogOutIcon} />
+        </List>
       </Box>
       <Box sx={{ flexGrow: 1 }} />
-      <Box
+      {/* <Box
         sx={{
           backgroundColor: 'background.default',
           m: 2,
@@ -170,7 +203,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             See PRO version
           </Button>
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 
@@ -217,7 +250,7 @@ DashboardSidebar.propTypes = {
 };
 
 DashboardSidebar.defaultProps = {
-  onMobileClose: () => { },
+  onMobileClose: () => {},
   openMobile: false
 };
 
