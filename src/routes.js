@@ -13,6 +13,7 @@ import BusinessRegister from './pages/BusinessRegister';
 import Interview from './pages/Interview';
 import Role from './pages/Role';
 import ShortList from './pages/ShortList';
+import SplashScreen from './pages/SplashScreen';
 import TalentRegister from './pages/TalentRegister';
 
 const routes = [
@@ -40,7 +41,8 @@ const routes = [
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
       { path: '404', element: <NotFound /> },
-      { path: '/', element: <Navigate to="/app/talent-profile" /> },
+      // { path: '/', element: <Navigate to="/app/talent-profile" /> },
+      { path: '/', element: <SplashScreen /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   }
