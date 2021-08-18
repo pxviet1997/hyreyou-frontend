@@ -9,6 +9,7 @@ import NotFound from 'src/pages/NotFound';
 import ProductList from 'src/pages/ProductList';
 import Register from 'src/pages/Register';
 import Settings from 'src/pages/Settings';
+import { PaymentInfo, TalentProfile, Activity } from './components/talent';
 import BusinessRegister from './pages/BusinessRegister';
 import Interview from './pages/Interview';
 import Role from './pages/Role';
@@ -30,6 +31,19 @@ const routes = [
       { path: 'role', element: <Role /> },
       { path: 'short-list', element: <ShortList /> },
       { path: 'interview', element: <Interview /> },
+      { path: '/app', element: <Navigate to="/app/dashboard" /> },
+      { path: '*', element: <Navigate to="/404" /> }
+    ]
+  },
+  {
+    path: 'talent',
+    element: <DashboardLayout />,
+    children: [
+      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'profile', element: <TalentProfile /> },
+      { path: 'payment-info', element: <PaymentInfo /> },
+      { path: 'activity', element: <Activity /> },
+      { path: '/talent', element: <Navigate to="/talent/dashboard" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
