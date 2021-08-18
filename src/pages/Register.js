@@ -7,14 +7,26 @@ import {
   Button,
   Checkbox,
   Container,
+  FormControlLabel,
   FormHelperText,
+  Grid,
   Link,
+  Radio,
+  RadioGroup,
   TextField,
-  Typography
+  Typography,
 } from '@material-ui/core';
+import { useState } from 'react';
 
 const Register = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState('Talent');
+
+  const onUserChange = () => {
+    if (user === 'Talent') {
+      setUser('Business');
+    } else setUser('Talent');
+  };
 
   return (
     <>
@@ -62,45 +74,59 @@ const Register = () => {
               values
             }) => (
               <form onSubmit={handleSubmit}>
-                <Box sx={{ mb: 3 }}>
+                <Box>
                   <Typography
                     color="textPrimary"
                     variant="h2"
                   >
-                    Create new account
+                    Sign Up
                   </Typography>
                   <Typography
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
                   >
-                    Use your email to create new account
+                    Enter your name, email address and password to createyour account
                   </Typography>
                 </Box>
-                <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
-                  fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="First name"
-                  margin="normal"
-                  name="firstName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.firstName}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
-                  fullWidth
-                  helperText={touched.lastName && errors.lastName}
-                  label="Last name"
-                  margin="normal"
-                  name="lastName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
-                  variant="outlined"
-                />
+                <Grid container spacing={3}>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                  >
+                    <TextField
+                      error={Boolean(touched.firstName && errors.firstName)}
+                      fullWidth
+                      helperText={touched.firstName && errors.firstName}
+                      label="First name"
+                      margin="normal"
+                      name="firstName"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.firstName}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                  >
+                    <TextField
+                      error={Boolean(touched.lastName && errors.lastName)}
+                      fullWidth
+                      helperText={touched.lastName && errors.lastName}
+                      label="Last name"
+                      margin="normal"
+                      name="lastName"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.lastName}
+                      variant="outlined"
+                    />
+                  </Grid>
+                </Grid>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
@@ -127,6 +153,10 @@ const Register = () => {
                   value={values.password}
                   variant="outlined"
                 />
+                <RadioGroup row aria-label="gender" name="gender1" value={user} onChange={onUserChange}>
+                  <FormControlLabel value="Talent" control={<Radio />} label="Talent" />
+                  <FormControlLabel value="Business" control={<Radio />} label="Business" />
+                </RadioGroup>
                 <Box
                   sx={{
                     alignItems: 'center',
@@ -177,7 +207,7 @@ const Register = () => {
                   color="textSecondary"
                   variant="body1"
                 >
-                  Have an account?
+                  Already have an account?
                   {' '}
                   <Link
                     component={RouterLink}

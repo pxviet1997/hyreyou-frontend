@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
   Box,
@@ -81,7 +81,7 @@ const SplashScreen = () => {
                 md={6}
               >
                 <Button
-                  component={Link}
+                  component={RouterLink}
                   to="/login"
                   // color="primary"
                   fullWidth
@@ -97,7 +97,7 @@ const SplashScreen = () => {
                 md={6}
               >
                 <Button
-                  component={Link}
+                  component={RouterLink}
                   to="/register"
                   fullWidth
                   size="large"
