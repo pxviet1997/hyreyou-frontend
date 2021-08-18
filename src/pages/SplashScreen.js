@@ -1,17 +1,51 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
 import {
   Box,
   Button,
   Container,
   Grid,
+  Typography,
+  ThemeProvider
 } from '@material-ui/core';
 import Image from 'material-ui-image';
+import { makeStyles } from '@material-ui/styles';
+import { createTheme } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  // image: {
+  //   minHeight: '100vh',
+  //   backgroundImage: `url(${process.env.PUBLIC_URL}/static/images/banner/home-banner.jpg)`,
+  // }
+  banner: {
+    // backgroundImage: `url(${process.env.PUBLIC_URL}/static/images/banner/home-banner.jpg)`,
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor: 'black',
+    // opacity: '50%',
+    // background: 'linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5) )',
+    width: '100%',
+    position: 'absolute'
+    // height: 'auto',
+    // filter: '50%',
+  },
+  bannerContent: {
+    paddingTop: '300px',
+    paddingBottom: '198px',
+  },
+  darken: {
+    backgroundColor: 'black',
+    width: '100%',
+    height: '100%',
+    opacity: '50%'
+  }
+
+}));
 
 const SplashScreen = () => {
-  const navigate = useNavigate();
+  const classes = useStyles();
+  const aspectRatio = 1920 / 751;
+
   return (
     <>
       <Helmet>
@@ -26,47 +60,56 @@ const SplashScreen = () => {
           justifyContent: 'center'
         }}
       >
-
-        <Container maxWidth="sm">
-          <Box
-            sx={{ pb: 1, pt: 3 }}
-          />
+        <Box className={classes.banner}>
+          {/* <div className={classes.darken} /> */}
           <Image
-            src="/static/images/IMG_8134.jpeg"
-            cover
+            aspectRatio={aspectRatio}
+            src="static/images/banner/home-banner.jpg"
           />
-
-          <Grid container spacing={3}>
-            <Grid
-              item
-              xs={12}
-              md={6}
+          <ThemeProvider theme={createTheme({ typography: { fontSize: 50 } })}>
+            <Typography
+              color="common.white"
             >
-              <Button
-                color="primary"
-                fullWidth
-                size="large"
-                variant="contained"
+              Hiring is difficult...
+            </Typography>
+          </ThemeProvider>
+          <Container maxWidth="sm">
+            <Grid container spacing={3}>
+              <Grid
+                item
+                xs={12}
+                md={6}
               >
-                Sign In
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={6}
-            >
-              <Button
-                fullWidth
-                size="large"
-                variant="contained"
+                <Button
+                  component={Link}
+                  to="/login"
+                  // color="primary"
+                  fullWidth
+                  size="large"
+                  variant="contained"
+                >
+                  Sign In
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={6}
               >
-                Sign Up
-              </Button>
+                <Button
+                  component={Link}
+                  to="/register"
+                  fullWidth
+                  size="large"
+                  variant="contained"
+                >
+                  Sign Up
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
 
-        </Container>
+          </Container>
+        </Box>
       </Box>
     </>
   );
