@@ -153,10 +153,31 @@ const Register = () => {
                   value={values.password}
                   variant="outlined"
                 />
-                <RadioGroup row aria-label="gender" name="gender1" value={user} onChange={onUserChange}>
-                  <FormControlLabel value="Talent" control={<Radio />} label="Talent" />
-                  <FormControlLabel value="Business" control={<Radio />} label="Business" />
-                </RadioGroup>
+                <TextField
+                  error={Boolean(touched.password && errors.password)}
+                  fullWidth
+                  helperText={touched.password && errors.password}
+                  label="Confirm Password"
+                  margin="normal"
+                  name="password"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="password"
+                  value={values.password}
+                  variant="outlined"
+                />
+                <Box sx={{ mt: 2, mb: 2 }}>
+                  <Typography
+                    color="textSecondary"
+                    variant="body2"
+                  >
+                    User Type
+                  </Typography>
+                  <RadioGroup row aria-label="gender" name="gender1" value={user} onChange={onUserChange}>
+                    <FormControlLabel value="Talent" control={<Radio />} label="Talent" />
+                    <FormControlLabel value="Business" control={<Radio />} label="Business" />
+                  </RadioGroup>
+                </Box>
                 <Box
                   sx={{
                     alignItems: 'center',
