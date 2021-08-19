@@ -17,13 +17,14 @@ import {
   Typography,
 } from '@material-ui/core';
 import { useState } from 'react';
+import { reqSignUp } from 'src/api';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState('Talent');
+  const [userType, setUser] = useState('Talent');
 
   const onUserChange = () => {
-    if (user === 'Talent') {
+    if (userType === 'Talent') {
       setUser('Business');
     } else setUser('Talent');
   };
@@ -49,6 +50,7 @@ const Register = () => {
               firstName: '',
               lastName: '',
               password: '',
+              confirmPassword: '',
               policy: false
             }}
             validationSchema={
@@ -56,11 +58,14 @@ const Register = () => {
                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                 firstName: Yup.string().max(255).required('First name is required'),
                 lastName: Yup.string().max(255).required('Last name is required'),
-                password: Yup.string().max(255).required('password is required'),
+                password: Yup.string().max(255).required('Password is required'),
+                confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
                 policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
-            onSubmit={() => {
+            onSubmit={async (values) => {
+              await reqSignUp(values.email, values.firstName, values.lastName, values.password, values.userType);
+              // console.log(values);
               navigate('/app/dashboard', { replace: true });
             }}
           >
@@ -154,16 +159,16 @@ const Register = () => {
                   variant="outlined"
                 />
                 <TextField
-                  error={Boolean(touched.password && errors.password)}
+                  error={Boolean(touched.confirmPassword && errors.confirmPassword)}
                   fullWidth
-                  helperText={touched.password && errors.password}
+                  helperText={touched.confirmPassword && errors.confirmPassword}
                   label="Confirm Password"
                   margin="normal"
-                  name="password"
+                  name="confirmPassword"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="password"
-                  value={values.password}
+                  value={values.confirmPassword}
                   variant="outlined"
                 />
                 <Box sx={{ mt: 2, mb: 2 }}>
@@ -173,7 +178,7 @@ const Register = () => {
                   >
                     User Type
                   </Typography>
-                  <RadioGroup row aria-label="gender" name="gender1" value={user} onChange={onUserChange}>
+                  <RadioGroup row aria-label="gender" name="gender1" value={userType} onChange={onUserChange}>
                     <FormControlLabel value="Talent" control={<Radio />} label="Talent" />
                     <FormControlLabel value="Business" control={<Radio />} label="Business" />
                   </RadioGroup>
@@ -233,7 +238,7 @@ const Register = () => {
                   <Link
                     component={RouterLink}
                     to="/login"
-                    variant="h6"
+                    variant="body1"
                   >
                     Sign in
                   </Link>

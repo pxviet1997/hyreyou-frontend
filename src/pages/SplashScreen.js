@@ -13,31 +13,20 @@ import { makeStyles } from '@material-ui/styles';
 import { createTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  // image: {
-  //   minHeight: '100vh',
-  //   backgroundImage: `url(${process.env.PUBLIC_URL}/static/images/banner/home-banner.jpg)`,
-  // }
+
   banner: {
-    // backgroundImage: `url(${process.env.PUBLIC_URL}/static/images/banner/home-banner.jpg)`,
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
     backgroundColor: 'black',
-    // opacity: '50%',
-    // background: 'linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5) )',
     width: '100%',
-    position: 'absolute'
-    // height: 'auto',
-    // filter: '50%',
+    // position: 'relative'
   },
   bannerContent: {
     paddingTop: '300px',
     paddingBottom: '198px',
   },
-  darken: {
-    backgroundColor: 'black',
-    width: '100%',
-    height: '100%',
-    opacity: '50%'
+  text: {
+    position: 'absolute'
   }
 
 }));
@@ -57,60 +46,102 @@ const SplashScreen = () => {
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
-          justifyContent: 'center'
+          position: 'relative'
         }}
       >
-        <Box className={classes.banner}>
-          {/* <div className={classes.darken} /> */}
-          <Image
-            aspectRatio={aspectRatio}
+        <Box
+          sx={{
+            position: 'relative',
+          }}
+        >
+          <img
             src="static/images/banner/home-banner.jpg"
+            alt="HyreYou"
+            style={{
+              width: '100%',
+              position: 'absolute',
+              filter: 'brightness(50%)'
+            }}
           />
-          <ThemeProvider theme={createTheme({ typography: { fontSize: 50 } })}>
+
+          <Container>
             <Typography
               color="common.white"
+              style={{
+                position: 'absolute',
+                top: '150px',
+                left: '20%',
+                fontSize: 50,
+                fontWeight: 600
+              }}
             >
-              Hiring is difficult...
+              <p>HIRING IS DIFFICULT...</p>
             </Typography>
-          </ThemeProvider>
-          <Container maxWidth="sm">
-            <Grid container spacing={3}>
-              <Grid
-                item
-                xs={12}
-                md={6}
-              >
-                <Button
-                  component={RouterLink}
-                  to="/login"
-                  // color="primary"
-                  fullWidth
-                  size="large"
-                  variant="contained"
-                >
-                  Sign In
-                </Button>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                md={6}
-              >
-                <Button
-                  component={RouterLink}
-                  to="/register"
-                  fullWidth
-                  size="large"
-                  variant="contained"
-                >
-                  Sign Up
-                </Button>
-              </Grid>
-            </Grid>
+
+            <Typography
+              color="common.white"
+              style={{
+                position: 'absolute',
+                top: '205px',
+                left: '20%',
+                fontSize: 48.4,
+                fontWeight: 200,
+              }}
+            >
+              FINDING A JOB IS JUST AS BAD
+            </Typography>
+
+            <Typography
+              color="common.white"
+              style={{
+                position: 'absolute',
+                top: '278px',
+                left: '20%',
+                fontSize: 14,
+                fontWeight: 490
+              }}
+            >
+              Create your seemless connections here and start working quicker
+            </Typography>
 
           </Container>
         </Box>
+        <Container maxWidth="md" style={{ marginTop: '600px' }}>
+          <Grid container spacing={5}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+            >
+              <Button
+                component={RouterLink}
+                to="/login"
+                fullWidth
+                size="large"
+                variant="contained"
+              >
+                Sign In
+              </Button>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={6}
+            >
+              <Button
+                component={RouterLink}
+                to="/register"
+                fullWidth
+                size="large"
+                variant="contained"
+              >
+                Sign Up
+              </Button>
+            </Grid>
+          </Grid>
+        </Container>
       </Box>
+      {/* </Box> */}
     </>
   );
 };

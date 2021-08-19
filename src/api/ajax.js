@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-export default function ajax(url, data = {}, type = "GET") {
+export default function ajax(url, data = {}, type = 'GET') {
   return new Promise((resolve, reject) => {
     let promise;
 
-    if (type === "GET") {
+    if (type === 'GET') {
       promise = axios.get(url, {
         params: data,
       });
@@ -19,7 +19,7 @@ export default function ajax(url, data = {}, type = "GET") {
       .catch((error) => {
         // reject(error)
         // message.error("Request Error: " + error.message);
-        console.log("Request Error: " + error.message);
+        console.log(`Request Error: ${error.message}`);
       });
   });
 }
