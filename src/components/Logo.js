@@ -1,7 +1,11 @@
 const Logo = (props) => (
   <img
     alt="Logo"
-    src="/static/logo.svg"
+    src="/static/images/logo-big.png"
+    style={{
+      backgroundColor: 'white',
+      height: 64
+    }}
     {...props}
   />
 );

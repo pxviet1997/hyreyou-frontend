@@ -7,14 +7,27 @@ import {
   Button,
   Checkbox,
   Container,
+  FormControlLabel,
   FormHelperText,
+  Grid,
   Link,
+  Radio,
+  RadioGroup,
   TextField,
-  Typography
+  Typography,
 } from '@material-ui/core';
+import { useState } from 'react';
+import { reqSignUp } from 'src/api';
 
 const Register = () => {
   const navigate = useNavigate();
+  const [userType, setUser] = useState('Talent');
+
+  const onUserChange = () => {
+    if (userType === 'Talent') {
+      setUser('Business');
+    } else setUser('Talent');
+  };
 
   return (
     <>
@@ -36,7 +49,9 @@ const Register = () => {
               email: '',
               firstName: '',
               lastName: '',
+              mobileNumber: '',
               password: '',
+              confirmPassword: '',
               policy: false
             }}
             validationSchema={
@@ -44,11 +59,16 @@ const Register = () => {
                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                 firstName: Yup.string().max(255).required('First name is required'),
                 lastName: Yup.string().max(255).required('Last name is required'),
-                password: Yup.string().max(255).required('password is required'),
+                mobileNumber: Yup.string().max(255).required('Mobile Number is required'),
+                password: Yup.string().max(255).required('Password is required'),
+                confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
                 policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
-            onSubmit={() => {
+            onSubmit={async (values) => {
+              console.log(userType);
+              const id = await reqSignUp(values.email, values.firstName, values.lastName, values.password, userType, values.mobileNumber);
+              console.log(id);
               navigate('/app/dashboard', { replace: true });
             }}
           >
@@ -62,45 +82,59 @@ const Register = () => {
               values
             }) => (
               <form onSubmit={handleSubmit}>
-                <Box sx={{ mb: 3 }}>
+                <Box>
                   <Typography
                     color="textPrimary"
                     variant="h2"
                   >
-                    Create new account
+                    Sign Up
                   </Typography>
                   <Typography
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
                   >
-                    Use your email to create new account
+                    Enter your name, email address and password to createyour account
                   </Typography>
                 </Box>
-                <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
-                  fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="First name"
-                  margin="normal"
-                  name="firstName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.firstName}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
-                  fullWidth
-                  helperText={touched.lastName && errors.lastName}
-                  label="Last name"
-                  margin="normal"
-                  name="lastName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
-                  variant="outlined"
-                />
+                <Grid container spacing={3}>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                  >
+                    <TextField
+                      error={Boolean(touched.firstName && errors.firstName)}
+                      fullWidth
+                      helperText={touched.firstName && errors.firstName}
+                      label="First name"
+                      margin="normal"
+                      name="firstName"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.firstName}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                  >
+                    <TextField
+                      error={Boolean(touched.lastName && errors.lastName)}
+                      fullWidth
+                      helperText={touched.lastName && errors.lastName}
+                      label="Last name"
+                      margin="normal"
+                      name="lastName"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.lastName}
+                      variant="outlined"
+                    />
+                  </Grid>
+                </Grid>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
@@ -115,18 +149,69 @@ const Register = () => {
                   variant="outlined"
                 />
                 <TextField
-                  error={Boolean(touched.password && errors.password)}
+                  error={Boolean(touched.mobileNumber && errors.mobileNumber)}
                   fullWidth
-                  helperText={touched.password && errors.password}
-                  label="Password"
+                  helperText={touched.mobileNumber && errors.mobileNumber}
+                  label="Mobile Number"
                   margin="normal"
-                  name="password"
+                  name="mobileNumber"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="password"
-                  value={values.password}
+                  value={values.mobileNumber}
                   variant="outlined"
                 />
+                <Grid container spacing={3}>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                  >
+                    <TextField
+                      error={Boolean(touched.password && errors.password)}
+                      fullWidth
+                      helperText={touched.password && errors.password}
+                      label="Password"
+                      margin="normal"
+                      name="password"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="password"
+                      value={values.password}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                  >
+                    <TextField
+                      error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+                      fullWidth
+                      helperText={touched.confirmPassword && errors.confirmPassword}
+                      label="Confirm Password"
+                      margin="normal"
+                      name="confirmPassword"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="password"
+                      value={values.confirmPassword}
+                      variant="outlined"
+                    />
+                  </Grid>
+                </Grid>
+                <Box sx={{ mt: 2, mb: 2 }}>
+                  <Typography
+                    color="textSecondary"
+                    variant="body2"
+                  >
+                    User Type
+                  </Typography>
+                  <RadioGroup row aria-label="gender" name="gender1" value={userType} onChange={onUserChange}>
+                    <FormControlLabel value="Talent" control={<Radio />} label="Talent" />
+                    <FormControlLabel value="Business" control={<Radio />} label="Business" />
+                  </RadioGroup>
+                </Box>
                 <Box
                   sx={{
                     alignItems: 'center',
@@ -177,12 +262,12 @@ const Register = () => {
                   color="textSecondary"
                   variant="body1"
                 >
-                  Have an account?
+                  Already have an account?
                   {' '}
                   <Link
                     component={RouterLink}
                     to="/login"
-                    variant="h6"
+                    variant="body1"
                   >
                     Sign in
                   </Link>
