@@ -49,6 +49,7 @@ const Register = () => {
               email: '',
               firstName: '',
               lastName: '',
+              mobileNumber: '',
               password: '',
               confirmPassword: '',
               policy: false
@@ -58,14 +59,16 @@ const Register = () => {
                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                 firstName: Yup.string().max(255).required('First name is required'),
                 lastName: Yup.string().max(255).required('Last name is required'),
+                mobileNumber: Yup.string().max(255).required('Mobile Number is required'),
                 password: Yup.string().max(255).required('Password is required'),
                 confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
                 policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
             onSubmit={async (values) => {
-              await reqSignUp(values.email, values.firstName, values.lastName, values.password, values.userType);
-              // console.log(values);
+              console.log(userType);
+              const id = await reqSignUp(values.email, values.firstName, values.lastName, values.password, userType, values.mobileNumber);
+              console.log(id);
               navigate('/app/dashboard', { replace: true });
             }}
           >
@@ -146,31 +149,57 @@ const Register = () => {
                   variant="outlined"
                 />
                 <TextField
-                  error={Boolean(touched.password && errors.password)}
+                  error={Boolean(touched.mobileNumber && errors.mobileNumber)}
                   fullWidth
-                  helperText={touched.password && errors.password}
-                  label="Password"
+                  helperText={touched.mobileNumber && errors.mobileNumber}
+                  label="Mobile Number"
                   margin="normal"
-                  name="password"
+                  name="mobileNumber"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="password"
-                  value={values.password}
+                  value={values.mobileNumber}
                   variant="outlined"
                 />
-                <TextField
-                  error={Boolean(touched.confirmPassword && errors.confirmPassword)}
-                  fullWidth
-                  helperText={touched.confirmPassword && errors.confirmPassword}
-                  label="Confirm Password"
-                  margin="normal"
-                  name="confirmPassword"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
-                  value={values.confirmPassword}
-                  variant="outlined"
-                />
+                <Grid container spacing={3}>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                  >
+                    <TextField
+                      error={Boolean(touched.password && errors.password)}
+                      fullWidth
+                      helperText={touched.password && errors.password}
+                      label="Password"
+                      margin="normal"
+                      name="password"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="password"
+                      value={values.password}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                  >
+                    <TextField
+                      error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+                      fullWidth
+                      helperText={touched.confirmPassword && errors.confirmPassword}
+                      label="Confirm Password"
+                      margin="normal"
+                      name="confirmPassword"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="password"
+                      value={values.confirmPassword}
+                      variant="outlined"
+                    />
+                  </Grid>
+                </Grid>
                 <Box sx={{ mt: 2, mb: 2 }}>
                   <Typography
                     color="textSecondary"
