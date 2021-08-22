@@ -11,10 +11,8 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import FacebookIcon from 'src/icons/Facebook';
-import GoogleIcon from 'src/icons/Google';
 
-const Login = () => {
+const Forgot = () => {
   const navigate = useNavigate();
 
   return (
@@ -34,12 +32,12 @@ const Login = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123'
+              newPass1: 'Password123',
+              newPass2: 'Password123'
             }}
             validationSchema={Yup.object().shape({
-              email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-              password: Yup.string().max(255).required('Password is required')
+              newPass1: Yup.string().max(255).required('New Password is required'),
+              newPass2: Yup.string().max(255).required('Confirm NewPass')
             })}
             onSubmit={() => {
               navigate('/app/dashboard', { replace: true });
@@ -110,7 +108,6 @@ const Login = () => {
                   </Button>
                 </Box>
                 <div width="1400">
-
                   <Typography
                     color="textSecondary"
                     variant="body1"
@@ -124,12 +121,7 @@ const Login = () => {
                     >
                       Reset password
                     </Link>
-                  </Typography>
-
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
+                    {' '}
                     Don&apos;t have an account?
                     {' '}
                     <Link
@@ -140,7 +132,6 @@ const Login = () => {
                       Sign up
                     </Link>
                   </Typography>
-
                 </div>
 
               </form>
@@ -152,4 +143,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Forgot;

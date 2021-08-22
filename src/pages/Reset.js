@@ -11,10 +11,8 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import FacebookIcon from 'src/icons/Facebook';
-import GoogleIcon from 'src/icons/Google';
 
-const Login = () => {
+const Reset = () => {
   const navigate = useNavigate();
 
   return (
@@ -60,14 +58,14 @@ const Login = () => {
                     color="textPrimary"
                     variant="h2"
                   >
-                    Sign in
+                    Reset Pasword
                   </Typography>
                   <Typography
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
                   >
-                    Sign in on the internal platform
+                    Enter email address to reset password
                   </Typography>
                 </Box>
 
@@ -84,19 +82,7 @@ const Login = () => {
                   value={values.email}
                   variant="outlined"
                 />
-                <TextField
-                  error={Boolean(touched.password && errors.password)}
-                  fullWidth
-                  helperText={touched.password && errors.password}
-                  label="Password"
-                  margin="normal"
-                  name="password"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
-                  value={values.password}
-                  variant="outlined"
-                />
+
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"
@@ -106,43 +92,9 @@ const Login = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign in now
+                    Send password reset email
                   </Button>
                 </Box>
-                <div width="1400">
-
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    Forgotton password?
-                    {' '}
-                    <Link
-                      component={RouterLink}
-                      to="/reset"
-                      variant="h6"
-                    >
-                      Reset password
-                    </Link>
-                  </Typography>
-
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    Don&apos;t have an account?
-                    {' '}
-                    <Link
-                      component={RouterLink}
-                      to="/register"
-                      variant="h6"
-                    >
-                      Sign up
-                    </Link>
-                  </Typography>
-
-                </div>
-
               </form>
             )}
           </Formik>
@@ -152,4 +104,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Reset;
