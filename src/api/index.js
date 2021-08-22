@@ -8,12 +8,10 @@ export const reqSignUp = (email, password, firstName, lastName, userType, mobile
   email, password, firstName, lastName, userType, mobileNumber
 }, 'POST');
 
-export const reqReset = (email) => ajax(`${BASE_URL}/auth /reset`, { email }, 'POST');
+export const reqReset = (email) => ajax(`${BASE_URL}/auth/reset`, { email }, 'POST');
 
-//reqForgotPassword
+// reqForgotPassword
 
-
-//reqEMailChecking
-
+// reqEMailChecking
 
 export const reqGetTalent = (_id) => ajax(`${BASE_URL}/talent`, { _id });

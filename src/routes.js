@@ -5,6 +5,8 @@ import Account from 'src/pages/Account';
 import CustomerList from 'src/pages/CustomerList';
 import Dashboard from 'src/pages/Dashboard';
 import Login from 'src/pages/Login';
+import Reset from 'src/pages/Reset';
+import Forgot from 'src/pages/Forgot';
 import NotFound from 'src/pages/NotFound';
 import ProductList from 'src/pages/ProductList';
 import Register from 'src/pages/Register';
@@ -24,6 +26,8 @@ const routes = [
       // { path: 'account', element: <Account /> },
       // { path: 'customers', element: <CustomerList /> },
       { path: 'dashboard', element: <Dashboard /> },
+      { path: 'reset', element: <Reset /> },
+      { path: 'forgot', element: <Forgot /> },
       // { path: 'products', element: <ProductList /> },
       // { path: 'settings', element: <Settings /> },
       { path: 'talent-profile', element: <TalentRegister /> },
@@ -39,6 +43,8 @@ const routes = [
     element: <MainLayout />,
     children: [
       { path: 'login', element: <Login /> },
+      { path: 'reset', element: <Reset /> },
+      // { path: 'forgot', element: <Forgot /> },
       { path: 'register', element: <Register /> },
       { path: '404', element: <NotFound /> },
       // { path: '/', element: <Navigate to="/app/talent-profile" /> },
