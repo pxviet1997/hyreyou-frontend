@@ -16,7 +16,7 @@ import {
   Tab,
   Typography
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 import PersonalDetails from './PersonalDetails';
 import JobHistory from './JobHistory';
 import EducationHistory from './EducationHistory';
@@ -52,8 +52,8 @@ TabPanel.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: '100%',
-    backgroundColor: theme.palette.background.paper
+    width: '100%'
+    // backgroundColor: theme.palette.background.paper
   }
 }));
 
