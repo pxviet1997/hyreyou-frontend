@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable operator-linebreak */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
@@ -43,35 +44,54 @@ const businessProfileForm = [
   },
   {
     name: 'businessABN',
-    value: '',
     type: 'text',
     label: 'ABN',
     size: defaultSize
   },
   {
     name: 'email',
-    value: '',
     type: 'email',
     label: 'Email',
     size: defaultSize
   },
   {
     name: 'contactNumber',
-    value: '',
     type: 'number',
     label: 'Contact Number',
     size: defaultSize
   },
   {
-    name: 'business_address',
-    value: '',
+    name: 'country',
     type: 'text',
-    label: 'Address',
-    size: { ...defaultSize, md: 12 }
+    label: 'Country',
+    size: defaultSize
+  },
+  {
+    name: 'city',
+    type: 'text',
+    label: 'City',
+    size: defaultSize
+  },
+  {
+    name: 'state',
+    type: 'text',
+    label: 'State',
+    size: { ...defaultSize, md: 4 }
+  },
+  {
+    name: 'streetName',
+    type: 'text',
+    label: 'Street Name',
+    size: { ...defaultSize, md: 4 }
+  },
+  {
+    name: 'postalCode',
+    type: 'number',
+    label: 'Postal Code',
+    size: { ...defaultSize, md: 4 }
   },
   {
     name: 'business_description',
-    value: '',
     type: 'text',
     label: 'Business Description',
     multiline: true,
@@ -80,7 +100,6 @@ const businessProfileForm = [
   },
   {
     name: 'culturalInformation',
-    value: '',
     type: 'text',
     label: 'Culture Information',
     multiline: true,
@@ -89,7 +108,6 @@ const businessProfileForm = [
   },
   {
     name: 'gender',
-    value: '',
     type: 'dropdown',
     label: 'Gender',
     options: gender,
@@ -99,16 +117,8 @@ const businessProfileForm = [
   },
   {
     name: 'type',
-    value: '',
     type: 'text',
     label: 'Type',
-    size: defaultSize
-  },
-  {
-    name: 'password',
-    value: '',
-    type: 'password',
-    label: 'Password',
     size: defaultSize
   }
 ];
@@ -118,15 +128,19 @@ const initialValues = {
   businessABN: '',
   contactNumber: '',
   email: '',
-  business_address: '',
+  streetName: '',
+  city: '',
+  state: '',
+  country: '',
+  postalCode: '',
   business_description: '',
   culturalInformation: '',
-  type: '',
-  password: ''
+  type: ''
 };
 
 const BusinessProfileDetails = (props) => {
-  const [state, setState] = useState(null);
+  const [businessForm, setBusinessForm] = useState(null);
+  const [isNewForm, setNewForm] = useState(true);
   const [isEditForm, setIsEditForm] = useState(false);
 
   const handleEdit = (edit) => {
@@ -136,7 +150,15 @@ const BusinessProfileDetails = (props) => {
   const getBusinessProfile = async () => {
     try {
       const response = await API.get('/business');
-      console.log({ response });
+      const { data } = response;
+
+      if (!data.length) {
+        setNewForm(true);
+        setIsEditForm(true);
+        return;
+      }
+
+      setNewForm(false);
       const {
         businessName,
         businessABN,
@@ -144,18 +166,23 @@ const BusinessProfileDetails = (props) => {
         email,
         culturalInformation,
         userType,
-        ...data
-      } = response.data[0];
-      setState({
+        address: { streetName, city, state, country, postalCode } = {},
+        ...rest
+      } = data[0];
+
+      setBusinessForm({
         businessName,
         businessABN,
         contactNumber,
         email,
-        business_address: '',
+        streetName: streetName || '',
+        city: city || '',
+        state: state || '',
+        country: country || '',
+        postalCode: postalCode || '',
         business_description: '',
         culturalInformation: '',
-        type: userType,
-        password: ''
+        type: userType
       });
     } catch (error) {
       console.log(error);
@@ -166,23 +193,41 @@ const BusinessProfileDetails = (props) => {
     getBusinessProfile();
   }, []);
 
+  const handleCreateForm = async (data) => {
+    try {
+      await API.post('/business/createBusiness', data);
+      alert('Profile created successfully');
+      setIsEditForm(false);
+    } catch (error) {
+      alert(error.message || 'something went wrong in creating profile');
+      console.log(error);
+    }
+  };
+
   const handleUpdateForm = async (data) => {
     try {
-      const response = await API.post('/business', data);
-      console.log({ response });
+      await API.post('/business/updateBusiness', data);
+      alert('Profile updated successfully');
+      setIsEditForm(false);
     } catch (error) {
-      alert('something went wrong in updating profile');
+      alert(error.message || 'something went wrong in updating profile');
       console.log(error);
     }
   };
 
   return (
     <Formik
-      initialValues={state || initialValues}
+      initialValues={businessForm || initialValues}
       validationSchema={validationSchema.businessProfileFormSchema}
       enableReinitialize
       onSubmit={async (values) => {
-        await handleUpdateForm(values);
+        if (!isEditForm) return;
+
+        if (isNewForm) {
+          await handleCreateForm(values);
+        } else {
+          await handleUpdateForm(values);
+        }
       }}
     >
       {({
@@ -215,13 +260,15 @@ const BusinessProfileDetails = (props) => {
                       justifyContent: 'flex-end'
                     }}
                   >
-                    <Button
-                      disabled={isSubmitting}
-                      onClick={() => handleEdit(true)}
-                      variant="outlined"
-                    >
-                      Edit
-                    </Button>
+                    {!isNewForm && (
+                      <Button
+                        disabled={isSubmitting}
+                        onClick={() => handleEdit(true)}
+                        variant="outlined"
+                      >
+                        Edit
+                      </Button>
+                    )}
                   </div>
                 </Grid>
               </Grid>
@@ -232,7 +279,7 @@ const BusinessProfileDetails = (props) => {
                     const { name, type, label } = field;
                     if (field.select) {
                       return (
-                        <Grid item md={6} xs={12}>
+                        <Grid key={name} item md={6} xs={12}>
                           <TextField
                             fullWidth
                             label={label}
@@ -294,7 +341,7 @@ const BusinessProfileDetails = (props) => {
                   color="primary"
                   variant="contained"
                 >
-                  Save details
+                  {isNewForm ? 'Create' : 'Update'}
                 </Button>
               </Box>
             </Card>
