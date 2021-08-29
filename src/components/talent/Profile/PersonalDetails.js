@@ -59,7 +59,7 @@ const PersonalDetails = () => {
                 name="email"
                 onChange={handleChange}
                 required
-                type="text"
+                type="email"
                 value={values.email}
                 variant="outlined"
               />

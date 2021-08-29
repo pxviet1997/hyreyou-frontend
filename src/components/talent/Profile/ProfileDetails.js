@@ -1,5 +1,8 @@
+/* eslint-disable indent */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable operator-linebreak */
 /* eslint-disable object-curly-newline */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -14,9 +17,15 @@ import {
   Paper,
   Tabs,
   Tab,
-  Typography
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { Formik } from 'formik';
+import { validationSchema } from 'src/utils';
+
+import API from 'src/services';
+
 import PersonalDetails from './PersonalDetails';
 import JobHistory from './JobHistory';
 import EducationHistory from './EducationHistory';
@@ -57,71 +66,430 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const normalizeData = (values) => {
+  console.log({ values });
+  return {
+    firstName: '',
+    lastName: '',
+    email: '',
+    mobileNumber: '',
+    streetName: '',
+    city: '',
+    state: '',
+    country: '',
+    postalCode: ''
+  };
+};
+
+const initialValues = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  mobileNumber: '',
+  streetName: '',
+  city: '',
+  state: '',
+  country: '',
+  postalCode: ''
+};
+
 const TalentProfileDetails = (props) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  const [talentForm, setTalentForm] = useState(null);
+  const [isNewForm, setNewForm] = useState(true);
+  const [isEditForm, setIsEditForm] = useState(false);
 
-  const handleChange = (event, newValue) => {
+  const handleEdit = (edit) => {
+    setIsEditForm(edit);
+  };
+
+  const isLastStep = () => value === 4; // TODO: change this dynamic
+
+  const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const getTalentProfile = async () => {
+    try {
+      const response = await API.get('/talent');
+      const { data } = response;
+      console.log({ data });
+
+      if (!data || !data.length) {
+        setNewForm(true);
+        setIsEditForm(true);
+        return;
+      }
+
+      setNewForm(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCreateForm = async (values) => {
+    try {
+      const body = normalizeData(values);
+      // const response = await API.post('createTalent', body);
+      // const { data } = response;
+    } catch (error) {
+      console.log(error);
+      alert('something went wrong with creating new profile');
+    }
+  };
+
+  useEffect(() => {
+    getTalentProfile();
+  }, []);
+
   return (
-    <form autoComplete="off" noValidate {...props}>
-      <Card>
-        <Grid container spacing={3}>
-          <Grid item md={6} xs={8}>
-            <CardHeader subheader="Profile" title="Talent Profile" />
-          </Grid>
-        </Grid>
-        <Divider />
-        <CardContent>
-          <Grid container spacing={2}>
-            <div className={classes.root}>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                indicatorColor="primary"
-                textColor="primary"
+    <Formik
+      initialValues={talentForm || initialValues}
+      validationSchema={validationSchema.talentProfileFormSchema}
+      enableReinitialize
+      onSubmit={async (values) => {
+        if (isLastStep()) {
+          if (!isEditForm) return;
+          if (isNewForm) {
+            await handleCreateForm(values);
+          } else {
+            //   await handleUpdateForm(values);
+          }
+        } else {
+          setValue((s) => s + 1);
+        }
+      }}
+    >
+      {({
+        errors,
+        handleBlur,
+        handleChange,
+        handleSubmit,
+        isSubmitting,
+        touched,
+        values
+      }) => {
+        console.log();
+        return (
+          <form
+            autoComplete="off"
+            onSubmit={handleSubmit}
+            noValidate
+            {...props}
+          >
+            <Card>
+              <Grid container spacing={3}>
+                <Grid item md={6} xs={8}>
+                  <CardHeader subheader="Profile" title="Talent Profile" />
+                </Grid>
+
+                <Grid item md={6} xs={4}>
+                  <div
+                    style={{
+                      padding: 16,
+                      display: 'flex',
+                      justifyContent: 'flex-end'
+                    }}
+                  >
+                    {!isNewForm && (
+                      <Button
+                        disabled={isSubmitting}
+                        onClick={() => handleEdit(true)}
+                        variant="outlined"
+                      >
+                        Edit
+                      </Button>
+                    )}
+                  </div>
+                </Grid>
+              </Grid>
+              <Divider />
+              <CardContent>
+                <Grid container spacing={2}>
+                  <div className={classes.root}>
+                    <Tabs
+                      value={value}
+                      onChange={handleTabChange}
+                      indicatorColor="primary"
+                      textColor="primary"
+                    >
+                      <Tab label="Personal" />
+                      <Tab label="Job History" />
+                      <Tab label="Education History" />
+                      <Tab label="Certification" />
+                      <Tab label="Job Expectation" />
+                    </Tabs>
+                    <TabPanel value={value} index={0}>
+                      <PersonalDetails />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                      <JobHistory />
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                      <EducationHistory />
+                    </TabPanel>
+                    <TabPanel value={value} index={3}>
+                      <Certification />
+                    </TabPanel>
+                    <TabPanel value={value} index={4}>
+                      <JobExpectation />
+                    </TabPanel>
+                  </div>
+                </Grid>
+              </CardContent>
+              <Divider />
+              <Grid
+                container
+                spacing={2}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  p: 2
+                }}
               >
-                <Tab label="Personal" />
-                <Tab label="Job History" />
-                <Tab label="Education History" />
-                <Tab label="Certification" />
-                <Tab label="Job Expectation" />
-              </Tabs>
-              <TabPanel value={value} index={0}>
-                <PersonalDetails />
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                <JobHistory />
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                <EducationHistory />
-              </TabPanel>
-              <TabPanel value={value} index={3}>
-                <Certification />
-              </TabPanel>
-              <TabPanel value={value} index={4}>
-                <JobExpectation />
-              </TabPanel>
-            </div>
-          </Grid>
-        </CardContent>
-        {/* <Divider />
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            p: 2
-          }}
-        >
-          <Button color="primary" variant="contained">
-            Save details
-          </Button>
-        </Box> */}
-      </Card>
-    </form>
+                {value > 0 ? (
+                  <Grid item>
+                    <Button
+                      disabled={!isEditForm || isSubmitting}
+                      variant="contained"
+                      color="primary"
+                      onClick={() => setValue((s) => s - 1)}
+                    >
+                      Back
+                    </Button>
+                  </Grid>
+                ) : null}
+                <Grid item>
+                  <Button
+                    startIcon={
+                      isSubmitting ? <CircularProgress size="1rem" /> : null
+                    }
+                    disabled={!isEditForm || isSubmitting}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                  >
+                    {isSubmitting
+                      ? 'Submitting'
+                      : isLastStep()
+                      ? 'Submit'
+                      : 'Next'}
+                  </Button>
+                </Grid>
+              </Grid>
+              {/* <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  p: 2
+                }}
+              >
+                <Button color="primary" variant="contained">
+                  Save details
+                </Button>
+              </Box> */}
+            </Card>
+          </form>
+        );
+      }}
+    </Formik>
   );
 };
 
 export default TalentProfileDetails;
+
+// import React, { useState } from 'react';
+// import PropTypes from 'prop-types';
+// import {
+//   Box,
+//   Button,
+//   Card,
+//   CardHeader,
+//   CardContent,
+//   CircularProgress,
+//   Grid,
+//   Step,
+//   StepLabel,
+//   Stepper,
+//   Divider
+// } from '@material-ui/core';
+// // eslint-disable-next-line object-curly-newline
+// import { Field, Form, Formik, FormikConfig, FormikValues } from 'formik';
+// import { CheckboxWithLabel, TextField } from 'formik-material-ui';
+// import { mixed, number, object } from 'yup';
+// import PersonalDetails from './PersonalDetails';
+// import JobHistory from './JobHistory';
+// import EducationHistory from './EducationHistory';
+// import Certification from './Certification';
+// import JobExpectation from './JobExpectation';
+
+// const sleep = (time) => new Promise((acc) => setTimeout(acc, time));
+
+// export default function TalentProfileDetails() {
+//   const [isNewForm, setNewForm] = useState(true);
+//   const [isEditForm, setIsEditForm] = useState(false);
+
+//   const handleEdit = (edit) => {
+//     setIsEditForm(edit);
+//   };
+
+//   return (
+//     <Card>
+//       <Grid container spacing={3}>
+//         <Grid item md={6} xs={8}>
+//           <CardHeader subheader="Profile" title="Talent Profile" />
+//         </Grid>
+
+//         <Grid item md={6} xs={4}>
+//           <div
+//             style={{
+//               padding: 16,
+//               display: 'flex',
+//               justifyContent: 'flex-end'
+//             }}
+//           >
+//             {isNewForm && (
+//               <Button onClick={() => handleEdit(true)} variant="outlined">
+//                 Edit
+//               </Button>
+//             )}
+//           </div>
+//         </Grid>
+//       </Grid>
+//       <Divider />
+//       <CardContent>
+//         <FormikStepper
+//           initialValues={{
+//             firstName: '',
+//             lastName: '',
+//             millionaire: false,
+//             money: 0,
+//             description: ''
+//           }}
+//           onSubmit={async (values) => {
+//             await sleep(3000);
+//             console.log('values', values);
+//           }}
+//         >
+//           <FormikStep label="Personal">
+//             <PersonalDetails />
+//           </FormikStep>
+
+//           <FormikStep label="Job History">
+//             <JobHistory />
+//           </FormikStep>
+
+//           <FormikStep label="Education History">
+//             <EducationHistory />
+//           </FormikStep>
+
+//           <FormikStep label="Certification">
+//             <Certification />
+//           </FormikStep>
+
+//           <FormikStep label="Job Expectation">
+//             <JobExpectation />
+//           </FormikStep>
+//         </FormikStepper>
+//       </CardContent>
+//     </Card>
+//   );
+// }
+
+// export function FormikStep({ children }) {
+//   return <>{children}</>;
+// }
+
+// export function FormikStepper({ children, ...props }) {
+//   const childrenArray = React.Children.toArray(children);
+//   const [step, setStep] = useState(0);
+//   const currentChild = childrenArray[step];
+//   const [completed, setCompleted] = useState(false);
+
+//   function isLastStep() {
+//     return step === childrenArray.length - 1;
+//   }
+
+//   return (
+//     <Formik
+//       {...props}
+//       validationSchema={currentChild.props.validationSchema}
+//       onSubmit={async (values, helpers) => {
+//         if (isLastStep()) {
+//           await props.onSubmit(values, helpers);
+//           setCompleted(true);
+//         } else {
+//           setStep((s) => s + 1);
+
+//           // the next line was not covered in the youtube video
+//           //
+//           // If you have multiple fields on the same step
+//           // we will see they show the validation error all at the same time after the first step!
+//           //
+//           // If you want to keep that behaviour, then, comment the next line :)
+//           // If you want the second/third/fourth/etc steps with the same behaviour
+//           //    as the first step regarding validation errors, then the next line is for you! =)
+//           //
+//           // In the example of the video, it doesn't make any difference, because we only
+//           //    have one field with validation in the second step :)
+//           helpers.setTouched({});
+//         }
+//       }}
+//     >
+//       {({ isSubmitting }) => (
+//         <Form autoComplete="off">
+//           <Stepper alternativeLabel activeStep={step}>
+//             {childrenArray.map((child, index) => (
+//               <Step
+//                 key={child.props.label}
+//                 completed={step > index || completed}
+//               >
+//                 <StepLabel>{child.props.label}</StepLabel>
+//               </Step>
+//             ))}
+//           </Stepper>
+
+//           {currentChild}
+
+//           <Grid container spacing={2}>
+//             {step > 0 ? (
+//               <Grid item>
+//                 <Button
+//                   disabled={isSubmitting}
+//                   variant="contained"
+//                   color="primary"
+//                   onClick={() => setStep((s) => s - 1)}
+//                 >
+//                   Back
+//                 </Button>
+//               </Grid>
+//             ) : null}
+//             <Grid item>
+//               <Button
+//                 startIcon={
+//                   isSubmitting ? <CircularProgress size="1rem" /> : null
+//                 }
+//                 disabled={isSubmitting}
+//                 variant="contained"
+//                 color="primary"
+//                 type="submit"
+//               >
+//                 {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
+//               </Button>
+//             </Grid>
+//           </Grid>
+//         </Form>
+//       )}
+//     </Formik>
+//   );
+// }
+
+// FormikStepper.propTypes = {
+//   children: PropTypes.node,
+//   onSubmit: PropTypes.func
+// };
+
+// FormikStep.propTypes = {
+//   children: PropTypes.node
+// };
