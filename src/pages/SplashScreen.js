@@ -115,7 +115,7 @@ const SplashScreen = () => {
             >
               <Button
                 component={RouterLink}
-                to="/login"
+                to="/verify"
                 fullWidth
                 size="large"
                 variant="contained"

@@ -7,6 +7,7 @@ import Dashboard from 'src/pages/Dashboard';
 import Login from 'src/pages/Login';
 import Reset from 'src/pages/Reset';
 import Forgot from 'src/pages/Forgot';
+import Verify from 'src/pages/Verify';
 import NotFound from 'src/pages/NotFound';
 import ProductList from 'src/pages/ProductList';
 import Register from 'src/pages/Register';
@@ -45,6 +46,7 @@ const routes = [
       { path: 'login', element: <Login /> },
       { path: 'reset', element: <Reset /> },
       // { path: 'forgot', element: <Forgot /> },
+      { path: 'verify', element: <Verify /> },
       { path: 'register', element: <Register /> },
       { path: '404', element: <NotFound /> },
       // { path: '/', element: <Navigate to="/app/talent-profile" /> },
