@@ -46,7 +46,7 @@ const routes = [
       { path: 'login', element: <Login /> },
       { path: 'reset', element: <Reset /> },
       // { path: 'forgot', element: <Forgot /> },
-      { path: 'verify', element: <Verify /> },
+      { path: 'verify/:id', element: <Verify /> },
       { path: 'register', element: <Register /> },
       { path: '404', element: <NotFound /> },
       // { path: '/', element: <Navigate to="/app/talent-profile" /> },

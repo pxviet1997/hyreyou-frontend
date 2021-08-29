@@ -1,24 +1,27 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
 import {
   Box,
   Button,
   Container,
-  Grid,
-  Link,
-  TextField,
   Typography
 } from '@material-ui/core';
+import { useEffect } from 'react';
+import { reqVerifyEmail } from 'src/api';
 
 const Verify = () => {
-  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(async () => {
+    const id = location.pathname.split('/')[2];
+    await reqVerifyEmail(id);
+    // console.log(id);
+  }, []);
 
   return (
     <>
       <Helmet>
-        <title>Login | Material Kit</title>
+        <title>Email Verification | Material Kit</title>
       </Helmet>
       <Box
         sx={{
@@ -30,46 +33,29 @@ const Verify = () => {
         }}
       >
         <Container maxWidth="sm">
-          <Formik
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
-            }}
-          >
-            {({
-              errors,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              isSubmitting,
-              touched,
-              values
-            }) => (
-              <form onSubmit={handleSubmit}>
-                <Box sx={{ mb: 3 }}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
-                    Email verification successfull!
-                  </Typography>
-                </Box>
-                <div width="1400">
-                  <Box sx={{ py: 2 }}>
-                    <Button
-                      color="primary"
-                      disabled={isSubmitting}
-                      fullWidth
-                      size="large"
-                      type="submit"
-                      variant="contained"
-                    >
-                      Sign in now
-                    </Button>
-                  </Box>
-                </div>
-              </form>
-            )}
-          </Formik>
+          <Box sx={{ mb: 3 }}>
+            <Typography
+              color="textPrimary"
+              variant="h2"
+            >
+              Email Verification successfull!
+            </Typography>
+          </Box>
+          <div width="1400">
+            <Box sx={{ py: 2 }}>
+              <Button
+                color="primary"
+                component={RouterLink}
+                to="/login"
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+              >
+                Sign In
+              </Button>
+            </Box>
+          </div>
         </Container>
       </Box>
     </>

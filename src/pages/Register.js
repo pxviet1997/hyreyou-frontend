@@ -66,10 +66,11 @@ const Register = () => {
               })
             }
             onSubmit={async (values) => {
-              console.log(userType);
-              const id = await reqSignUp(values.email, values.firstName, values.lastName, values.password, userType, values.mobileNumber);
-              console.log(id);
-              navigate('/app/dashboard', { replace: true });
+              const { policy, confirmPassword, ...newUser } = values;
+
+              const id = await reqSignUp({ ...newUser, userType });
+              // console.log(id);
+              // navigate('/app/dashboard', {replace: true });
             }}
           >
             {({
