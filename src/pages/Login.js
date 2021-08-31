@@ -6,16 +6,17 @@ import {
   Box,
   Button,
   Container,
-  Grid,
   Link,
   TextField,
-  Typography
+  Typography,
 } from '@material-ui/core';
-import FacebookIcon from 'src/icons/Facebook';
-import GoogleIcon from 'src/icons/Google';
+import { reqTalentSignIn, reqBusinessSignIn } from 'src/api';
+import { useState } from 'react';
 
-const Login = () => {
+const Login = ({ userType }) => {
   const navigate = useNavigate();
+  const [loginMessage, setLoginMessage] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
 
   return (
     <>
@@ -34,15 +35,31 @@ const Login = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123'
+              // email: '',
+              // password: ''
+              email: 'pxviet1997@gmail.com',
+              password: 'padpxv9697'
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={async (values) => {
+              try {
+                console.log(userType);
+                const { data, login, message } = userType === 'talent'
+                  ? await reqTalentSignIn(values) : await reqBusinessSignIn(values);
+
+                if (!login) {
+                  setLoginMessage(message);
+                }
+              } catch (error) {
+                // console.log(error);
+                setShowMessage(true);
+                setLoginMessage(error.error);
+              }
+
+              // navigate('/app/dashboard', { replace: true });
             }}
           >
             {({
@@ -55,7 +72,7 @@ const Login = () => {
               values
             }) => (
               <form onSubmit={handleSubmit}>
-                <Box sx={{ mb: 3 }}>
+                <Box sx={{ mb: 1 }}>
                   <Typography
                     color="textPrimary"
                     variant="h2"
@@ -79,7 +96,10 @@ const Login = () => {
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
-                  onChange={handleChange}
+                  onChange={(event) => {
+                    handleChange(event);
+                    setShowMessage(false);
+                  }}
                   type="email"
                   value={values.email}
                   variant="outlined"
@@ -110,7 +130,17 @@ const Login = () => {
                   </Button>
                 </Box>
                 <div width="1400">
-
+                  {showMessage
+                    ? (
+                      <Typography
+                        color="red"
+                        variant="body1"
+                        style={{ marginTop: '2px', marginBottom: '10px' }}
+                      >
+                        {loginMessage}
+                      </Typography>
+                    )
+                    : (<Box style={{ height: '36px' }} />)}
                   <Typography
                     color="textSecondary"
                     variant="body1"
@@ -120,7 +150,7 @@ const Login = () => {
                     <Link
                       component={RouterLink}
                       to="/reset"
-                      variant="h6"
+                    // variant="h6"
                     >
                       Reset password
                     </Link>
@@ -135,7 +165,7 @@ const Login = () => {
                     <Link
                       component={RouterLink}
                       to="/register"
-                      variant="h6"
+                    // variant="h6"
                     >
                       Sign up
                     </Link>

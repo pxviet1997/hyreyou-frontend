@@ -107,7 +107,7 @@ const SplashScreen = () => {
           </Container>
         </Box>
         <Container maxWidth="md" style={{ marginTop: '600px' }}>
-          <Grid container spacing={5}>
+          <Grid container spacing={3}>
             <Grid
               item
               xs={12}
@@ -115,12 +115,12 @@ const SplashScreen = () => {
             >
               <Button
                 component={RouterLink}
-                to="/login"
+                to="/talent-login"
                 fullWidth
                 size="large"
                 variant="contained"
               >
-                Sign In
+                Talent Sign In
               </Button>
             </Grid>
             <Grid
@@ -130,14 +130,25 @@ const SplashScreen = () => {
             >
               <Button
                 component={RouterLink}
-                to="/register"
+                to="/business-login"
                 fullWidth
                 size="large"
                 variant="contained"
               >
-                Sign Up
+                Business Sign In
               </Button>
             </Grid>
+          </Grid>
+          <Grid style={{ marginTop: '20px' }}>
+            <Button
+              component={RouterLink}
+              to="/register"
+              fullWidth
+              size="large"
+              variant="contained"
+            >
+              Sign Up
+            </Button>
           </Grid>
         </Container>
       </Box>

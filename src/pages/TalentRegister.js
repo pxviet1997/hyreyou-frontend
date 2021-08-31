@@ -22,9 +22,9 @@ const TalentRegister = () => (
           <Grid item lg={8} md={6} xs={12}>
             <TalentProfileDetails />
           </Grid>
-          <Grid item lg={4} md={6} xs={12}>
+          {/* <Grid item lg={4} md={6} xs={12}>
             <TalentProfile />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Box>
