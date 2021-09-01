@@ -1,20 +1,17 @@
 /* eslint-disable object-curly-newline */
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid, TextField } from '@material-ui/core';
 
-const JobExpectation = () => {
-  const [values, setValues] = useState({
-    culture_prefences: '',
-  });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
-
+const JobExpectation = ({
+  isEditForm,
+  values,
+  handleChange,
+  handleBlur,
+  touched,
+  errors
+}) => {
+  console.log('[JobExpectation]', { values });
   return (
     <>
       <Helmet>
@@ -32,12 +29,20 @@ const JobExpectation = () => {
               <TextField
                 fullWidth
                 label="Culture Prefences"
-                name="culture_prefences"
+                name="culturalPreferences"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
-                value={values.culture_prefences}
+                value={values.culturalPreferences}
                 variant="outlined"
+                helperText={
+                  touched.culturalPreferences && errors.culturalPreferences
+                }
+                error={Boolean(
+                  touched.culturalPreferences && errors.culturalPreferences
+                )}
+                disabled={isEditForm}
               />
             </Grid>
           </Grid>
@@ -48,3 +53,12 @@ const JobExpectation = () => {
 };
 
 export default JobExpectation;
+
+JobExpectation.propTypes = {
+  isEditForm: PropTypes.bool,
+  values: PropTypes.arrayOf(PropTypes.string),
+  handleChange: PropTypes.func,
+  handleBlur: PropTypes.func,
+  errors: PropTypes.object,
+  touched: PropTypes.object
+};

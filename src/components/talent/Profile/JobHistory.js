@@ -1,22 +1,18 @@
 /* eslint-disable object-curly-newline */
-import { useState } from 'react';
 import { Helmet } from 'react-helmet';
+import PropTypes from 'prop-types';
+
 import { Box, Container, Grid, TextField } from '@material-ui/core';
 
-const JobHistory = () => {
-  const [values, setValues] = useState({
-    company_name: '',
-    job_position: '',
-    job_description: '',
-    years_of_experience: ''
-  });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
+const JobHistory = ({
+  isEditForm,
+  values,
+  handleChange,
+  handleBlur,
+  touched,
+  errors
+}) => {
+  console.log('[JobHistory]', { values });
 
   return (
     <>
@@ -35,48 +31,66 @@ const JobHistory = () => {
               <TextField
                 fullWidth
                 label="Company Name"
-                name="company_name"
+                name="companyName"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
-                value={values.company_name}
+                value={values.companyName}
                 variant="outlined"
+                helperText={touched.companyName && errors.companyName}
+                error={Boolean(touched.companyName && errors.companyName)}
+                disabled={isEditForm}
               />
             </Grid>
             <Grid item lg={12} md={12} xs={12}>
               <TextField
                 fullWidth
                 label="Job Position"
-                name="job_position"
+                name="jobPosition"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
-                value={values.job_position}
+                value={values.jobPosition}
                 variant="outlined"
+                helperText={touched.jobPosition && errors.jobPosition}
+                error={Boolean(touched.jobPosition && errors.jobPosition)}
+                disabled={isEditForm}
               />
             </Grid>
             <Grid item lg={12} md={12} xs={12}>
               <TextField
                 fullWidth
                 label="Job Description"
-                name="job_description"
+                name="jobDescription"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
-                value={values.job_description}
+                value={values.jobDescription}
                 variant="outlined"
+                helperText={touched.jobDescription && errors.jobDescription}
+                error={Boolean(touched.jobDescription && errors.jobDescription)}
+                disabled={isEditForm}
               />
             </Grid>
             <Grid item lg={12} md={12} xs={12}>
               <TextField
                 fullWidth
                 label="Years Of Experience"
-                name="years_of_experience"
+                name="yearOfExperience"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="number"
-                value={values.years_of_experience}
+                value={values.yearOfExperience}
                 variant="outlined"
+                helperText={touched.yearOfExperience && errors.yearOfExperience}
+                error={Boolean(
+                  touched.yearOfExperience && errors.yearOfExperience
+                )}
+                disabled={isEditForm}
               />
             </Grid>
           </Grid>
@@ -87,3 +101,17 @@ const JobHistory = () => {
 };
 
 export default JobHistory;
+
+JobHistory.propTypes = {
+  isEditForm: PropTypes.bool,
+  values: PropTypes.shape({
+    companyName: PropTypes.string,
+    jobPosition: PropTypes.string,
+    jobDescription: PropTypes.string,
+    yearOfExperience: PropTypes.string
+  }),
+  handleChange: PropTypes.func,
+  handleBlur: PropTypes.func,
+  errors: PropTypes.object,
+  touched: PropTypes.object
+};

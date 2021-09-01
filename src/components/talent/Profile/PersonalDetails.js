@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import { Helmet } from 'react-helmet';
 import {
   Box,
@@ -9,24 +10,15 @@ import {
   Button
 } from '@material-ui/core';
 
-const PersonalDetails = () => {
-  const [values, setValues] = useState({
-    full_name: '',
-    email: '',
-    phone_number: '',
-    country: '',
-    city: '',
-    street_name: '',
-    state: '',
-    postal_code: ''
-  });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
+const PersonalDetails = ({
+  isEditForm,
+  values,
+  handleChange,
+  handleBlur,
+  touched,
+  errors
+}) => {
+  console.log('[PersonalDetails]', { values, handleChange });
   return (
     <>
       <Helmet>
@@ -40,16 +32,36 @@ const PersonalDetails = () => {
       >
         <Container maxWidth="lg">
           <Grid container spacing={3}>
-            <Grid item lg={12} md={12} xs={12}>
+            <Grid item lg={6} md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Full Name"
-                name="full_name"
+                label="First Name"
+                name="firstName"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
-                value={values.full_name}
+                value={values.firstName}
                 variant="outlined"
+                helperText={touched.firstName && errors.firstName}
+                error={Boolean(touched.firstName && errors.firstName)}
+                disabled={isEditForm}
+              />
+            </Grid>
+            <Grid item lg={6} md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Last Name"
+                name="lastName"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                required
+                type="text"
+                value={values.lastName}
+                variant="outlined"
+                helperText={touched.lastName && errors.lastName}
+                error={Boolean(touched.lastName && errors.lastName)}
+                disabled={isEditForm}
               />
             </Grid>
             <Grid item lg={12} md={12} xs={12}>
@@ -58,22 +70,30 @@ const PersonalDetails = () => {
                 label="Email"
                 name="email"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="email"
                 value={values.email}
                 variant="outlined"
+                helperText={touched.email && errors.email}
+                error={Boolean(touched.email && errors.email)}
+                disabled={isEditForm}
               />
             </Grid>
             <Grid item lg={12} md={12} xs={12}>
               <TextField
                 fullWidth
-                label="Phone Number"
-                name="phone_number"
+                label="Mobile Number"
+                name="mobileNumber"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
-                value={values.phone_number}
+                value={values.mobileNumber}
                 variant="outlined"
+                helperText={touched.mobileNumber && errors.mobileNumber}
+                error={Boolean(touched.mobileNumber && errors.mobileNumber)}
+                disabled={isEditForm}
               />
             </Grid>
             <Grid item lg={6} md={6} xs={12}>
@@ -82,10 +102,14 @@ const PersonalDetails = () => {
                 label="Country"
                 name="country"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
                 value={values.country}
                 variant="outlined"
+                helperText={touched.country && errors.country}
+                error={Boolean(touched.country && errors.country)}
+                disabled={isEditForm}
               />
             </Grid>
             <Grid item lg={6} md={6} xs={12}>
@@ -94,10 +118,14 @@ const PersonalDetails = () => {
                 label="City"
                 name="city"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
                 value={values.city}
                 variant="outlined"
+                helperText={touched.city && errors.city}
+                error={Boolean(touched.city && errors.city)}
+                disabled={isEditForm}
               />
             </Grid>
 
@@ -105,12 +133,16 @@ const PersonalDetails = () => {
               <TextField
                 fullWidth
                 label="Street Name"
-                name="street_name"
+                name="streetName"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
-                value={values.street_name}
+                value={values.streetName}
                 variant="outlined"
+                helperText={touched.streetName && errors.streetName}
+                error={Boolean(touched.streetName && errors.streetName)}
+                disabled={isEditForm}
               />
             </Grid>
             <Grid item lg={4} md={4} xs={12}>
@@ -119,22 +151,30 @@ const PersonalDetails = () => {
                 label="State"
                 name="state"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
                 value={values.state}
                 variant="outlined"
+                helperText={touched.state && errors.state}
+                error={Boolean(touched.state && errors.state)}
+                disabled={isEditForm}
               />
             </Grid>
             <Grid item lg={4} md={4} xs={12}>
               <TextField
                 fullWidth
                 label="Postal Code"
-                name="postal_code"
+                name="postalCode"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
-                value={values.postal_code}
+                value={values.postalCode}
                 variant="outlined"
+                helperText={touched.postalCode && errors.postalCode}
+                error={Boolean(touched.postalCode && errors.postalCode)}
+                disabled={isEditForm}
               />
             </Grid>
           </Grid>
@@ -145,3 +185,22 @@ const PersonalDetails = () => {
 };
 
 export default PersonalDetails;
+
+PersonalDetails.propTypes = {
+  isEditForm: PropTypes.bool,
+  values: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    email: PropTypes.string,
+    mobileNumber: PropTypes.string,
+    streetName: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    country: PropTypes.string,
+    postalCode: PropTypes.string
+  }),
+  handleChange: PropTypes.func,
+  handleBlur: PropTypes.func,
+  errors: PropTypes.object,
+  touched: PropTypes.object
+};

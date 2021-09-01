@@ -2,35 +2,30 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable operator-linebreak */
 /* eslint-disable object-curly-newline */
-import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-
 import {
   Box,
   Button,
   Card,
   CardContent,
   CardHeader,
+  CircularProgress,
   Divider,
   Grid,
-  TextField,
-  Paper,
-  Tabs,
   Tab,
-  Typography,
-  CircularProgress
+  Tabs,
+  Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Formik } from 'formik';
-import { validationSchema } from 'src/utils';
-
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import API from 'src/services';
-
-import PersonalDetails from './PersonalDetails';
-import JobHistory from './JobHistory';
-import EducationHistory from './EducationHistory';
+import { validationSchema } from 'src/utils';
 import Certification from './Certification';
+import EducationHistory from './EducationHistory';
 import JobExpectation from './JobExpectation';
+import JobHistory from './JobHistory';
+import PersonalDetails from './PersonalDetails';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -69,15 +64,34 @@ const useStyles = makeStyles((theme) => ({
 const normalizeData = (values) => {
   console.log({ values });
   return {
-    firstName: '',
-    lastName: '',
-    email: '',
-    mobileNumber: '',
-    streetName: '',
-    city: '',
-    state: '',
-    country: '',
-    postalCode: ''
+    firstName: values.firstName,
+    lastName: values.lastName,
+    email: values.email,
+    mobileNumber: values.mobileNumber,
+    address: {
+      streetName: values.streetName,
+      city: values.city,
+      state: values.state,
+      country: values.country,
+      postalCode: values.postalCode
+    },
+    jobHistory: [
+      {
+        companyName: values.companyName,
+        jobPosition: values.jobPosition,
+        jobDescription: values.jobDescription,
+        yearOfExperience: values.yearOfExperience
+      }
+    ],
+    education: [
+      {
+        nameOfUniversity: values.nameOfUniversity,
+        nameOfDegree: values.nameOfDegree,
+        degreeDuration: values.degreeDuration
+      }
+    ],
+    skills: values.skills,
+    culturalPreferences: values.culturalPreferences
   };
 };
 
@@ -90,7 +104,16 @@ const initialValues = {
   city: '',
   state: '',
   country: '',
-  postalCode: ''
+  postalCode: '',
+  companyName: '',
+  jobPosition: '',
+  jobDescription: '',
+  yearOfExperience: '',
+  nameOfUniversity: '',
+  nameOfDegree: '',
+  degreeDuration: '',
+  skills: [],
+  culturalPreferences: []
 };
 
 const TalentProfileDetails = (props) => {
@@ -101,6 +124,9 @@ const TalentProfileDetails = (props) => {
   const [isEditForm, setIsEditForm] = useState(false);
 
   const handleEdit = (edit) => {
+    if (edit) {
+      setValue(0);
+    }
     setIsEditForm(edit);
   };
 
@@ -123,6 +149,60 @@ const TalentProfileDetails = (props) => {
       }
 
       setNewForm(false);
+      const {
+        firstName,
+        lastName,
+        email,
+        mobileNumber,
+        address: { streetName, city, state, country, postalCode } = {},
+        jobHistory,
+        education,
+        skills,
+        culturalPreferences,
+        ...rest
+      } = data[0];
+
+      console.log({
+        firstName,
+        lastName,
+        email,
+        mobileNumber,
+        streetName,
+        city,
+        state,
+        country,
+        postalCode,
+        // companyName,
+        // jobPosition,
+        // jobDescription,
+        // yearOfExperience,
+        // nameOfUniversity,
+        // nameOfDegree,
+        // degreeDuration,
+        skills,
+        culturalPreferences
+      });
+
+      setTalentForm({
+        firstName,
+        lastName,
+        email,
+        mobileNumber,
+        streetName,
+        city,
+        state,
+        country,
+        postalCode,
+        // companyName,
+        // jobPosition,
+        // jobDescription,
+        // yearOfExperience,
+        // nameOfUniversity,
+        // nameOfDegree,
+        // degreeDuration,
+        skills,
+        culturalPreferences
+      });
     } catch (error) {
       console.log(error);
     }
@@ -131,11 +211,15 @@ const TalentProfileDetails = (props) => {
   const handleCreateForm = async (values) => {
     try {
       const body = normalizeData(values);
-      // const response = await API.post('createTalent', body);
-      // const { data } = response;
+      body.password = 'test'; // TODO:
+      console.log({ body });
+      const response = await API.post('/talent', body);
+      const { data } = response;
+      console.log({ data });
+      alert('created talent profile');
     } catch (error) {
       console.log(error);
-      alert('something went wrong with creating new profile');
+      alert(`something went wrong with creating new profile${error.message}`);
     }
   };
 
@@ -149,6 +233,7 @@ const TalentProfileDetails = (props) => {
       validationSchema={validationSchema.talentProfileFormSchema}
       enableReinitialize
       onSubmit={async (values) => {
+        console.log({ values });
         if (isLastStep()) {
           if (!isEditForm) return;
           if (isNewForm) {
@@ -169,116 +254,144 @@ const TalentProfileDetails = (props) => {
         isSubmitting,
         touched,
         values
-      }) => {
-        console.log();
-        return (
-          <form
-            autoComplete="off"
-            onSubmit={handleSubmit}
-            noValidate
-            {...props}
-          >
-            <Card>
-              <Grid container spacing={3}>
-                <Grid item md={6} xs={8}>
-                  <CardHeader subheader="Profile" title="Talent Profile" />
-                </Grid>
-
-                <Grid item md={6} xs={4}>
-                  <div
-                    style={{
-                      padding: 16,
-                      display: 'flex',
-                      justifyContent: 'flex-end'
-                    }}
-                  >
-                    {!isNewForm && (
-                      <Button
-                        disabled={isSubmitting}
-                        onClick={() => handleEdit(true)}
-                        variant="outlined"
-                      >
-                        Edit
-                      </Button>
-                    )}
-                  </div>
-                </Grid>
+      }) => (
+        <form autoComplete="off" onSubmit={handleSubmit} noValidate {...props}>
+          <Card>
+            <Grid container spacing={3}>
+              <Grid item md={6} xs={8}>
+                <CardHeader subheader="Profile" title="Talent Profile" />
               </Grid>
-              <Divider />
-              <CardContent>
-                <Grid container spacing={2}>
-                  <div className={classes.root}>
-                    <Tabs
-                      value={value}
-                      onChange={handleTabChange}
-                      indicatorColor="primary"
-                      textColor="primary"
-                    >
-                      <Tab label="Personal" />
-                      <Tab label="Job History" />
-                      <Tab label="Education History" />
-                      <Tab label="Certification" />
-                      <Tab label="Job Expectation" />
-                    </Tabs>
-                    <TabPanel value={value} index={0}>
-                      <PersonalDetails />
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                      <JobHistory />
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                      <EducationHistory />
-                    </TabPanel>
-                    <TabPanel value={value} index={3}>
-                      <Certification />
-                    </TabPanel>
-                    <TabPanel value={value} index={4}>
-                      <JobExpectation />
-                    </TabPanel>
-                  </div>
-                </Grid>
-              </CardContent>
-              <Divider />
-              <Grid
-                container
-                spacing={2}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  p: 2
-                }}
-              >
-                {value > 0 ? (
-                  <Grid item>
+
+              <Grid item md={6} xs={4}>
+                <div
+                  style={{
+                    padding: 16,
+                    display: 'flex',
+                    justifyContent: 'flex-end'
+                  }}
+                >
+                  {!isNewForm && (
                     <Button
-                      disabled={!isEditForm || isSubmitting}
-                      variant="contained"
-                      color="primary"
-                      onClick={() => setValue((s) => s - 1)}
+                      disabled={isSubmitting}
+                      onClick={() => handleEdit(true)}
+                      variant="outlined"
                     >
-                      Back
+                      Edit
                     </Button>
-                  </Grid>
-                ) : null}
+                  )}
+                </div>
+              </Grid>
+            </Grid>
+            <Divider />
+            <CardContent>
+              <Grid container spacing={2}>
+                <div className={classes.root}>
+                  <Tabs
+                    value={value}
+                    onChange={handleTabChange} // TODO: check this should allow when form is locked
+                    indicatorColor="primary"
+                    textColor="primary"
+                  >
+                    <Tab label="Personal" />
+                    <Tab label="Job History" />
+                    <Tab label="Education History" />
+                    <Tab label="Certification" />
+                    <Tab label="Job Expectation" />
+                  </Tabs>
+                  <TabPanel value={value} index={0}>
+                    <PersonalDetails
+                      isEditForm={!isEditForm}
+                      values={values}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      touched={touched}
+                      errors={errors}
+                    />
+                  </TabPanel>
+                  <TabPanel value={value} index={1}>
+                    <JobHistory
+                      isEditForm={!isEditForm}
+                      values={values}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      touched={touched}
+                      errors={errors}
+                    />
+                  </TabPanel>
+                  <TabPanel value={value} index={2}>
+                    <EducationHistory
+                      isEditForm={!isEditForm}
+                      values={values}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      touched={touched}
+                      errors={errors}
+                    />
+                  </TabPanel>
+                  <TabPanel value={value} index={3}>
+                    <Certification
+                      isEditForm={!isEditForm}
+                      values={values}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      touched={touched}
+                      errors={errors}
+                    />
+                  </TabPanel>
+                  <TabPanel value={value} index={4}>
+                    <JobExpectation
+                      isEditForm={!isEditForm}
+                      values={values}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      touched={touched}
+                      errors={errors}
+                    />
+                  </TabPanel>
+                </div>
+              </Grid>
+            </CardContent>
+            <Divider />
+            <Grid
+              container
+              spacing={2}
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                p: 2
+              }}
+            >
+              {value > 0 ? (
                 <Grid item>
                   <Button
-                    startIcon={
-                      isSubmitting ? <CircularProgress size="1rem" /> : null
-                    }
                     disabled={!isEditForm || isSubmitting}
                     variant="contained"
                     color="primary"
-                    type="submit"
+                    onClick={() => setValue((s) => s - 1)}
                   >
-                    {isSubmitting
-                      ? 'Submitting'
-                      : isLastStep()
-                      ? 'Submit'
-                      : 'Next'}
+                    Back
                   </Button>
                 </Grid>
+              ) : null}
+              <Grid item>
+                <Button
+                  startIcon={
+                    isSubmitting ? <CircularProgress size="1rem" /> : null
+                  }
+                  disabled={!isEditForm || isSubmitting}
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
+                  {isSubmitting
+                    ? 'Submitting'
+                    : isLastStep()
+                    ? 'Submit'
+                    : 'Next'}
+                </Button>
               </Grid>
-              {/* <Box
+            </Grid>
+            {/* <Box
                 sx={{
                   display: 'flex',
                   justifyContent: 'flex-end',
@@ -289,10 +402,9 @@ const TalentProfileDetails = (props) => {
                   Save details
                 </Button>
               </Box> */}
-            </Card>
-          </form>
-        );
-      }}
+          </Card>
+        </form>
+      )}
     </Formik>
   );
 };

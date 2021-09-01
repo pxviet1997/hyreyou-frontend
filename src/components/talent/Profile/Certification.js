@@ -1,20 +1,18 @@
 /* eslint-disable object-curly-newline */
-import { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid, TextField } from '@material-ui/core';
 
-const Certification = () => {
-  const [values, setValues] = useState({
-    skills: ''
-  });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
-
+const Certification = ({
+  isEditForm,
+  values,
+  handleChange,
+  handleBlur,
+  touched,
+  errors
+}) => {
+  console.log('[Certification]', { values });
   return (
     <>
       <Helmet>
@@ -34,10 +32,14 @@ const Certification = () => {
                 label="Skill"
                 name="skills"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 type="text"
                 value={values.skills}
                 variant="outlined"
+                helperText={touched.skills && errors.skills}
+                error={Boolean(touched.skills && errors.skills)}
+                disabled={isEditForm}
               />
             </Grid>
           </Grid>
@@ -47,3 +49,12 @@ const Certification = () => {
   );
 };
 export default Certification;
+
+Certification.propTypes = {
+  isEditForm: PropTypes.bool,
+  values: PropTypes.arrayOf(PropTypes.string),
+  handleChange: PropTypes.func,
+  handleBlur: PropTypes.func,
+  errors: PropTypes.object,
+  touched: PropTypes.object
+};

@@ -15,4 +15,21 @@ export const businessProfileFormSchema = Yup.object().shape({
   type: Yup.string().max(255).required('Required')
 });
 
-export const talentProfileFormSchema = Yup.object().shape({});
+export const talentProfileFormSchema = Yup.object().shape({
+  firstName: Yup.string().required('Required'),
+  lastName: Yup.string().required('Required'),
+  email: Yup.string().email().required('Required'),
+  mobileNumber: Yup.string().required('Required'),
+  streetName: Yup.string().required('Required'),
+  city: Yup.string().required('Required'),
+  state: Yup.string().required('Required'),
+  country: Yup.string().required('Required'),
+  postalCode: Yup.string().required('Required'),
+  companyName: Yup.string().required('Required'),
+  jobPosition: Yup.string().required('Required'),
+  jobDescription: Yup.string().required('Required'),
+  yearOfExperience: Yup.string().required('Required'),
+  nameOfUniversity: Yup.string().required('Required'),
+  nameOfDegree: Yup.string().required('Required'),
+  degreeDuration: Yup.string().required('Required')
+});
