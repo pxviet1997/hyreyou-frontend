@@ -45,6 +45,7 @@ const Login = ({ userType }) => {
               password: Yup.string().max(255).required('Password is required')
             })}
             onSubmit={async (values) => {
+              setShowMessage(true);
               try {
                 console.log(userType);
                 const { data, login, message } = userType === 'talent'
@@ -55,7 +56,6 @@ const Login = ({ userType }) => {
                 }
               } catch (error) {
                 // console.log(error);
-                setShowMessage(true);
                 setLoginMessage(error.error);
               }
 

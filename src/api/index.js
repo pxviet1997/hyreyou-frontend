@@ -7,12 +7,8 @@ export const reqBusinessSignIn = (user) => ajax(`${BASE_URL}/auth/businesslogin`
 
 export const reqSignUp = (newUser) => ajax(`${BASE_URL}/auth/signup`, newUser, 'POST');
 
-export const reqReset = (email) => ajax(`${BASE_URL}/auth/reset`, { email }, 'POST');
-
-// reqForgotPassword
-
-// reqEmailChecking
+export const reqReset = (email) => ajax(`${BASE_URL}/auth/resetpassword`, { email }, 'POST');
 
 export const reqGetTalent = (_id) => ajax(`${BASE_URL}/talent`, { _id });
 
-export const reqVerifyEmail = (_id) => ajax(`${BASE_URL}/auth/verify`, { _id });
+export const reqVerifyEmail = (verifyInfo) => ajax(`${BASE_URL}/auth/verify`, verifyInfo);

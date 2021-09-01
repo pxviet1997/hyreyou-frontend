@@ -11,14 +11,18 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import { reqReset } from 'src/api';
+import { useState } from 'react';
 
 const Reset = () => {
-  const navigate = useNavigate();
+  const [loginMessage, setLoginMessage] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
+  const [loginMessageColor, setLoginMessageColor] = useState('green');
 
   return (
     <>
       <Helmet>
-        <title>Login | Material Kit</title>
+        <title>Reser Password | Material Kit</title>
       </Helmet>
       <Box
         sx={{
@@ -32,15 +36,21 @@ const Reset = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123'
+              email: 'pxviet1997@gmail.com',
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-              password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={async (values) => {
+              console.log('hi');
+              setShowMessage(true);
+              try {
+                const { message } = await reqReset(values.email);
+                setLoginMessage(message);
+              } catch (error) {
+                setLoginMessage(error.message);
+                setLoginMessageColor('red');
+              }
             }}
           >
             {({
@@ -77,7 +87,11 @@ const Reset = () => {
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
-                  onChange={handleChange}
+                  onChange={(event) => {
+                    handleChange(event);
+                    setShowMessage(false);
+                    setLoginMessageColor('green');
+                  }}
                   type="email"
                   value={values.email}
                   variant="outlined"
@@ -95,6 +109,17 @@ const Reset = () => {
                     Send password reset email
                   </Button>
                 </Box>
+                {showMessage
+                  ? (
+                    <Typography
+                      color={loginMessageColor}
+                      variant="body1"
+                      style={{ marginTop: '2px', marginBottom: '10px' }}
+                    >
+                      {loginMessage}
+                    </Typography>
+                  )
+                  : (<Box style={{ height: '36px' }} />)}
               </form>
             )}
           </Formik>

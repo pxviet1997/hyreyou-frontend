@@ -32,6 +32,7 @@
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
     "react/prop-types": "off",
+    "no-underscore-dangle": "off",
     "no-unused-vars": 0
   }
 }

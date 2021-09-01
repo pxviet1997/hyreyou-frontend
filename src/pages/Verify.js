@@ -8,13 +8,16 @@ import {
 } from '@material-ui/core';
 import { useEffect } from 'react';
 import { reqVerifyEmail } from 'src/api';
+import querystring from 'query-string';
 
 const Verify = () => {
   const location = useLocation();
 
   useEffect(async () => {
-    const id = location.pathname.split('/')[2];
-    await reqVerifyEmail(id);
+    const params = querystring.parse(location.search);
+    console.log(params);
+    const { id, userType } = params;
+    // await reqVerifyEmail({ _id, userType });
     // console.log(id);
   }, []);
 
