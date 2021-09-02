@@ -43,8 +43,8 @@ const routes = [
     path: '/',
     element: <MainLayout />,
     children: [
-      { path: 'talent-login', element: <Login userType="talent" /> },
-      { path: 'business-login', element: <Login userTypr="business" /> },
+      { path: 'talent-login', element: <Login userType="Talent" /> },
+      { path: 'business-login', element: <Login userType="Business" /> },
       { path: 'reset', element: <Reset /> },
       { path: 'forgot', element: <Forgot /> },
       { path: 'verify', element: <Verify /> },

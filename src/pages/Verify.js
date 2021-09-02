@@ -6,19 +6,19 @@ import {
   Container,
   Typography
 } from '@material-ui/core';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { reqVerifyEmail } from 'src/api';
 import querystring from 'query-string';
 
 const Verify = () => {
   const location = useLocation();
+  const [type, setType] = useState('');
 
   useEffect(async () => {
     const params = querystring.parse(location.search);
-    console.log(params);
-    const { id, userType } = params;
-    // await reqVerifyEmail({ _id, userType });
-    // console.log(id);
+    const { _id, userType } = params;
+    setType(userType);
+    await reqVerifyEmail({ _id, userType });
   }, []);
 
   return (
@@ -49,7 +49,7 @@ const Verify = () => {
               <Button
                 color="primary"
                 component={RouterLink}
-                to="/login"
+                to={type === 'Talent' ? '/talent-login' : 'business-talent'}
                 fullWidth
                 size="large"
                 type="submit"

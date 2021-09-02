@@ -15,13 +15,17 @@ import {
   RadioGroup,
   TextField,
   Typography,
+  InputAdornment,
+  IconButton
 } from '@material-ui/core';
 import { useState } from 'react';
 import { reqSignUp } from 'src/api';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 const Register = () => {
   const navigate = useNavigate();
   const [userType, setUser] = useState('Talent');
+  const [showPassword, setShowPassword] = useState(false);
 
   const onUserChange = () => {
     if (userType === 'Talent') {
@@ -176,9 +180,22 @@ const Register = () => {
                       name="password"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       value={values.password}
                       variant="outlined"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword(!showPassword)}
+                              onMouseDown={() => setShowPassword(!showPassword)}
+                            >
+                              {showPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }}
                     />
                   </Grid>
                   <Grid
@@ -195,9 +212,22 @@ const Register = () => {
                       name="confirmPassword"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       value={values.confirmPassword}
                       variant="outlined"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword(!showPassword)}
+                              onMouseDown={() => setShowPassword(!showPassword)}
+                            >
+                              {showPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }}
                     />
                   </Grid>
                 </Grid>

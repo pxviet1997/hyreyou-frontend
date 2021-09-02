@@ -9,14 +9,18 @@ import {
   Link,
   TextField,
   Typography,
+  InputAdornment,
+  IconButton
 } from '@material-ui/core';
 import { reqTalentSignIn, reqBusinessSignIn } from 'src/api';
 import { useState } from 'react';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 const Login = ({ userType }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [loginMessage, setLoginMessage] = useState('');
   const [showMessage, setShowMessage] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <>
@@ -48,7 +52,7 @@ const Login = ({ userType }) => {
               setShowMessage(true);
               try {
                 console.log(userType);
-                const { data, login, message } = userType === 'talent'
+                const { data, login, message } = userType === 'Talent'
                   ? await reqTalentSignIn(values) : await reqBusinessSignIn(values);
 
                 if (!login) {
@@ -77,7 +81,7 @@ const Login = ({ userType }) => {
                     color="textPrimary"
                     variant="h2"
                   >
-                    Sign in
+                    {`${userType} Sign In`}
                   </Typography>
                   <Typography
                     color="textSecondary"
@@ -112,10 +116,26 @@ const Login = ({ userType }) => {
                   margin="normal"
                   name="password"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
+                  onChange={(event) => {
+                    handleChange(event);
+                    setShowMessage(false);
+                  }}
+                  type={showPassword ? 'text' : 'password'}
                   value={values.password}
                   variant="outlined"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setShowPassword(!showPassword)}
+                          onMouseDown={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
                 />
                 <Box sx={{ py: 2 }}>
                   <Button
@@ -141,6 +161,20 @@ const Login = ({ userType }) => {
                       </Typography>
                     )
                     : (<Box style={{ height: '36px' }} />)}
+                  <Typography
+                    color="textSecondary"
+                    variant="body1"
+                  >
+                    {`Not a ${userType}?`}
+                    {' '}
+                    <Link
+                      component={RouterLink}
+                      to={userType === 'Talent' ? '/business-login' : '/talent-login'}
+                    // variant="h6"
+                    >
+                      {`${userType === 'Talent' ? 'Business' : 'Talent'} Sign In`}
+                    </Link>
+                  </Typography>
                   <Typography
                     color="textSecondary"
                     variant="body1"
