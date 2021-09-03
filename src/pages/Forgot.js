@@ -32,12 +32,12 @@ const Forgot = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              newPass1: 'Password123',
-              newPass2: 'Password123'
+              password: '',
+              confirmPassword: ''
             }}
             validationSchema={Yup.object().shape({
-              newPass1: Yup.string().max(255).required('New Password is required'),
-              newPass2: Yup.string().max(255).required('Confirm NewPass')
+              password: Yup.string().max(255).required('New Password is required'),
+              confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
             })}
             onSubmit={() => {
               navigate('/app/dashboard', { replace: true });
@@ -58,30 +58,9 @@ const Forgot = () => {
                     color="textPrimary"
                     variant="h2"
                   >
-                    Sign in
-                  </Typography>
-                  <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    variant="body2"
-                  >
-                    Sign in on the internal platform
+                    Reset Password
                   </Typography>
                 </Box>
-
-                <TextField
-                  error={Boolean(touched.email && errors.email)}
-                  fullWidth
-                  helperText={touched.email && errors.email}
-                  label="Email Address"
-                  margin="normal"
-                  name="email"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="email"
-                  value={values.email}
-                  variant="outlined"
-                />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
@@ -95,6 +74,19 @@ const Forgot = () => {
                   value={values.password}
                   variant="outlined"
                 />
+                <TextField
+                  error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+                  fullWidth
+                  helperText={touched.confirmPassword && errors.confirmPassword}
+                  label="Confirm Password"
+                  margin="normal"
+                  name="confirmPassword"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="password"
+                  value={values.confirmPassword}
+                  variant="outlined"
+                />
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"
@@ -104,36 +96,9 @@ const Forgot = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign in now
+                    Reset password now
                   </Button>
                 </Box>
-                <div width="1400">
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    Forgotton password?
-                    {' '}
-                    <Link
-                      component={RouterLink}
-                      to="/reset"
-                      variant="h6"
-                    >
-                      Reset password
-                    </Link>
-                    {' '}
-                    Don&apos;t have an account?
-                    {' '}
-                    <Link
-                      component={RouterLink}
-                      to="/register"
-                      variant="h6"
-                    >
-                      Sign up
-                    </Link>
-                  </Typography>
-                </div>
-
               </form>
             )}
           </Formik>
