@@ -6,34 +6,12 @@ import {
   Container,
   Grid,
   Typography,
-  ThemeProvider
 } from '@material-ui/core';
-import Image from 'material-ui-image';
 import { makeStyles } from '@material-ui/styles';
-import { createTheme } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-
-  banner: {
-    backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor: 'black',
-    width: '100%',
-    // position: 'relative'
-  },
-  bannerContent: {
-    paddingTop: '300px',
-    paddingBottom: '198px',
-  },
-  text: {
-    position: 'absolute'
-  }
-
-}));
 
 const SplashScreen = () => {
-  const classes = useStyles();
-  const aspectRatio = 1920 / 751;
+  // const classes = useStyles();
+  // const aspectRatio = 1920 / 751;
 
   return (
     <>
@@ -115,12 +93,12 @@ const SplashScreen = () => {
             >
               <Button
                 component={RouterLink}
-                to="/talent-login"
+                to="/login"
                 fullWidth
                 size="large"
                 variant="contained"
               >
-                Talent Sign In
+                Sign In
               </Button>
             </Grid>
             <Grid
@@ -130,25 +108,14 @@ const SplashScreen = () => {
             >
               <Button
                 component={RouterLink}
-                to="/business-login"
+                to="/register"
                 fullWidth
                 size="large"
                 variant="contained"
               >
-                Business Sign In
+                Sign Up
               </Button>
             </Grid>
-          </Grid>
-          <Grid style={{ marginTop: '20px' }}>
-            <Button
-              component={RouterLink}
-              to="/register"
-              fullWidth
-              size="large"
-              variant="contained"
-            >
-              Sign Up
-            </Button>
           </Grid>
         </Container>
       </Box>

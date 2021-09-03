@@ -6,26 +6,34 @@ import {
   Box,
   Button,
   Container,
+  FormControlLabel,
   Link,
   TextField,
   Typography,
   InputAdornment,
-  IconButton
+  IconButton,
+  Radio,
+  RadioGroup
 } from '@material-ui/core';
-import { reqTalentSignIn, reqBusinessSignIn } from 'src/api';
+import { reqSignIn } from 'src/api';
 import { useState } from 'react';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
-const Login = ({ userType }) => {
+const Login = () => {
   // const navigate = useNavigate();
   const [loginMessage, setLoginMessage] = useState('');
+  const [userType, setUser] = useState('Talent');
   const [showMessage, setShowMessage] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const onUserChange = (event) => {
+    setUser(event.target.value);
+  };
 
   return (
     <>
       <Helmet>
-        <title>Login | Material Kit</title>
+        <title>Login | HyreYou</title>
       </Helmet>
       <Box
         sx={{
@@ -39,10 +47,10 @@ const Login = ({ userType }) => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              // email: '',
-              // password: ''
-              email: 'pxviet1997@gmail.com',
-              password: 'padpxv9697'
+              email: '',
+              password: ''
+              // email: 'pxviet1997@gmail.com',
+              // password: 'padpxv9697'
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -52,9 +60,8 @@ const Login = ({ userType }) => {
               setShowMessage(true);
               try {
                 // console.log(userType);
-                const response = userType === 'Talent'
-                  ? await reqTalentSignIn(values) : await reqBusinessSignIn(values);
-                // console.log(response);
+                const response = await reqSignIn({ ...values, userType });
+                console.log(response);
                 setLoginMessage('');
                 localStorage.setItem('user', JSON.stringify(response));
               } catch (error) {
@@ -80,7 +87,7 @@ const Login = ({ userType }) => {
                     color="textPrimary"
                     variant="h2"
                   >
-                    {`${userType} Sign In`}
+                    Sign In
                   </Typography>
                   <Typography
                     color="textSecondary"
@@ -136,6 +143,18 @@ const Login = ({ userType }) => {
                     )
                   }}
                 />
+                <Box sx={{ mt: 2, mb: 2 }}>
+                  <Typography
+                    color="textSecondary"
+                    variant="body2"
+                  >
+                    Sign In As
+                  </Typography>
+                  <RadioGroup row aria-label="gender" name="gender1" value={userType} onChange={onUserChange}>
+                    <FormControlLabel value="Talent" control={<Radio />} label="Talent" />
+                    <FormControlLabel value="Business" control={<Radio />} label="Business" />
+                  </RadioGroup>
+                </Box>
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"
@@ -160,7 +179,7 @@ const Login = ({ userType }) => {
                       </Typography>
                     )
                     : (<Box style={{ height: '36px' }} />)}
-                  <Typography
+                  {/* <Typography
                     color="textSecondary"
                     variant="body1"
                   >
@@ -173,7 +192,7 @@ const Login = ({ userType }) => {
                     >
                       {`${userType === 'Talent' ? 'Business' : 'Talent'} Sign In`}
                     </Link>
-                  </Typography>
+                  </Typography> */}
                   <Typography
                     color="textSecondary"
                     variant="body1"
@@ -182,7 +201,7 @@ const Login = ({ userType }) => {
                     {' '}
                     <Link
                       component={RouterLink}
-                      to="/reset"
+                      to={`/reset/${userType}`}
                     // variant="h6"
                     >
                       Reset password

@@ -1,8 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/components/DashboardLayout';
 import MainLayout from 'src/components/MainLayout';
-import Account from 'src/pages/Account';
-import CustomerList from 'src/pages/CustomerList';
 import Dashboard from 'src/pages/Dashboard';
 import Login from 'src/pages/Login';
 import Reset from 'src/pages/Reset';
@@ -24,13 +22,7 @@ const routes = [
     path: 'app',
     element: <DashboardLayout />,
     children: [
-      // { path: 'account', element: <Account /> },
-      // { path: 'customers', element: <CustomerList /> },
       { path: 'dashboard', element: <Dashboard /> },
-      // { path: 'reset', element: <Reset /> },
-      // { path: 'forgot', element: <Forgot /> },
-      // { path: 'products', element: <ProductList /> },
-      // { path: 'settings', element: <Settings /> },
       { path: 'talent-profile', element: <TalentRegister /> },
       { path: 'business-profile', element: <BusinessRegister /> },
       { path: 'role', element: <Role /> },
@@ -43,14 +35,14 @@ const routes = [
     path: '/',
     element: <MainLayout />,
     children: [
-      { path: 'talent-login', element: <Login userType="Talent" /> },
-      { path: 'business-login', element: <Login userType="Business" /> },
-      { path: 'reset', element: <Reset /> },
+      // { path: 'talent-login', element: <Login userType="Talent" /> },
+      // { path: 'business-login', element: <Login userType="Business" /> },
+      { path: 'login', element: <Login /> },
+      { path: 'reset/:userType', element: <Reset /> },
       { path: 'forgot', element: <Forgot /> },
       { path: 'verify', element: <Verify /> },
       { path: 'register', element: <Register /> },
       { path: '404', element: <NotFound /> },
-      // { path: '/', element: <Navigate to="/app/talent-profile" /> },
       { path: '/', element: <SplashScreen /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

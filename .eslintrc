@@ -33,6 +33,7 @@
     "react/require-default-props": "off",
     "react/prop-types": "off",
     "no-underscore-dangle": "off",
-    "no-unused-vars": 0
+    "no-unused-vars": 0,
+    "arrow-body-style": "off"
   }
 }

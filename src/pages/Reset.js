@@ -1,4 +1,4 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -18,6 +18,7 @@ const Reset = () => {
   const [loginMessage, setLoginMessage] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const [loginMessageColor, setLoginMessageColor] = useState('green');
+  const { userType } = useParams();
 
   return (
     <>
@@ -36,7 +37,7 @@ const Reset = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'pxviet1997@gmail.com',
+              email: '',
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -45,7 +46,7 @@ const Reset = () => {
               console.log('hi');
               setShowMessage(true);
               try {
-                const { message } = await reqReset(values.email);
+                const { message } = await reqReset({ email: values.email, userType });
                 setLoginMessage(message);
               } catch (error) {
                 setLoginMessage(error.message);
