@@ -19,7 +19,7 @@ export default function ajax(url, data = {}, type = 'GET', header = {}) {
       .catch((error) => {
         reject(error.response.data);
         // message.error("Request Error: " + error.message);
-        console.log(`Request Error: ${error.message}`);
+        // console.log(`Request Error: ${error.message}`);
       });
   });
 }

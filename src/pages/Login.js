@@ -51,16 +51,15 @@ const Login = ({ userType }) => {
             onSubmit={async (values) => {
               setShowMessage(true);
               try {
-                console.log(userType);
-                const { data, login, message } = userType === 'Talent'
+                // console.log(userType);
+                const response = userType === 'Talent'
                   ? await reqTalentSignIn(values) : await reqBusinessSignIn(values);
-
-                if (!login) {
-                  setLoginMessage(message);
-                }
+                // console.log(response);
+                setLoginMessage('');
+                localStorage.setItem('user', JSON.stringify(response));
               } catch (error) {
                 // console.log(error);
-                setLoginMessage(error.error);
+                setLoginMessage(error.message);
               }
 
               // navigate('/app/dashboard', { replace: true });
