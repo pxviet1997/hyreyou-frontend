@@ -1,21 +1,14 @@
 /* eslint-disable object-curly-newline */
-import React from 'react';
+import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
-import { Box, Container, Divider, Grid, TextField } from '@material-ui/core';
+import { Box, Button, Container, Grid } from '@material-ui/core';
+import { FieldArray } from 'formik';
+import { MyTextField } from 'src/components/shared';
 
-const JobHistory = ({
-  isEditForm,
-  values,
-  handleChange,
-  handleBlur,
-  touched,
-  errors
-}) => {
-  console.log('[JobHistory]', { values });
-
-  return (
+const JobHistory = memo(
+  ({ isEditForm, values, handleChange, handleBlur, touched, errors }) => (
     <>
       <Helmet>
         <title>Job History</title>
@@ -27,93 +20,70 @@ const JobHistory = ({
         }}
       >
         <Container maxWidth="lg">
-          <Grid container spacing={3}>
-            {values.jobHistory.map((data) => {
-              console.log({ data });
-              return (
-                <React.Fragment key={data.name}>
-                  <Grid item lg={12} md={12} xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Company Name"
-                      name="companyName"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      required
-                      type="text"
-                      value={data.companyName}
-                      variant="outlined"
-                      helperText={touched.companyName && errors.companyName}
-                      error={Boolean(touched.companyName && errors.companyName)}
-                      disabled={isEditForm}
-                    />
-                  </Grid>
-                  <Grid item lg={12} md={12} xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Job Position"
-                      name="jobPosition"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      required
-                      type="text"
-                      value={data.jobPosition}
-                      variant="outlined"
-                      helperText={touched.jobPosition && errors.jobPosition}
-                      error={Boolean(touched.jobPosition && errors.jobPosition)}
-                      disabled={isEditForm}
-                    />
-                  </Grid>
-                  <Grid item lg={12} md={12} xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Job Description"
-                      name="jobDescription"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      required
-                      type="text"
-                      value={data.jobDescription}
-                      variant="outlined"
-                      helperText={
-                        touched.jobDescription && errors.jobDescription
-                      }
-                      error={Boolean(
-                        touched.jobDescription && errors.jobDescription
-                      )}
-                      disabled={isEditForm}
-                    />
-                  </Grid>
-                  <Grid item lg={12} md={12} xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Years Of Experience"
-                      name="yearOfExperience"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      required
-                      type="number"
-                      value={data.yearOfExperience}
-                      variant="outlined"
-                      helperText={
-                        touched.yearOfExperience && errors.yearOfExperience
-                      }
-                      error={Boolean(
-                        touched.yearOfExperience && errors.yearOfExperience
-                      )}
-                      disabled={isEditForm}
-                    />
-                  </Grid>
-                  <Divider />
-                </React.Fragment>
-              );
-            })}
-          </Grid>
+          <FieldArray name="jobHistory">
+            {(arrayHelpers) => (
+              <Grid container spacing={3}>
+                <Button
+                  onClick={() => {
+                    arrayHelpers.push({
+                      id: `${Math.random()}`,
+                      companyName: '',
+                      jobPosition: '',
+                      jobDescription: '',
+                      yearOfExperience: ''
+                    });
+                  }}
+                >
+                  Add Job
+                </Button>
+                {values.jobHistory.map((data, index) => (
+                  <React.Fragment key={data.id}>
+                    <Grid item lg={12} md={12} xs={12}>
+                      <MyTextField
+                        name={`jobHistory[${index}].companyName`}
+                        label="Company Name"
+                        placeholder="Company Name"
+                        type="text"
+                        disabled={isEditForm}
+                      />
+                    </Grid>
+                    <Grid item lg={12} md={12} xs={12}>
+                      <MyTextField
+                        name={`jobHistory[${index}].jobPosition`}
+                        label="Job Position"
+                        placeholder="Job Position"
+                        type="text"
+                        disabled={isEditForm}
+                      />
+                    </Grid>
+                    <Grid item lg={12} md={12} xs={12}>
+                      <MyTextField
+                        name={`jobHistory[${index}].jobDescription`}
+                        label="Job Description"
+                        placeholder="Job Description"
+                        type="text"
+                        disabled={isEditForm}
+                      />
+                    </Grid>
+                    <Grid item lg={12} md={12} xs={12}>
+                      <MyTextField
+                        name={`jobHistory[${index}].yearOfExperience`}
+                        label="Years Of Experience"
+                        placeholder="Years Of Experience"
+                        type="number"
+                        disabled={isEditForm}
+                      />
+                    </Grid>
+                  </React.Fragment>
+                ))}
+              </Grid>
+            )}
+          </FieldArray>
         </Container>
       </Box>
     </>
-  );
-};
+  )
+);
 
 export default JobHistory;
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable indent */
 /* eslint-disable no-nested-ternary */
@@ -14,10 +15,11 @@ import {
   Grid,
   Tab,
   Tabs,
-  Typography
+  Typography,
+  TextField
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { Formik } from 'formik';
+import { Form, Formik, useField } from 'formik';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import API from 'src/services';
@@ -65,35 +67,9 @@ const useStyles = makeStyles((theme) => ({
 const normalizeData = (values) => {
   console.log({ values });
   return {
-    _id: values._id,
-    firstName: values.firstName,
-    lastName: values.lastName,
-    email: values.email,
-    mobileNumber: values.mobileNumber,
-    address: {
-      streetName: values.streetName,
-      city: values.city,
-      state: values.state,
-      country: values.country,
-      postalCode: values.postalCode
-    },
-    jobHistory: [
-      {
-        companyName: values.companyName,
-        jobPosition: values.jobPosition,
-        jobDescription: values.jobDescription,
-        yearOfExperience: values.yearOfExperience
-      }
-    ],
-    education: [
-      {
-        nameOfUniversity: values.nameOfUniversity,
-        nameOfDegree: values.nameOfDegree,
-        degreeDuration: values.degreeDuration
-      }
-    ],
-    skills: values.skills,
-    culturalPreferences: values.culturalPreferences
+    ...values,
+    skills: values.skills.split(','),
+    culturalPreferences: values.culturalPreferences.split(',')
   };
 };
 
@@ -109,6 +85,7 @@ const initialValues = {
   postalCode: '',
   jobHistory: [
     {
+      id: `${Math.random()}`,
       companyName: '',
       jobPosition: '',
       jobDescription: '',
@@ -117,6 +94,7 @@ const initialValues = {
   ],
   education: [
     {
+      id: `${Math.random()}`,
       nameOfUniversity: '',
       nameOfDegree: '',
       degreeDuration: ''
@@ -140,7 +118,7 @@ const TalentProfileDetails = (props) => {
     setIsEditForm(edit);
   };
 
-  const isLastStep = () => value === 4; // TODO: change this dynamic
+  const isLastStep = () => value === 4; // change this dynamic
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -173,22 +151,6 @@ const TalentProfileDetails = (props) => {
         ...rest
       } = data[0];
 
-      console.log({
-        firstName,
-        lastName,
-        email,
-        mobileNumber,
-        streetName,
-        city,
-        state,
-        country,
-        postalCode,
-        jobHistory,
-        education,
-        skills,
-        culturalPreferences
-      });
-
       setTalentForm({
         _id,
         firstName,
@@ -202,26 +164,28 @@ const TalentProfileDetails = (props) => {
         postalCode,
         jobHistory,
         education,
-        skills,
-        culturalPreferences
+        skills: skills.join(','),
+        culturalPreferences: culturalPreferences.join(',')
       });
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e);
     }
   };
 
   const handleCreateForm = async (values) => {
     try {
       const body = normalizeData(values);
-      body.password = 'test'; // TODO:
       console.log({ body });
-      const response = await API.post('/talent', body);
+      const response = await API.post('/talent', {
+        ...body,
+        password: 'test'
+      });
       const { data } = response;
       console.log({ data });
       alert('created talent profile');
-    } catch (error) {
-      console.log(error);
-      alert(`something went wrong with creating new profile${error.message}`);
+    } catch (e) {
+      console.log(e);
+      alert(`something went wrong with creating new profile${e.message}`);
     }
   };
 
@@ -229,14 +193,16 @@ const TalentProfileDetails = (props) => {
     try {
       const body = normalizeData(values);
       body.password = 'test'; // TODO:
-      console.log({ body });
-      const response = await API.post(`/talent/update?_id=${body._id}`, body);
+      const response = await API.post(`/talent/update?_id=${body._id}`, {
+        ...body,
+        password: 'test'
+      });
       const { data } = response;
       console.log({ data });
       alert('updated talent profile');
-    } catch (error) {
-      console.log(error);
-      alert(`something went wrong with updating profile${error.message}`);
+    } catch (e) {
+      console.log(e);
+      alert(`something went wrong with updating profile${e.message}`);
     }
   };
 
@@ -250,7 +216,7 @@ const TalentProfileDetails = (props) => {
       validationSchema={validationSchema.talentProfileFormSchema}
       enableReinitialize
       onSubmit={async (values) => {
-        console.log({ values });
+        console.log({ values, last: isLastStep() });
         if (isLastStep()) {
           if (!isEditForm) return;
           if (isNewForm) {
@@ -274,12 +240,7 @@ const TalentProfileDetails = (props) => {
       }) => {
         console.log({ errors });
         return (
-          <form
-            autoComplete="off"
-            onSubmit={handleSubmit}
-            noValidate
-            {...props}
-          >
+          <Form>
             <Card>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={8}>
@@ -312,7 +273,7 @@ const TalentProfileDetails = (props) => {
                   <div className={classes.root}>
                     <Tabs
                       value={value}
-                      onChange={handleTabChange} // TODO: check this should allow when form is locked
+                      onChange={handleTabChange}
                       indicatorColor="primary"
                       textColor="primary"
                     >
@@ -441,7 +402,7 @@ const TalentProfileDetails = (props) => {
                 </Button>
               </Box> */}
             </Card>
-          </form>
+          </Form>
         );
       }}
     </Formik>
