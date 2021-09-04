@@ -26,11 +26,21 @@ const Register = () => {
   const navigate = useNavigate();
   const [userType, setUser] = useState('Talent');
   const [showPassword, setShowPassword] = useState(false);
+  const [registerMessage, setRegisterMessage] = useState('');
+  const [registerMessageColor, setRegisterMessageColor] = useState('green');
+  const [showMessage, setShowMessage] = useState(false);
 
   const onUserChange = () => {
     if (userType === 'Talent') {
       setUser('Business');
     } else setUser('Talent');
+  };
+
+  const onChange = (event, handleChange) => {
+    handleChange(event);
+    setShowMessage(false);
+    setRegisterMessage('');
+    setRegisterMessageColor('green');
   };
 
   return (
@@ -71,10 +81,15 @@ const Register = () => {
             }
             onSubmit={async (values) => {
               const { policy, confirmPassword, ...newUser } = values;
-
-              const id = await reqSignUp({ ...newUser, userType });
-              // console.log(id);
-              // navigate('/app/dashboard', {replace: true });
+              setShowMessage(true);
+              try {
+                const { message } = await reqSignUp({ ...newUser, userType });
+                // setRegisterMessageColor('green');
+                setRegisterMessage(message);
+              } catch (error) {
+                setRegisterMessageColor('red');
+                setRegisterMessage(error.message);
+              }
             }}
           >
             {({
@@ -116,7 +131,9 @@ const Register = () => {
                       margin="normal"
                       name="firstName"
                       onBlur={handleBlur}
-                      onChange={handleChange}
+                      onChange={(event) => {
+                        onChange(event, handleChange);
+                      }}
                       value={values.firstName}
                       variant="outlined"
                     />
@@ -134,7 +151,9 @@ const Register = () => {
                       margin="normal"
                       name="lastName"
                       onBlur={handleBlur}
-                      onChange={handleChange}
+                      onChange={(event) => {
+                        onChange(event, handleChange);
+                      }}
                       value={values.lastName}
                       variant="outlined"
                     />
@@ -148,7 +167,9 @@ const Register = () => {
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
-                  onChange={handleChange}
+                  onChange={(event) => {
+                    onChange(event, handleChange);
+                  }}
                   type="email"
                   value={values.email}
                   variant="outlined"
@@ -161,7 +182,9 @@ const Register = () => {
                   margin="normal"
                   name="mobileNumber"
                   onBlur={handleBlur}
-                  onChange={handleChange}
+                  onChange={(event) => {
+                    onChange(event, handleChange);
+                  }}
                   value={values.mobileNumber}
                   variant="outlined"
                 />
@@ -179,7 +202,9 @@ const Register = () => {
                       margin="normal"
                       name="password"
                       onBlur={handleBlur}
-                      onChange={handleChange}
+                      onChange={(event) => {
+                        onChange(event, handleChange);
+                      }}
                       type={showPassword ? 'text' : 'password'}
                       value={values.password}
                       variant="outlined"
@@ -211,7 +236,9 @@ const Register = () => {
                       margin="normal"
                       name="confirmPassword"
                       onBlur={handleBlur}
-                      onChange={handleChange}
+                      onChange={(event) => {
+                        onChange(event, handleChange);
+                      }}
                       type={showPassword ? 'text' : 'password'}
                       value={values.confirmPassword}
                       variant="outlined"
@@ -253,7 +280,9 @@ const Register = () => {
                   <Checkbox
                     checked={values.policy}
                     name="policy"
-                    onChange={handleChange}
+                    onChange={(event) => {
+                      onChange(event, handleChange);
+                    }}
                   />
                   <Typography
                     color="textSecondary"
@@ -303,6 +332,17 @@ const Register = () => {
                     Sign in
                   </Link>
                 </Typography>
+                {showMessage
+                  ? (
+                    <Typography
+                      color={registerMessageColor}
+                      variant="body1"
+                      style={{ marginTop: '2px', marginBottom: '10px' }}
+                    >
+                      {registerMessage}
+                    </Typography>
+                  )
+                  : (<Box style={{ height: '36px' }} />)}
               </form>
             )}
           </Formik>
