@@ -98,6 +98,29 @@ const items = [
   // }
 ];
 
+const talentItems = [
+  {
+    href: '/talent/dashboard',
+    icon: BarChartIcon,
+    title: 'Dashboard'
+  },
+  {
+    href: '/talent/profile',
+    icon: BarChartIcon,
+    title: 'Profile'
+  },
+  {
+    href: '/talent/payment-info',
+    icon: BarChartIcon,
+    title: 'Payment Information'
+  },
+  {
+    href: '/talent/activity',
+    icon: BarChartIcon,
+    title: 'Activity'
+  }
+];
+
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
 
@@ -152,7 +175,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       <Divider />
       <Box sx={{ p: 2 }}>
         <List>
-          {items.map((item) => (
+          {talentItems.map((item) => (
             <NavItem
               href={item.href}
               key={item.title}
