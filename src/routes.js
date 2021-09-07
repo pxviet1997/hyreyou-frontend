@@ -19,20 +19,20 @@ import SplashScreen from './pages/SplashScreen';
 import TalentRegister from './pages/TalentRegister';
 
 const routes = [
-  {
-    path: 'app',
-    element: <DashboardLayout />,
-    children: [
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: 'talent-profile', element: <TalentRegister /> },
-      { path: 'business-profile', element: <BusinessRegister /> },
-      { path: 'role', element: <Role /> },
-      { path: 'short-list', element: <ShortList /> },
-      { path: 'interview', element: <Interview /> },
-      { path: '/app', element: <Navigate to="/app/dashboard" /> },
-      { path: '*', element: <Navigate to="/404" /> }
-    ]
-  },
+  // {
+  //   path: 'app',
+  //   element: <DashboardLayout />,
+  //   children: [
+  //     { path: 'dashboard', element: <Dashboard /> },
+  //     { path: 'talent-profile', element: <TalentRegister /> },
+  //     { path: 'business-profile', element: <BusinessRegister /> },
+  //     { path: 'role', element: <Role /> },
+  //     { path: 'short-list', element: <ShortList /> },
+  //     { path: 'interview', element: <Interview /> },
+  //     { path: '/app', element: <Navigate to="/app/dashboard" /> },
+  //     { path: '*', element: <Navigate to="/404" /> }
+  //   ]
+  // },
   {
     path: 'talent',
     element: <DashboardLayout />,
@@ -41,7 +41,7 @@ const routes = [
       { path: 'profile', element: <TalentProfile /> },
       { path: 'payment-info', element: <PaymentInfo /> },
       { path: 'activity', element: <Activity /> },
-      { path: '/talent', element: <Navigate to="/talent/dashboard" /> },
+      { path: '/', element: <Navigate to="/talent/dashboard" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
@@ -49,8 +49,6 @@ const routes = [
     path: '/',
     element: <MainLayout />,
     children: [
-      // { path: 'talent-login', element: <Login userType="Talent" /> },
-      // { path: 'business-login', element: <Login userType="Business" /> },
       { path: 'login', element: <Login /> },
       { path: 'reset/:userType', element: <Reset /> },
       { path: 'forgot', element: <Forgot /> },
