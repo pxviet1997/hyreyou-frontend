@@ -23,17 +23,14 @@ import { reqSignUp } from 'src/api';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 const Register = () => {
-  const navigate = useNavigate();
   const [userType, setUser] = useState('Talent');
   const [showPassword, setShowPassword] = useState(false);
   const [registerMessage, setRegisterMessage] = useState('');
   const [registerMessageColor, setRegisterMessageColor] = useState('green');
   const [showMessage, setShowMessage] = useState(false);
 
-  const onUserChange = () => {
-    if (userType === 'Talent') {
-      setUser('Business');
-    } else setUser('Talent');
+  const onUserChange = (event) => {
+    setUser(event.target.value);
   };
 
   const onChange = (event, handleChange) => {
