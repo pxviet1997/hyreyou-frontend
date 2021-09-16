@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+/* eslint-disable no-alert */
+/* eslint-disable operator-linebreak */
+import { useEffect, useRef, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -11,6 +13,7 @@ import {
   List,
   Typography
 } from '@material-ui/core';
+import API from 'src/services';
 import {
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
@@ -123,12 +126,49 @@ const talentItems = [
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+  const avatarRef = useRef();
+
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
   }, [location.pathname]);
+
+  const uploadHandler = async (_selectedFile) => {
+    console.log('upload handler', _selectedFile);
+    try {
+      const formData = new FormData();
+      formData.append('_id', '6138a8cc35389921daef2627'); // TODO: change this to dynamic
+      formData.append('Type', 'Talent');
+      formData.append('profilePhoto', _selectedFile, _selectedFile.name);
+
+      const data = {};
+
+      API.post('/updateImage/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: (progressEvent) => {
+          console.log(progressEvent.loaded / progressEvent.total);
+        }
+      });
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const fileChangedHandler = (event) => {
+    const file = event.target.files[0];
+    console.log({ file });
+    setSelectedFile({
+      raw: file,
+      preview: URL.createObjectURL(file)
+    });
+
+    // uploadHandler(file);
+  };
 
   const content = (
     <Box
@@ -146,15 +186,31 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           p: 2
         }}
       >
-        <Avatar
-          component={RouterLink}
-          src={user.avatar}
-          sx={{
-            cursor: 'pointer',
-            width: 64,
-            height: 64
-          }}
-          to="/app/business-profile"
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label htmlFor="file-upload">
+          <Avatar
+            for="file-upload"
+            className="custom-file-upload"
+            // component={RouterLink}
+            src={!selectedFile ? user.avatar : selectedFile.preview}
+            sx={{
+              cursor: 'pointer',
+              width: 64,
+              height: 64
+            }}
+            //   to="/app/business-profile"
+          />
+        </label>
+
+        <input
+          ref={avatarRef}
+          accept="image/*"
+          id="file-upload"
+          type="file"
+          name="profilePhoto"
+          className="form-control"
+          onChange={fileChangedHandler}
+          style={{ display: 'none' }}
         />
         <Typography
           color="textPrimary"

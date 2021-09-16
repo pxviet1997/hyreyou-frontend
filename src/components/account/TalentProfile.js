@@ -15,35 +15,32 @@ const user = {
   city: 'Los Angeles',
   country: 'USA',
   jobTitle: 'Senior Developer',
-  name: 'User Profile',
+  name: 'John Doe',
   timezone: 'GTM-7'
 };
 
-const TalentProfile = (props) => (
-  <Card {...props}>
-    <CardContent>
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-      >
-        <Avatar
-          src={user.avatar}
+const TalentProfileComponent = (props) => {
+  return (
+    <Card {...props}>
+      <CardContent>
+        <Box
           sx={{
-            height: 100,
-            width: 100
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'column'
           }}
-        />
-        <Typography
-          color="textPrimary"
-          gutterBottom
-          variant="h3"
         >
-          {user.name}
-        </Typography>
-        <Typography
+          <Avatar
+            src={user.avatar}
+            sx={{
+              height: 100,
+              width: 100
+            }}
+          />
+          <Typography color="textPrimary" gutterBottom variant="h4">
+            {user.name}
+          </Typography>
+          {/* <Typography
           color="textSecondary"
           variant="body1"
         >
@@ -54,20 +51,17 @@ const TalentProfile = (props) => (
           variant="body1"
         >
           {`${moment().format('hh:mm A')} ${user.timezone}`}
-        </Typography>
-      </Box>
-    </CardContent>
-    <Divider />
-    <CardActions>
-      <Button
-        color="primary"
-        fullWidth
-        variant="text"
-      >
-        Upload picture
-      </Button>
-    </CardActions>
-  </Card>
-);
+        </Typography> */}
+        </Box>
+      </CardContent>
+      <Divider />
+      <CardActions>
+        <Button color="primary" fullWidth variant="text">
+          Upload picture
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
 
-export default TalentProfile;
+export default TalentProfileComponent;

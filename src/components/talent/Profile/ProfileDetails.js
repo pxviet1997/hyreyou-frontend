@@ -126,7 +126,9 @@ const TalentProfileDetails = (props) => {
 
   const getTalentProfile = async () => {
     try {
-      const response = await API.get('/talent');
+      const response = await API.get('/talent', {
+        _id: '6138a8cc35389921daef2627' // TODO: SERVER_BUG: change this to dynamic and can't send body with GET method
+      });
       const { data } = response;
       console.log({ data });
 
