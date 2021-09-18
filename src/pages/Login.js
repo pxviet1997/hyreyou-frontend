@@ -18,6 +18,7 @@ import {
 import { reqSignIn } from 'src/api';
 import { useState } from 'react';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
   // const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Login = () => {
   const [userType, setUser] = useState('Talent');
   const [showMessage, setShowMessage] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const onUserChange = (event) => {
     setUser(event.target.value);
