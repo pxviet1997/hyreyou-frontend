@@ -17,7 +17,8 @@ export default function ajax(url, data = {}, type = 'GET', header = {}) {
         resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response.data);
+        // console.log(error.response.data);
+        reject(error.response.data.error);
         // message.error("Request Error: " + error.message);
         // console.log(`Request Error: ${error.message}`);
       });

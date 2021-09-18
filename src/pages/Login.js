@@ -18,19 +18,26 @@ import {
 import { reqSignIn } from 'src/api';
 import { useState } from 'react';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { signIn } from 'src/redux/actions/authAction';
+import { clearMessage } from 'src/redux/actions/messageAction';
 
 const Login = () => {
   // const navigate = useNavigate();
-  const [loginMessage, setLoginMessage] = useState('');
+  // const [loginMessage, setLoginMessage] = useState('');
   const [userType, setUser] = useState('Talent');
   const [showMessage, setShowMessage] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
+  const { message } = useSelector((state) => state.message);
 
   const onUserChange = (event) => {
     setUser(event.target.value);
   };
+
+  if (message) {
+    console.log(message);
+  }
 
   return (
     <>
@@ -59,19 +66,8 @@ const Login = () => {
               password: Yup.string().max(255).required('Password is required')
             })}
             onSubmit={async (values) => {
+              dispatch(signIn({ ...values, userType }));
               setShowMessage(true);
-              try {
-                // console.log(userType);
-                const response = await reqSignIn({ ...values, userType });
-                console.log(response);
-                setLoginMessage('');
-                localStorage.setItem('user', JSON.stringify(response));
-              } catch (error) {
-                // console.log(error);
-                setLoginMessage(error.message);
-              }
-
-              // navigate('/app/dashboard', { replace: true });
             }}
           >
             {({
@@ -110,7 +106,11 @@ const Login = () => {
                   onBlur={handleBlur}
                   onChange={(event) => {
                     handleChange(event);
-                    setShowMessage(false);
+                    // dispatch(clearMessage());
+                    if (showMessage) {
+                      dispatch(clearMessage());
+                      setShowMessage(false);
+                    }
                   }}
                   type="email"
                   value={values.email}
@@ -126,7 +126,10 @@ const Login = () => {
                   onBlur={handleBlur}
                   onChange={(event) => {
                     handleChange(event);
-                    setShowMessage(false);
+                    if (showMessage) {
+                      dispatch(clearMessage());
+                      setShowMessage(false);
+                    }
                   }}
                   type={showPassword ? 'text' : 'password'}
                   value={values.password}
@@ -175,26 +178,12 @@ const Login = () => {
                       <Typography
                         color="red"
                         variant="body1"
-                        style={{ marginTop: '2px', marginBottom: '10px' }}
+                        style={{ marginTop: '2px', marginBottom: '10px', height: '36px' }}
                       >
-                        {loginMessage}
+                        {message}
                       </Typography>
                     )
                     : (<Box style={{ height: '36px' }} />)}
-                  {/* <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    {`Not a ${userType}?`}
-                    {' '}
-                    <Link
-                      component={RouterLink}
-                      to={userType === 'Talent' ? '/business-login' : '/talent-login'}
-                    // variant="h6"
-                    >
-                      {`${userType === 'Talent' ? 'Business' : 'Talent'} Sign In`}
-                    </Link>
-                  </Typography> */}
                   <Typography
                     color="textSecondary"
                     variant="body1"
