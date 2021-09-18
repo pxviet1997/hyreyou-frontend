@@ -7,32 +7,32 @@ import Reset from 'src/pages/Reset';
 import Forgot from 'src/pages/Forgot';
 import Verify from 'src/pages/Verify';
 import NotFound from 'src/pages/NotFound';
-// import ProductList from 'src/pages/ProductList';
+import ProductList from 'src/pages/ProductList';
 import Register from 'src/pages/Register';
-// import Settings from 'src/pages/Settings';
+import Settings from 'src/pages/Settings';
 import { PaymentInfo, TalentProfile, Activity } from './components/talent';
-// import BusinessRegister from './pages/BusinessRegister';
-// import Interview from './pages/Interview';
-// import Role from './pages/Role';
-// import ShortList from './pages/ShortList';
+import BusinessRegister from './pages/BusinessRegister';
+import Interview from './pages/Interview';
+import Role from './pages/Role';
+import ShortList from './pages/ShortList';
 import SplashScreen from './pages/SplashScreen';
-// import TalentRegister from './pages/TalentRegister';
+import TalentRegister from './pages/TalentRegister';
 
 const routes = [
-  // {
-  //   path: 'app',
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     { path: 'dashboard', element: <Dashboard /> },
-  //     { path: 'talent-profile', element: <TalentRegister /> },
-  //     { path: 'business-profile', element: <BusinessRegister /> },
-  //     { path: 'role', element: <Role /> },
-  //     { path: 'short-list', element: <ShortList /> },
-  //     { path: 'interview', element: <Interview /> },
-  //     { path: '/app', element: <Navigate to="/app/dashboard" /> },
-  //     { path: '*', element: <Navigate to="/404" /> }
-  //   ]
-  // },
+  {
+    path: 'app',
+    element: <DashboardLayout />,
+    children: [
+      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'talent-profile', element: <TalentRegister /> },
+      { path: 'business-profile', element: <BusinessRegister /> },
+      { path: 'role', element: <Role /> },
+      { path: 'short-list', element: <ShortList /> },
+      { path: 'interview', element: <Interview /> },
+      { path: '/app', element: <Navigate to="/app/dashboard" /> },
+      { path: '*', element: <Navigate to="/404" /> }
+    ]
+  },
   {
     path: 'talent',
     element: <DashboardLayout />,
