@@ -129,6 +129,10 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const avatarRef = useRef();
 
   const [selectedFile, setSelectedFile] = useState(null);
+  const [fileChanged, setFileChanged] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  const userType = 'Business'; // FIXME: change this logged in user type, either Talent or Business;
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -136,17 +140,16 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
     }
   }, [location.pathname]);
 
-  const uploadHandler = async (_selectedFile) => {
-    console.log('upload handler', _selectedFile);
+  const uploadHandler = async () => {
+    setUploading(true);
+
     try {
       const formData = new FormData();
-      formData.append('_id', '6138a8cc35389921daef2627'); // TODO: change this to dynamic
-      formData.append('Type', 'Talent');
-      formData.append('profilePhoto', _selectedFile, _selectedFile.name);
+      formData.append('_id', '6138a8cc35389921daef2627'); // FIXME: change this to logged in user id
+      formData.append('Type', userType);
+      formData.append('profilePhoto', selectedFile.raw, selectedFile.raw.name);
 
-      const data = {};
-
-      API.post('/updateImage/upload', formData, {
+      await API.post('/updateImage/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -154,7 +157,10 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           console.log(progressEvent.loaded / progressEvent.total);
         }
       });
+      setUploading(false);
+      setFileChanged(false);
     } catch (error) {
+      setUploading(false);
       alert(error);
     }
   };
@@ -166,6 +172,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       raw: file,
       preview: URL.createObjectURL(file)
     });
+    setFileChanged(true);
 
     // uploadHandler(file);
   };
@@ -201,6 +208,25 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             //   to="/app/business-profile"
           />
         </label>
+
+        {fileChanged && (
+          <Typography
+            onClick={fileChanged && !uploading ? () => uploadHandler() : null}
+            color="textPrimary"
+            variant="caption"
+            align="center"
+            sx={{
+              p: 1
+            }}
+            style={
+              !uploading
+                ? { textDecoration: 'underline', cursor: 'pointer' }
+                : {}
+            }
+          >
+            {uploading ? 'Uploading, Please Wait' : 'Upload'}
+          </Typography>
+        )}
 
         <input
           ref={avatarRef}
