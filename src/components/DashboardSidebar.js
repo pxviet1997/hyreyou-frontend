@@ -26,6 +26,7 @@ import {
   LogOut as LogOutIcon
 } from 'react-feather';
 import NavItem from './NavItem';
+import { getTalentProfileData } from './talent/Profile/ProfileDetails';
 
 const user = {
   avatar: '/static/images/avatars/avatar_7.png',
@@ -127,18 +128,60 @@ const talentItems = [
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
   const avatarRef = useRef();
+  const talentType = window.location.pathname.includes('talent'); // TODO: either we do better or can change this logged in user type, either Talent or Business;
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileChanged, setFileChanged] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  const userType = 'Business'; // FIXME: change this logged in user type, either Talent or Business;
+  const userType = talentType ? 'Talent' : 'Business';
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
   }, [location.pathname]);
+
+  const buf = (TYPED_ARRAY) => {
+    return TYPED_ARRAY.reduce((data, byte) => {
+      return data + String.fromCharCode(byte);
+    }, '');
+  };
+
+  const getTalentProfile = async () => {
+    try {
+      const data = await getTalentProfileData(); // TODO: pass the logged in user id as the parameter
+
+      if (!data) {
+        return;
+      }
+
+      const { profilePhoto } = data;
+      let base64String;
+      let TYPED_ARRAY;
+      let STRING_CHAR;
+
+      if (profilePhoto && profilePhoto.data && profilePhoto.data.data) {
+        const arrayBuffer = profilePhoto.data.data;
+
+        TYPED_ARRAY = new Uint8Array(arrayBuffer);
+
+        STRING_CHAR = buf(TYPED_ARRAY);
+
+        base64String = btoa(STRING_CHAR);
+      }
+
+      setSelectedFile({
+        preview: `data:image/png;base64,${base64String}`
+      });
+    } catch (e) {
+      alert(`sidebar error ${e}`);
+    }
+  };
+
+  useEffect(() => {
+    getTalentProfile();
+  }, []);
 
   const uploadHandler = async () => {
     setUploading(true);
@@ -199,7 +242,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             for="file-upload"
             className="custom-file-upload"
             // component={RouterLink}
-            src={!selectedFile ? user.avatar : selectedFile.preview}
+            src={selectedFile && selectedFile.preview}
             sx={{
               cursor: 'pointer',
               width: 64,

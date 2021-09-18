@@ -105,6 +105,18 @@ const initialValues = {
   profilePhoto: { data: { data: {} } }
 };
 
+export const getTalentProfileData = async (uid = '') => {
+  try {
+    const response = await API.get('/talent', {
+      _id: uid || '6138a8cc35389921daef2627' // FIXME: SERVER_BUG: change this to dynamic and can't send body with GET method
+    });
+    const { data } = response;
+    return data;
+  } catch (error) {
+    throw Error(error);
+  }
+};
+
 const TalentProfileDetails = (props) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
@@ -127,10 +139,7 @@ const TalentProfileDetails = (props) => {
 
   const getTalentProfile = async () => {
     try {
-      const response = await API.post('/talent', {
-        _id: '6138a8cc35389921daef2627' // FIXME: SERVER_BUG: change this to dynamic and can't send body with GET method
-      });
-      const { data } = response;
+      const data = await getTalentProfileData(); // TODO: pass the logged in user id
 
       if (!data) {
         setNewForm(true);
@@ -173,7 +182,7 @@ const TalentProfileDetails = (props) => {
         profilePhoto
       });
     } catch (e) {
-      console.log(e);
+      alert(e);
     }
   };
 
@@ -190,7 +199,7 @@ const TalentProfileDetails = (props) => {
       alert('created talent profile');
     } catch (e) {
       console.log(e);
-      alert(`something went wrong with creating new profile${e.message}`);
+      alert(`something went wrong with creating new profile ${e.message}`);
     }
   };
 
@@ -207,7 +216,7 @@ const TalentProfileDetails = (props) => {
       alert('updated talent profile');
     } catch (e) {
       console.log(e);
-      alert(`something went wrong with updating profile${e.message}`);
+      alert(`something went wrong with updating profile ${e.message}`);
     }
   };
 

@@ -7,7 +7,7 @@ export const BASE_URL = process.env.NODE_ENV === 'development' ? DEV : LIVE;
 
 const instance = axios.create({
   baseURL: BASE_URL,
-  timeout: 10000,
+  timeout: 30000,
 });
 
 export default instance;
