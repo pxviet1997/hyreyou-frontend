@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logOut } from 'src/redux/actions/authAction';
 import PropTypes from 'prop-types';
 import {
   Avatar,
   Box,
-  Button,
   Divider,
   Drawer,
   Hidden,
@@ -12,11 +13,7 @@ import {
   Typography
 } from '@material-ui/core';
 import {
-  AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
-  Lock as LockIcon,
-  Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
@@ -30,105 +27,72 @@ const user = {
   name: 'John Doe'
 };
 
-const items = [
-  {
-    href: '/app/dashboard',
-    icon: BarChartIcon,
-    title: 'Dashboard'
-  },
-  {
-    href: '/app/talent-profile',
-    icon: UserPlusIcon,
-    title: 'Talent Register'
-  },
-  {
-    href: '/app/business-profile',
-    icon: UserPlusIcon,
-    title: 'Profile'
-  },
-  {
-    href: '/app/role',
-    icon: UserPlusIcon,
-    title: 'Role'
-  },
-  {
-    href: '/app/short-list',
-    icon: UserPlusIcon,
-    title: 'Short List'
-  },
-  {
-    href: '/app/interview',
-    icon: UserPlusIcon,
-    title: 'Interview'
-  }
-  // {
-  //   href: '/app/customers',
-  //   icon: UsersIcon,
-  //   title: 'Customers'
-  // },
-  // {
-  //   href: '/app/products',
-  //   icon: ShoppingBagIcon,
-  //   title: 'Products'
-  // },
-  // {
-  //   href: '/app/account',
-  //   icon: UserIcon,
-  //   title: 'Account'
-  // },
-  // {
-  //   href: '/app/settings',
-  //   icon: SettingsIcon,
-  //   title: 'Settings'
-  // },
-  // {
-  //   href: '/login',
-  //   icon: LockIcon,
-  //   title: 'Login'
-  // },
-  // {
-  //   href: '/register',
-  //   icon: UserPlusIcon,
-  //   title: 'Register'
-  // },
-  // {
-  //   href: '/404',
-  //   icon: AlertCircleIcon,
-  //   title: 'Error'
-  // }
-];
-
-const talentItems = [
-  {
-    href: '/talent/dashboard',
-    icon: BarChartIcon,
-    title: 'Dashboard'
-  },
-  {
-    href: '/talent/profile',
-    icon: BarChartIcon,
-    title: 'Profile'
-  },
-  {
-    href: '/talent/payment-info',
-    icon: BarChartIcon,
-    title: 'Payment Information'
-  },
-  {
-    href: '/talent/activity',
-    icon: BarChartIcon,
-    title: 'Activity'
-  }
-];
-
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+
+  const { userType } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const items = userType === 'Talent'
+    ? [
+      {
+        href: '/talent/dashboard',
+        icon: BarChartIcon,
+        title: 'Dashboard'
+      },
+      {
+        href: '/talent/profile',
+        icon: BarChartIcon,
+        title: 'Profile'
+      },
+      {
+        href: '/talent/payment-info',
+        icon: BarChartIcon,
+        title: 'Payment Information'
+      },
+      {
+        href: '/talent/activity',
+        icon: BarChartIcon,
+        title: 'Activity'
+      }
+    ]
+    : [
+      {
+        href: '/business/dashboard',
+        icon: BarChartIcon,
+        title: 'Dashboard'
+      },
+      {
+        href: '/business/business-profile',
+        icon: UserPlusIcon,
+        title: 'Profile'
+      },
+      {
+        href: '/business/role',
+        icon: UserPlusIcon,
+        title: 'Role'
+      },
+      {
+        href: '/business/short-list',
+        icon: UserPlusIcon,
+        title: 'Short List'
+      },
+      {
+        href: '/business/interview',
+        icon: UserPlusIcon,
+        title: 'Interview'
+      }
+    ];
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
   }, [location.pathname]);
+
+  const onLogoutClick = () => {
+    dispatch(logOut());
+  };
 
   const content = (
     <Box
@@ -154,7 +118,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             width: 64,
             height: 64
           }}
-          to="/app/business-profile"
+          to="/business/business-profile"
         />
         <Typography
           color="textPrimary"
@@ -165,17 +129,11 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         >
           {user.name}
         </Typography>
-        {/* <Typography
-          color="textSecondary"
-          variant="body2"
-        >
-          {user.jobTitle}
-        </Typography> */}
       </Box>
       <Divider />
       <Box sx={{ p: 2 }}>
         <List>
-          {talentItems.map((item) => (
+          {items.map((item) => (
             <NavItem
               href={item.href}
               key={item.title}
@@ -186,47 +144,10 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         </List>
 
         <List style={{ marginTop: 'auto' }}>
-          <NavItem href="/login" title="Logout" icon={LogOutIcon} />
+          <NavItem href="/" title="Logout" icon={LogOutIcon} onClick={onLogoutClick} />
         </List>
       </Box>
       <Box sx={{ flexGrow: 1 }} />
-      {/* <Box
-        sx={{
-          backgroundColor: 'background.default',
-          m: 2,
-          p: 2
-        }}
-      >
-        <Typography
-          align="center"
-          gutterBottom
-          variant="h4"
-        >
-          Need more?
-        </Typography>
-        <Typography
-          align="center"
-          variant="body2"
-        >
-          Upgrade to PRO version and access 20 more screens
-        </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            pt: 2
-          }}
-        >
-          <Button
-            color="primary"
-            component="a"
-            href="https://react-material-kit.devias.io"
-            variant="contained"
-          >
-            See PRO version
-          </Button>
-        </Box>
-      </Box> */}
     </Box>
   );
 
@@ -273,7 +194,7 @@ DashboardSidebar.propTypes = {
 };
 
 DashboardSidebar.defaultProps = {
-  onMobileClose: () => {},
+  onMobileClose: () => { },
   openMobile: false
 };
 

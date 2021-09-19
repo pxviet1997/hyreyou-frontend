@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   AppBar,
@@ -16,6 +17,16 @@ import Logo from './Logo';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   const [notifications] = useState([]);
+  const { userType } = useSelector((state) => state.auth);
+  let logoPath = '/';
+
+  // console.log('userType in DashboardNavbar:', userType);
+
+  if (userType === 'Talent') {
+    logoPath = '/talent';
+  } else {
+    logoPath = '/business';
+  }
 
   return (
     <AppBar
@@ -23,7 +34,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
       {...rest}
     >
       <Toolbar>
-        <RouterLink to="/">
+        <RouterLink to={logoPath}>
           <Logo />
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />

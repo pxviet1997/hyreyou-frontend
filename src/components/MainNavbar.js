@@ -1,4 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   AppBar, Toolbar, MenuList, MenuItem, FormControl, InputLabel, Typography, Paper, Grow,
 } from '@material-ui/core';
@@ -12,7 +13,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MainNavbar = (props) => {
-  const classes = useStyles();
+  const { userType } = useSelector((state) => state.auth);
+  let logoPath = '/';
+
+  if (userType === 'Talent') {
+    logoPath = '/talent';
+  } else {
+    logoPath = '/business';
+  }
 
   return (
     <AppBar
@@ -32,7 +40,7 @@ const MainNavbar = (props) => {
         }}
 
       >
-        <RouterLink to="/">
+        <RouterLink to={logoPath}>
           <Logo />
         </RouterLink>
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { experimentalStyled } from '@material-ui/core';
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
@@ -40,6 +41,14 @@ const DashboardLayoutContent = experimentalStyled('div')({
 
 const DashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  console.log(isLoggedIn);
+
+  if (!isLoggedIn) {
+    navigate('/');
+  }
 
   return (
     <DashboardLayoutRoot>

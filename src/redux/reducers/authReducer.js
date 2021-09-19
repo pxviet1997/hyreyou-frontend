@@ -1,3 +1,9 @@
+import { read_cookie as readCookie } from 'sfcookies';
+
+// const userInfo = JSON.parse(readCookie('userInfo'));
+const userInfo = readCookie('userInfo');
+console.log(userInfo);
+
 const initialState = {
   isLoggedIn: false,
   user: null,
@@ -21,6 +27,14 @@ export const authReducer = (state = initialState, action) => {
         isLoggedIn: false,
         user: null,
         error: true
+      };
+    case 'LOGOUT':
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+        userType: '',
+        error: false
       };
     default:
       return state;

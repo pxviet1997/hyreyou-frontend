@@ -20,16 +20,15 @@ import SplashScreen from './pages/SplashScreen';
 
 const routes = [
   {
-    path: 'app',
+    path: 'business',
     element: <DashboardLayout />,
     children: [
       { path: 'dashboard', element: <Dashboard /> },
-      // { path: 'talent-profile', element: <TalentRegister /> },
       { path: 'business-profile', element: <BusinessRegister /> },
       { path: 'role', element: <Role /> },
       { path: 'short-list', element: <ShortList /> },
       { path: 'interview', element: <Interview /> },
-      { path: '/app', element: <Navigate to="/app/dashboard" /> },
+      { path: '/', element: <Navigate to="/business/dashboard" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },

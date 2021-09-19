@@ -15,7 +15,6 @@ import {
   Radio,
   RadioGroup
 } from '@material-ui/core';
-import { reqSignIn } from 'src/api';
 import { useEffect, useRef, useState } from 'react';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,7 +41,7 @@ const Login = () => {
     if (userType === 'Talent') {
       navigate('/talent');
     } else {
-      navigate('/app');
+      navigate('/business');
     }
   }, [navigated, error]);
 
@@ -75,13 +74,7 @@ const Login = () => {
             onSubmit={async (values) => {
               setShowMessage(true);
               await dispatch(signIn(values));
-              // console.log(userType);
               setNavigated(true);
-              // if (userType === 'Talent') {
-              //   navigate('/talent');
-              // } else {
-              //   navigate('/app');
-              // }
             }}
           >
             {({

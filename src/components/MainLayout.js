@@ -1,5 +1,7 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { experimentalStyled } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { Satellite } from '@material-ui/icons';
 import MainNavbar from './MainNavbar';
 
 const MainLayoutRoot = experimentalStyled('div')(
@@ -31,17 +33,26 @@ const MainLayoutContent = experimentalStyled('div')({
   overflow: 'auto'
 });
 
-const MainLayout = () => (
-  <MainLayoutRoot>
-    <MainNavbar />
-    <MainLayoutWrapper>
-      <MainLayoutContainer>
-        <MainLayoutContent>
-          <Outlet />
-        </MainLayoutContent>
-      </MainLayoutContainer>
-    </MainLayoutWrapper>
-  </MainLayoutRoot>
-);
+const MainLayout = () => {
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  if (!isLoggedIn) {
+    navigate('/');
+  }
+
+  return (
+    <MainLayoutRoot>
+      <MainNavbar />
+      <MainLayoutWrapper>
+        <MainLayoutContainer>
+          <MainLayoutContent>
+            <Outlet />
+          </MainLayoutContent>
+        </MainLayoutContainer>
+      </MainLayoutWrapper>
+    </MainLayoutRoot>
+  );
+};
 
 export default MainLayout;
