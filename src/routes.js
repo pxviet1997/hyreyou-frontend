@@ -50,7 +50,7 @@ const routes = [
     element: <MainLayout />,
     children: [
       { path: 'login', element: <Login /> },
-      { path: 'reset/:userType', element: <Reset /> },
+      { path: 'reset', element: <Reset /> },
       { path: 'forgot', element: <Forgot /> },
       { path: 'verify', element: <Verify /> },
       { path: 'register', element: <Register /> },

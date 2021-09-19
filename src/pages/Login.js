@@ -16,28 +16,35 @@ import {
   RadioGroup
 } from '@material-ui/core';
 import { reqSignIn } from 'src/api';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from 'src/redux/actions/authAction';
 import { clearMessage } from 'src/redux/actions/messageAction';
 
 const Login = () => {
-  // const navigate = useNavigate();
-  // const [loginMessage, setLoginMessage] = useState('');
-  const [userType, setUser] = useState('Talent');
+  const navigate = useNavigate();
   const [showMessage, setShowMessage] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [navigated, setNavigated] = useState();
+  const isFirstRun = useRef(true);
+
   const dispatch = useDispatch();
   const { message } = useSelector((state) => state.message);
+  const { userType, error } = useSelector((state) => state.auth);
 
-  const onUserChange = (event) => {
-    setUser(event.target.value);
-  };
-
-  if (message) {
-    console.log(message);
-  }
+  useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+    if (error) return;
+    if (userType === 'Talent') {
+      navigate('/talent');
+    } else {
+      navigate('/app');
+    }
+  }, [navigated, error]);
 
   return (
     <>
@@ -56,18 +63,25 @@ const Login = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: '',
-              password: ''
-              // email: 'pxviet1997@gmail.com',
-              // password: 'padpxv9697'
+              // email: '',
+              // password: ''
+              email: 'pxviet1997@gmail.com',
+              password: '1234'
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
             onSubmit={async (values) => {
-              dispatch(signIn({ ...values, userType }));
               setShowMessage(true);
+              await dispatch(signIn(values));
+              // console.log(userType);
+              setNavigated(true);
+              // if (userType === 'Talent') {
+              //   navigate('/talent');
+              // } else {
+              //   navigate('/app');
+              // }
             }}
           >
             {({
@@ -148,7 +162,7 @@ const Login = () => {
                     )
                   }}
                 />
-                <Box sx={{ mt: 2, mb: 2 }}>
+                {/* <Box sx={{ mt: 2, mb: 2 }}>
                   <Typography
                     color="textSecondary"
                     variant="body2"
@@ -159,7 +173,7 @@ const Login = () => {
                     <FormControlLabel value="Talent" control={<Radio />} label="Talent" />
                     <FormControlLabel value="Business" control={<Radio />} label="Business" />
                   </RadioGroup>
-                </Box>
+                </Box> */}
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"
@@ -192,7 +206,7 @@ const Login = () => {
                     {' '}
                     <Link
                       component={RouterLink}
-                      to={`/reset/${userType}`}
+                      to="/reset"
                     // variant="h6"
                     >
                       Reset password

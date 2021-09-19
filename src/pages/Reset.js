@@ -18,7 +18,7 @@ const Reset = () => {
   const [loginMessage, setLoginMessage] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const [loginMessageColor, setLoginMessageColor] = useState('green');
-  const { userType } = useParams();
+  // const { userType } = useParams();
 
   return (
     <>
@@ -46,7 +46,7 @@ const Reset = () => {
               console.log('hi');
               setShowMessage(true);
               try {
-                const { message } = await reqReset({ email: values.email, userType });
+                const { message } = await reqReset({ email: values.email });
                 setLoginMessage(message);
               } catch (error) {
                 setLoginMessage(error.message);
