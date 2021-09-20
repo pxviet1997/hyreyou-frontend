@@ -29,7 +29,7 @@ const Login = () => {
   const isFirstRun = useRef(true);
 
   const dispatch = useDispatch();
-  const { message } = useSelector((state) => state.message);
+  const { message, messageColor } = useSelector((state) => state.message);
   const { userType, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -185,7 +185,7 @@ const Login = () => {
                   {showMessage
                     ? (
                       <Typography
-                        color="red"
+                        color={messageColor}
                         variant="body1"
                         style={{ marginTop: '2px', marginBottom: '10px', height: '36px' }}
                       >

@@ -33,6 +33,25 @@ export const authReducer = (state = initialState, action) => {
         user: null,
         error: true
       };
+    case 'SIGNUP_SUCCESS':
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+        error: false
+      };
+    case 'SIGNUP_FAIL':
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+        error: true
+      };
+    case 'RESET_ERROR':
+      return {
+        ...state,
+        error: false
+      };
     case 'LOGOUT':
       return {
         ...state,

@@ -1,4 +1,5 @@
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -18,16 +19,19 @@ import {
   InputAdornment,
   IconButton
 } from '@material-ui/core';
-import { useState } from 'react';
-import { reqSignUp } from 'src/api';
+import { useEffect, useState } from 'react';
+// import { reqSignUp } from 'src/api';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { resetError, signUp } from 'src/redux/actions/authAction';
+import { clearMessage } from 'src/redux/actions/messageAction';
 
 const Register = () => {
   const [userType, setUser] = useState('Talent');
   const [showPassword, setShowPassword] = useState(false);
-  const [registerMessage, setRegisterMessage] = useState('');
-  const [registerMessageColor, setRegisterMessageColor] = useState('green');
   const [showMessage, setShowMessage] = useState(false);
+  const dispatch = useDispatch();
+  const { message, messageColor } = useSelector((state) => state.message);
+  const { error } = useSelector((state) => state.auth);
 
   const onUserChange = (event) => {
     setUser(event.target.value);
@@ -36,9 +40,13 @@ const Register = () => {
   const onChange = (event, handleChange) => {
     handleChange(event);
     setShowMessage(false);
-    setRegisterMessage('');
-    setRegisterMessageColor('green');
+    if (message) dispatch(clearMessage());
+    if (error) dispatch(resetError());
   };
+
+  useEffect(() => {
+    return dispatch(clearMessage());
+  }, []);
 
   return (
     <>
@@ -79,14 +87,15 @@ const Register = () => {
             onSubmit={async (values) => {
               const { policy, confirmPassword, ...newUser } = values;
               setShowMessage(true);
-              try {
-                const { message } = await reqSignUp({ ...newUser, userType });
-                // setRegisterMessageColor('green');
-                setRegisterMessage(message);
-              } catch (error) {
-                setRegisterMessageColor('red');
-                setRegisterMessage(error.message);
-              }
+              dispatch(signUp({ ...newUser, userType }));
+              // try {
+              //   // const { message } = await reqSignUp({ ...newUser, userType });
+              //   // setRegisterMessageColor('green');
+              //   setRegisterMessage(message);
+              // } catch (error) {
+              //   setRegisterMessageColor('red');
+              //   setRegisterMessage(error.message);
+              // }
             }}
           >
             {({
@@ -332,11 +341,11 @@ const Register = () => {
                 {showMessage
                   ? (
                     <Typography
-                      color={registerMessageColor}
+                      color={messageColor}
                       variant="body1"
                       style={{ marginTop: '2px', marginBottom: '10px' }}
                     >
-                      {registerMessage}
+                      {message}
                     </Typography>
                   )
                   : (<Box style={{ height: '36px' }} />)}

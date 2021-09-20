@@ -17,7 +17,7 @@ export const signIn = (userInfo) => async (dispatch) => {
 
     // return Promise.resolve();
   } catch (error) {
-    dispatch({ type: 'SET_MESSAGE', payload: error });
+    dispatch({ type: 'SET_ERROR_MESSAGE', payload: error });
     dispatch({ type: 'LOGIN_FAIL' });
     // console.log(error);
     // return Promise.reject();
@@ -27,10 +27,12 @@ export const signIn = (userInfo) => async (dispatch) => {
 export const signUp = (userInfo) => async (dispatch) => {
   try {
     const response = await reqSignUp(userInfo);
-    dispatch({ type: 'SET_MESSAGE', payload: response.message });
+    dispatch({ type: 'SIGNUP_SUCCESS' });
+    dispatch({ type: 'SET_CONFIRM_MESSAGE', payload: response.message });
   } catch (error) {
     console.log(error);
-    dispatch({ type: 'SET_MESSAGE', payload: error });
+    dispatch({ type: 'SIGNUP_FAIL' });
+    dispatch({ type: 'SET_ERROR_MESSAGE', payload: error });
   }
 };
 
@@ -38,3 +40,5 @@ export const logOut = () => {
   localStorage.removeItem('userInfo');
   return { type: 'LOGOUT' };
 };
+
+export const resetError = () => ({ type: 'RESET_ERROR' });
