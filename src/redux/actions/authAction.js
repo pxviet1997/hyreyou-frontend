@@ -1,14 +1,14 @@
-import { reqSignIn } from 'src/api';
-import {
-  bake_cookie as bakeCookie,
-  read_cookie as readCookie,
-  delete_cookie as deleteCookie
-} from 'sfcookies';
+import { reqSignIn, reqSignUp } from 'src/api';
 
 export const signIn = (userInfo) => async (dispatch) => {
   try {
     const response = await reqSignIn(userInfo);
-    bakeCookie('userInfo', JSON.stringify(response));
+    // bakeCookie('userInfo', JSON.stringify(response));
+    // bake_cookie('userInfo', JSON.stringify(response));
+
+    // console.log('new cookie:', readCookie('userInfo'));
+
+    localStorage.setItem('userInfo', JSON.stringify(response));
 
     // console.log(response);
     dispatch({ type: 'LOGIN_SUCCESS', payload: response });
@@ -24,6 +24,17 @@ export const signIn = (userInfo) => async (dispatch) => {
   }
 };
 
+export const signUp = (userInfo) => async (dispatch) => {
+  try {
+    const response = await reqSignUp(userInfo);
+    dispatch({ type: 'SET_MESSAGE', payload: response.message });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'SET_MESSAGE', payload: error });
+  }
+};
+
 export const logOut = () => {
+  localStorage.removeItem('userInfo');
   return { type: 'LOGOUT' };
 };

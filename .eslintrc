@@ -35,6 +35,7 @@
     "no-underscore-dangle": "off",
     "no-unused-vars": 0,
     "arrow-body-style": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "camelcase": "off"
   }
 }

@@ -1,6 +1,6 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { read_cookie as readCookie } from 'sfcookies';
 import {
   Box,
   Button,
@@ -8,18 +8,9 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import { useSelector } from 'react-redux';
 
 const SplashScreen = () => {
-  // const classes = useStyles();
-  // const aspectRatio = 1920 / 751;
-
-  const { userType } = useSelector((state) => state.auth);
-  console.log(userType);
-
-  const userInfo = readCookie('userInfo');
-  console.log(userInfo);
+  const { isLoggedIn, userType } = useSelector((state) => state.auth);
 
   return (
     <>

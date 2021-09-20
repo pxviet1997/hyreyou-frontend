@@ -7,16 +7,13 @@ import Reset from 'src/pages/Reset';
 import Forgot from 'src/pages/Forgot';
 import Verify from 'src/pages/Verify';
 import NotFound from 'src/pages/NotFound';
-// import ProductList from 'src/pages/ProductList';
 import Register from 'src/pages/Register';
-// import Settings from 'src/pages/Settings';
 import { PaymentInfo, TalentProfile, Activity } from './components/talent';
 import BusinessRegister from './pages/BusinessRegister';
 import Interview from './pages/Interview';
 import Role from './pages/Role';
 import ShortList from './pages/ShortList';
 import SplashScreen from './pages/SplashScreen';
-// import TalentRegister from './pages/TalentRegister';
 
 const routes = [
   {

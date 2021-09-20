@@ -1,15 +1,20 @@
-import { read_cookie as readCookie } from 'sfcookies';
+const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
-// const userInfo = JSON.parse(readCookie('userInfo'));
-const userInfo = readCookie('userInfo');
-console.log(userInfo);
-
-const initialState = {
-  isLoggedIn: false,
-  user: null,
-  userType: '',
-  error: false
-};
+const initialState = userInfo
+  ? {
+    isLoggedIn: true,
+    user: userInfo.user,
+    userType: userInfo.userType,
+    token: userInfo.token,
+    error: false
+  }
+  : {
+    isLoggedIn: false,
+    user: null,
+    userType: '',
+    token: '',
+    error: false
+  };
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {

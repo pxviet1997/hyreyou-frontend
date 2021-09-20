@@ -37,7 +37,9 @@ const Login = () => {
       isFirstRun.current = false;
       return;
     }
+
     if (error) return;
+
     if (userType === 'Talent') {
       navigate('/talent');
     } else {

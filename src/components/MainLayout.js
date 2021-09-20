@@ -1,7 +1,6 @@
-import { Outlet, useNavigate } from 'react-router-dom';
-import { experimentalStyled } from '@material-ui/core';
+import { Outlet, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Satellite } from '@material-ui/icons';
+import { experimentalStyled } from '@material-ui/core';
 import MainNavbar from './MainNavbar';
 
 const MainLayoutRoot = experimentalStyled('div')(
@@ -34,13 +33,14 @@ const MainLayoutContent = experimentalStyled('div')({
 });
 
 const MainLayout = () => {
-  const { isLoggedIn } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
+  const { isLoggedIn, userType } = useSelector((state) => state.auth);
 
-  if (!isLoggedIn) {
-    navigate('/');
+  if (isLoggedIn) {
+    console.log(userType === 'Talent');
+    return userType === 'Talent'
+      ? <Navigate to="/talent" />
+      : <Navigate to="/business" />;
   }
-
   return (
     <MainLayoutRoot>
       <MainNavbar />
