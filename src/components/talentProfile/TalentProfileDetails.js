@@ -210,186 +210,186 @@ const TalentProfileDetails = (props) => {
   }, []);
 
   return (
-    <Formik
-      initialValues={talentForm || initialValues}
-      validationSchema={validationSchema.talentProfileFormSchema}
-      enableReinitialize
-      onSubmit={async (values) => {
-        console.log({ values, last: isLastStep() });
-        if (isLastStep()) {
-          if (!isEditForm) return;
-          if (isNewForm) {
-            await handleCreateForm(values);
-          } else {
-            await handleUpdateForm(values);
-          }
-        } else {
-          setValue((s) => s + 1);
-        }
-      }}
-    >
-      {({
-        errors,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-        isSubmitting,
-        touched,
-        values
-      }) => {
-        console.log({ errors });
-        return (
-          <Form>
-            <Card>
-              <Grid container spacing={3}>
-                <Grid item md={6} xs={8}>
-                  <CardHeader title="Talent Profile" />
-                </Grid>
+    // <Formik
+    //   initialValues={talentForm || initialValues}
+    //   validationSchema={validationSchema.talentProfileFormSchema}
+    //   enableReinitialize
+    //   onSubmit={async (values) => {
+    //     console.log({ values, last: isLastStep() });
+    //     if (isLastStep()) {
+    //       if (!isEditForm) return;
+    //       if (isNewForm) {
+    //         await handleCreateForm(values);
+    //       } else {
+    //         await handleUpdateForm(values);
+    //       }
+    //     } else {
+    //       setValue((s) => s + 1);
+    //     }
+    //   }}
+    // >
+    //   {({
+    //     errors,
+    //     handleBlur,
+    //     handleChange,
+    //     handleSubmit,
+    //     isSubmitting,
+    //     touched,
+    //     values
+    //   }) => {
+    //     console.log({ errors });
+    //     return (
+    //       <Form>
+    <Card>
+      <Grid container spacing={3}>
+        <Grid item md={6} xs={8}>
+          <CardHeader title="Talent Profile" />
+        </Grid>
 
-                <Grid item md={6} xs={4}>
-                  <div
-                    style={{
-                      padding: 16,
-                      display: 'flex',
-                      justifyContent: 'flex-end'
-                    }}
-                  >
-                    {!isNewForm && (
-                      <Button
-                        disabled={isSubmitting}
-                        onClick={() => handleEdit(true)}
-                        variant="outlined"
-                      >
-                        Edit
-                      </Button>
-                    )}
-                  </div>
-                </Grid>
-              </Grid>
-              <Divider />
-              <CardContent>
-                <Grid container spacing={2}>
-                  <div className={classes.root}>
-                    <Tabs
-                      value={value}
-                      onChange={handleTabChange}
-                      indicatorColor="primary"
-                      textColor="primary"
-                    >
-                      <Tab label="Personal" />
-                      <Tab label="Job History" />
-                      <Tab label="Education History" />
-                      <Tab label="Certification" />
-                      <Tab label="Job Expectation" />
-                    </Tabs>
-                    <TabPanel value={value} index={0}>
-                      <PersonalDetails
-                        isEditForm={!isEditForm}
-                        values={values}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        touched={touched}
-                        errors={errors}
-                      />
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                      <JobHistory
-                        isEditForm={!isEditForm}
-                        values={values}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        touched={touched}
-                        errors={errors}
-                      />
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                      <EducationHistory
-                        isEditForm={!isEditForm}
-                        values={values}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        touched={touched}
-                        errors={errors}
-                      />
-                    </TabPanel>
-                    <TabPanel value={value} index={3}>
-                      <Certification
-                        isEditForm={!isEditForm}
-                        values={values}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        touched={touched}
-                        errors={errors}
-                      />
-                    </TabPanel>
-                    <TabPanel value={value} index={4}>
-                      <JobExpectation
-                        isEditForm={!isEditForm}
-                        values={values}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        touched={touched}
-                        errors={errors}
-                      />
-                    </TabPanel>
-                  </div>
-                </Grid>
-              </CardContent>
-              <Divider />
-              <Grid
-                container
-                spacing={2}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  p: 2
-                }}
+        <Grid item md={6} xs={4}>
+          <div
+            style={{
+              padding: 16,
+              display: 'flex',
+              justifyContent: 'flex-end'
+            }}
+          >
+            {!isNewForm && (
+              <Button
+                // disabled={isSubmitting}
+                onClick={() => handleEdit(true)}
+                variant="outlined"
               >
-                <Grid item>
-                  {Boolean(Object.keys(errors).length) && (
-                    <p style={{ color: 'red' }}>
-                      * Please fill the requried field
-                    </p>
-                  )}
-                </Grid>
-                {value > 0 ? (
-                  <Grid item>
-                    <Button
-                      disabled={!isEditForm || isSubmitting}
-                      variant="contained"
-                      color="primary"
-                      onClick={() => setValue((s) => s - 1)}
-                    >
-                      Back
-                    </Button>
-                  </Grid>
-                ) : null}
-                <Grid item>
-                  {isLastStep() ? (
-                    <Button
-                      startIcon={
-                        isSubmitting ? <CircularProgress size="1rem" /> : null
-                      }
-                      disabled={!isEditForm || isSubmitting}
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                    >
-                      {isSubmitting ? 'Submitting' : 'Submit'}
-                    </Button>
-                  ) : (
-                    <Button
-                      disabled={!isEditForm || isSubmitting}
-                      variant="contained"
-                      color="primary"
-                      onClick={() => setValue((s) => s + 1)}
-                    >
-                      {isSubmitting ? 'Submitting' : 'Next'}
-                    </Button>
-                  )}
-                </Grid>
-              </Grid>
-              {/* <Box
+                Edit
+              </Button>
+            )}
+          </div>
+        </Grid>
+      </Grid>
+      <Divider />
+      <CardContent>
+        <Grid container spacing={2}>
+          <div className={classes.root}>
+            <Tabs
+              value={value}
+              onChange={handleTabChange}
+              indicatorColor="primary"
+              textColor="primary"
+            >
+              <Tab label="Personal" />
+              <Tab label="Job History" />
+              <Tab label="Education History" />
+              <Tab label="Certification" />
+              <Tab label="Job Expectation" />
+            </Tabs>
+            <TabPanel value={value} index={0}>
+              <PersonalDetails />
+              {/* // isEditForm={!isEditForm}
+              // values={values}
+              // handleChange={handleChange}
+              // handleBlur={handleBlur}
+              // touched={touched}
+              // errors={errors}
+              // /> */}
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <JobHistory />
+              {/* isEditForm={!isEditForm}
+              values={values}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              touched={touched}
+              errors={errors}
+              /> */}
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <EducationHistory />
+              {/* // isEditForm={!isEditForm}
+              // values={values}
+              // handleChange={handleChange}
+              // handleBlur={handleBlur}
+              // touched={touched}
+              // errors={errors}
+              /> */}
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+              <Certification />
+              {/* // isEditForm={!isEditForm}
+              // values={values}
+              // handleChange={handleChange}
+              // handleBlur={handleBlur}
+              // touched={touched}
+              // errors={errors}
+              /> */}
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+              <JobExpectation />
+              {/* // isEditForm={!isEditForm}
+              // values={values}
+              // handleChange={handleChange}
+              // handleBlur={handleBlur}
+              // touched={touched}
+              // errors={errors}
+              /> */}
+            </TabPanel>
+          </div>
+        </Grid>
+      </CardContent>
+      <Divider />
+      {/* <Grid
+        container
+        spacing={2}
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          p: 2
+        }}
+      > */}
+      {/* <Grid item>
+          {Boolean(Object.keys(errors).length) && (
+            <p style={{ color: 'red' }}>
+              * Please fill the requried field
+            </p>
+          )}
+        </Grid> */}
+      {/* {value > 0 ? (
+          <Grid item>
+            <Button
+              disabled={!isEditForm || isSubmitting}
+              variant="contained"
+              color="primary"
+              onClick={() => setValue((s) => s - 1)}
+            >
+              Back
+            </Button>
+          </Grid>
+        ) : null}
+        <Grid item>
+          {isLastStep() ? (
+            <Button
+              startIcon={
+                isSubmitting ? <CircularProgress size="1rem" /> : null
+              }
+              disabled={!isEditForm || isSubmitting}
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              {isSubmitting ? 'Submitting' : 'Submit'}
+            </Button>
+          ) : (
+            <Button
+              disabled={!isEditForm || isSubmitting}
+              variant="contained"
+              color="primary"
+              onClick={() => setValue((s) => s + 1)}
+            >
+              {isSubmitting ? 'Submitting' : 'Next'}
+            </Button>
+          )}
+        </Grid>
+      </Grid> */}
+      {/* <Box
                 sx={{
                   display: 'flex',
                   justifyContent: 'flex-end',
@@ -400,11 +400,11 @@ const TalentProfileDetails = (props) => {
                   Save details
                 </Button>
               </Box> */}
-            </Card>
-          </Form>
-        );
-      }}
-    </Formik>
+    </Card>
+    //       </Form>
+    //     );
+    //   }}
+    // </Formik>
   );
 };
 

@@ -3,10 +3,6 @@ import { reqSignIn, reqSignUp } from 'src/api';
 export const signIn = (userInfo) => async (dispatch) => {
   try {
     const response = await reqSignIn(userInfo);
-    // bakeCookie('userInfo', JSON.stringify(response));
-    // bake_cookie('userInfo', JSON.stringify(response));
-
-    // console.log('new cookie:', readCookie('userInfo'));
 
     localStorage.setItem('userInfo', JSON.stringify(response));
 
