@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid } from '@material-ui/core';
 
-import TalentProfileDetails from './ProfileDetails';
+import TalentProfileDetails from '../components/talentProfile/TalentProfileDetails';
 
 const TalentProfile = () => (
   <>
@@ -20,9 +20,6 @@ const TalentProfile = () => (
           <Grid item lg={12} md={12} xs={12}>
             <TalentProfileDetails />
           </Grid>
-          {/* <Grid item lg={4} md={6} xs={12}>
-          <TalentProfile />
-        </Grid> */}
         </Grid>
       </Container>
     </Box>

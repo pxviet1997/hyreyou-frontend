@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet';
 import { Box, Container, Grid } from '@material-ui/core';
 import AccountProfile from 'src/components/account/AccountProfile';
 import AccountProfileDetails from 'src/components/account/AccountProfileDetails';
-import BusinessProfileDetails from 'src/components/profile/BusinessProfileDetails';
+import BusinessProfileDetails from 'src/components/businessProfile/BusinessProfileDetails';
 import BusinessProfile from 'src/components/account/BusinessProfile';
 
 const BusinessRegister = () => (
@@ -22,9 +22,6 @@ const BusinessRegister = () => (
           <Grid item lg={12} md={12} xs={12}>
             <BusinessProfileDetails />
           </Grid>
-          {/* <Grid item lg={4} md={6} xs={12}>
-            <BusinessProfile />
-          </Grid> */}
         </Grid>
       </Container>
     </Box>

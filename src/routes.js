@@ -1,19 +1,21 @@
 import { Navigate } from 'react-router-dom';
-import DashboardLayout from 'src/components/DashboardLayout';
-import MainLayout from 'src/components/MainLayout';
-import Dashboard from 'src/pages/Dashboard';
-import Login from 'src/pages/Login';
-import Reset from 'src/pages/Reset';
-import Forgot from 'src/pages/Forgot';
-import Verify from 'src/pages/Verify';
-import NotFound from 'src/pages/NotFound';
-import Register from 'src/pages/Register';
-import { PaymentInfo, TalentProfile, Activity } from './components/talent';
+import Activity from 'src/pages/Activity';
 import BusinessRegister from './pages/BusinessRegister';
+import Dashboard from 'src/pages/Dashboard';
+import DashboardLayout from 'src/components/DashboardLayout';
+import Forgot from 'src/pages/Forgot';
 import Interview from './pages/Interview';
+import Login from 'src/pages/Login';
+import NotFound from 'src/pages/NotFound';
+import MainLayout from 'src/components/MainLayout';
+import PaymentInfo from 'src/pages/PaymentInfo';
+import Register from 'src/pages/Register';
+import Reset from 'src/pages/Reset';
 import Role from './pages/Role';
 import ShortList from './pages/ShortList';
 import SplashScreen from './pages/SplashScreen';
+import TalentProfile from 'src/pages/TalentProfile';
+import Verify from 'src/pages/Verify';
 
 const routes = [
   {
@@ -21,6 +23,7 @@ const routes = [
     element: <DashboardLayout />,
     children: [
       { path: 'dashboard', element: <Dashboard /> },
+      // { path: 'business-profile', element: <BusinessProfileDetails /> },
       { path: 'business-profile', element: <BusinessRegister /> },
       { path: 'role', element: <Role /> },
       { path: 'short-list', element: <ShortList /> },
