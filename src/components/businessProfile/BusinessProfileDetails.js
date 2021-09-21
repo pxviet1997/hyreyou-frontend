@@ -140,7 +140,7 @@ const initialValues = {
 
 const BusinessProfileDetails = (props) => {
   const [businessForm, setBusinessForm] = useState(null);
-  const [isNewForm, setNewForm] = useState(true);
+  const [isNewForm, setNewForm] = useState(false);
   const [isEditForm, setIsEditForm] = useState(false);
 
   const handleEdit = (edit) => {

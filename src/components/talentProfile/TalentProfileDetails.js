@@ -16,10 +16,9 @@ import {
   Tab,
   Tabs,
   Typography,
-  TextField
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { Form, Formik, useField } from 'formik';
+import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import API from 'src/services';
@@ -244,7 +243,7 @@ const TalentProfileDetails = (props) => {
             <Card>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={8}>
-                  <CardHeader subheader="Profile" title="Talent Profile" />
+                  <CardHeader title="Talent Profile" />
                 </Grid>
 
                 <Grid item md={6} xs={4}>

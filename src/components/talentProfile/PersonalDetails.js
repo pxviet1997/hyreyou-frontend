@@ -7,8 +7,9 @@ import {
   Divider,
   Grid,
   TextField,
-  Button
+  Button,
 } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 const PersonalDetails = ({
   isEditForm,
@@ -18,34 +19,38 @@ const PersonalDetails = ({
   touched,
   errors
 }) => {
-  console.log('[PersonalDetails]', { values, handleChange });
+  const { user } = useSelector((state) => state.auth);
+
+  // console.log('[PersonalDetails]', { values, handleChange });
   return (
     <>
       <Helmet>
-        <title>Personal Details</title>
+        <title>Talent | Personal Details</title>
       </Helmet>
       <Box
         sx={{
           minHeight: '100%',
-          py: 3
+          pt: 2
+          // py: 3
         }}
       >
         <Container maxWidth="lg">
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item lg={6} md={6} xs={12}>
               <TextField
                 fullWidth
                 label="First Name"
                 name="firstName"
                 onChange={handleChange}
-                onBlur={handleBlur}
-                required
                 type="text"
-                value={values.firstName}
-                variant="outlined"
-                helperText={touched.firstName && errors.firstName}
-                error={Boolean(touched.firstName && errors.firstName)}
-                disabled={isEditForm}
+                value={user.firstName}
+                inputProps={{ readOnly: true, }}
+              // onBlur={handleBlur}
+              // required
+              // variant="outlined"
+              // helperText={touched.firstName && errors.firstName}
+              // error={Boolean(touched.firstName && errors.firstName)}
+              // disabled={isEditForm}
               />
             </Grid>
             <Grid item lg={6} md={6} xs={12}>
@@ -55,9 +60,9 @@ const PersonalDetails = ({
                 name="lastName"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                required
+                // required
                 type="text"
-                value={values.lastName}
+                value={user.lastName}
                 variant="outlined"
                 helperText={touched.lastName && errors.lastName}
                 error={Boolean(touched.lastName && errors.lastName)}
@@ -71,9 +76,9 @@ const PersonalDetails = ({
                 name="email"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                required
+                // required
                 type="email"
-                value={values.email}
+                value={user.email}
                 variant="outlined"
                 helperText={touched.email && errors.email}
                 error={Boolean(touched.email && errors.email)}
@@ -87,9 +92,9 @@ const PersonalDetails = ({
                 name="mobileNumber"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                required
+                // required
                 type="text"
-                value={values.mobileNumber}
+                value={user.mobileNumber}
                 variant="outlined"
                 helperText={touched.mobileNumber && errors.mobileNumber}
                 error={Boolean(touched.mobileNumber && errors.mobileNumber)}
@@ -103,9 +108,9 @@ const PersonalDetails = ({
                 name="country"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                required
+                // required
                 type="text"
-                value={values.country}
+                value={user.country}
                 variant="outlined"
                 helperText={touched.country && errors.country}
                 error={Boolean(touched.country && errors.country)}
@@ -119,9 +124,9 @@ const PersonalDetails = ({
                 name="city"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                required
+                // required
                 type="text"
-                value={values.city}
+                value={user.city}
                 variant="outlined"
                 helperText={touched.city && errors.city}
                 error={Boolean(touched.city && errors.city)}
@@ -136,9 +141,9 @@ const PersonalDetails = ({
                 name="streetName"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                required
+                // required
                 type="text"
-                value={values.streetName}
+                value={user.streetName}
                 variant="outlined"
                 helperText={touched.streetName && errors.streetName}
                 error={Boolean(touched.streetName && errors.streetName)}
@@ -152,9 +157,9 @@ const PersonalDetails = ({
                 name="state"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                required
+                // required
                 type="text"
-                value={values.state}
+                value={user.state}
                 variant="outlined"
                 helperText={touched.state && errors.state}
                 error={Boolean(touched.state && errors.state)}
@@ -168,14 +173,26 @@ const PersonalDetails = ({
                 name="postalCode"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                required
+                // required
                 type="text"
-                value={values.postalCode}
+                value={user.postalCode}
                 variant="outlined"
                 helperText={touched.postalCode && errors.postalCode}
                 error={Boolean(touched.postalCode && errors.postalCode)}
                 disabled={isEditForm}
               />
+            </Grid>
+          </Grid>
+          <Grid container style={{ marginTop: 16, }} spacing={2}>
+            <Grid item>
+              <Button color="primary" variant="contained">
+                Edit
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button color="primary" variant="contained">
+                Save
+              </Button>
             </Grid>
           </Grid>
         </Container>
