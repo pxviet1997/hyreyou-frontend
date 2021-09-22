@@ -97,6 +97,33 @@ const items = [
   //   title: 'Error'
   // }
 ];
+// const businessItems = [
+//  {
+//    href: '/business/dashboard',
+//    icon: BarChartIcon,
+//    title: 'Dashboard'
+//  },
+//  {
+//    href: '/business/business-profile',
+//    icon: UserPlusIcon,
+//    title: 'Profile'
+//  },
+//  {
+//    href: '/business/role',
+//    icon: UserPlusIcon,
+//    title: 'Role'
+//  },
+//  {
+//    href: '/business/short-list',
+//    icon: UserPlusIcon,
+//    title: 'Short List'
+//  },
+//  {
+//    href: '/business/interview',
+//    icon: UserPlusIcon,
+//    title: 'Interview'
+//  }
+// ];
 
 const talentItems = [
   {
