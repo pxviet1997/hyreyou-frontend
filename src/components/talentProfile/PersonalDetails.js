@@ -6,7 +6,6 @@ import {
   Alert,
   Box,
   Container,
-  // Divider,
   Grid,
   TextField,
   Button,
@@ -19,7 +18,7 @@ import { updatePersonalDetail } from 'src/redux/actions/talentAction';
 
 const PersonalDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const { user, error } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
@@ -93,6 +92,7 @@ const PersonalDetails = () => {
               const { _id } = user;
               // console.log(values);
               dispatch(updatePersonalDetail({ _id, info: values }));
+              setOpen(true);
             }}
           >
             {({
@@ -289,8 +289,8 @@ const PersonalDetails = () => {
                     autoHideDuration={6000}
                     onClose={handleClose}
                   >
-                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }} variant="filled">
-                      This is a success message!
+                    <Alert onClose={handleClose} severity={error ? 'error' : 'success'} sx={{ width: '100%' }} variant="filled">
+                      {message}
                     </Alert>
                   </Snackbar>
                 </form>
