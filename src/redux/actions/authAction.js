@@ -4,11 +4,12 @@ export const signIn = (userInfo) => async (dispatch) => {
   try {
     const response = await reqSignIn(userInfo);
 
-    localStorage.setItem('userInfo', JSON.stringify(response));
+    localStorage.setItem('token', JSON.stringify(response.token));
+    localStorage.setItem('user', JSON.stringify(response.user));
 
     // console.log(response);
     dispatch({ type: 'LOGIN_SUCCESS', payload: response });
-    dispatch({ type: 'RESET_MESSAGE' });
+    // dispatch({ type: 'RESET_MESSAGE' });
     // console.log(JSON.stringify(response));
 
     // return Promise.resolve();
@@ -33,7 +34,8 @@ export const signUp = (userInfo) => async (dispatch) => {
 };
 
 export const logOut = () => {
-  localStorage.removeItem('userInfo');
+  localStorage.removeItem('user');
+  localStorage.removeItem('token');
   return { type: 'LOGOUT' };
 };
 

@@ -30,7 +30,9 @@ const user = {
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
 
-  const { userType } = useSelector((state) => state.auth);
+  // const { userType } = useSelector((state) => state.auth);
+  const { userType } = useSelector((state) => state.shared);
+
   const dispatch = useDispatch();
 
   const items = userType === 'Talent'

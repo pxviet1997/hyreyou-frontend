@@ -30,7 +30,8 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const { message, messageColor } = useSelector((state) => state.message);
-  const { userType, error } = useSelector((state) => state.auth);
+  // const { userType, error } = useSelector((state) => state.auth);
+  const { userType, error } = useSelector((state) => state.shared);
 
   useEffect(() => {
     if (isFirstRun.current) {
@@ -40,11 +41,10 @@ const Login = () => {
 
     if (error) return;
 
-    if (userType === 'Talent') {
-      navigate('/talent');
-    } else {
-      navigate('/business');
-    }
+    dispatch(clearMessage());
+
+    if (userType === 'Talent') navigate('/talent');
+    else navigate('/business');
   }, [navigated, error]);
 
   return (

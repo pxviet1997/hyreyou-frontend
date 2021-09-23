@@ -42,7 +42,8 @@ const DashboardLayoutContent = experimentalStyled('div')({
 const DashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  // const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.shared);
 
   if (!isLoggedIn) {
     return <Navigate to="/" />;

@@ -127,7 +127,7 @@ const TalentProfileDetails = (props) => {
     try {
       const response = await API.get('/talent');
       const { data } = response;
-      console.log({ data });
+      // console.log({ data });
 
       if (!data || !data.length) {
         setNewForm(true);

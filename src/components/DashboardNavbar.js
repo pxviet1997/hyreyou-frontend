@@ -17,7 +17,9 @@ import Logo from './Logo';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   const [notifications] = useState([]);
-  const { userType } = useSelector((state) => state.auth);
+  // const { userType } = useSelector((state) => state.auth);
+  const { userType } = useSelector((state) => state.shared);
+
   let logoPath = '/';
 
   // console.log('userType in DashboardNavbar:', userType);

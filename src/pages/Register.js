@@ -31,7 +31,8 @@ const Register = () => {
   const [showMessage, setShowMessage] = useState(false);
   const dispatch = useDispatch();
   const { message, messageColor } = useSelector((state) => state.message);
-  const { error } = useSelector((state) => state.auth);
+  // const { error } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.shared);
 
   const onUserChange = (event) => {
     setUser(event.target.value);

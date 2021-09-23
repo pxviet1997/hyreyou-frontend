@@ -33,7 +33,8 @@ const MainLayoutContent = experimentalStyled('div')({
 });
 
 const MainLayout = () => {
-  const { isLoggedIn, userType } = useSelector((state) => state.auth);
+  // const { isLoggedIn, userType } = useSelector((state) => state.auth);
+  const { isLoggedIn, userType } = useSelector((state) => state.shared);
 
   if (isLoggedIn) {
     console.log(userType === 'Talent');

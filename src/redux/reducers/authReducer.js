@@ -1,20 +1,4 @@
-const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-
-const initialState = userInfo
-  ? {
-    isLoggedIn: true,
-    user: userInfo.user,
-    userType: userInfo.userType,
-    token: userInfo.token,
-    error: false
-  }
-  : {
-    isLoggedIn: false,
-    user: null,
-    userType: '',
-    token: '',
-    error: false
-  };
+import { initialState } from './state/intinalState';
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -23,7 +7,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         isLoggedIn: true,
         user: action.payload.user,
-        userType: action.payload.userType,
+        userType: action.payload.user.userType,
         error: false
       };
     case 'LOGIN_FAIL':
@@ -60,6 +44,10 @@ export const authReducer = (state = initialState, action) => {
         userType: '',
         error: false
       };
+    // case 'UPDATE_PERSONAL_DETAIL':
+    //   return {
+    //     ...state, user: action.payload,
+    //   };
     default:
       return state;
   }

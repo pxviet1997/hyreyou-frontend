@@ -7,9 +7,9 @@ export default function ajax(url, data = {}, type = 'GET', header = {}) {
     if (type === 'GET') {
       promise = axios.get(url, {
         params: data,
-      });
+      }, header);
     } else {
-      promise = axios.post(url, data);
+      promise = axios.post(url, data, header);
     }
 
     promise
@@ -19,8 +19,6 @@ export default function ajax(url, data = {}, type = 'GET', header = {}) {
       .catch((error) => {
         console.log(error.response.data);
         reject(error.response.data.message);
-        // message.error("Request Error: " + error.message);
-        // console.log(`Request Error: ${error.message}`);
       });
   });
 }

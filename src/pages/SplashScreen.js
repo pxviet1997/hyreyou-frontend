@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 
 const SplashScreen = () => {
-  const { isLoggedIn, userType } = useSelector((state) => state.auth);
+  // const { isLoggedIn, userType } = useSelector((state) => state.auth);
 
   return (
     <>

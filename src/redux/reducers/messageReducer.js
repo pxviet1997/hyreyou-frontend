@@ -1,9 +1,6 @@
-const initialState = {
-  message: '',
-  messageColor: 'red'
-};
+import { initialMessageState } from './state/intinalState';
 
-export const messageReducer = (state = initialState, action) => {
+export const messageReducer = (state = initialMessageState, action) => {
   switch (action.type) {
     case 'SET_ERROR_MESSAGE':
       return { ...state, message: action.payload, messageColor: 'red' };

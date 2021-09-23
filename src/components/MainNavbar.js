@@ -13,7 +13,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MainNavbar = (props) => {
-  const { userType } = useSelector((state) => state.auth);
+  // const { userType } = useSelector((state) => state.auth);
+  const { userType } = useSelector((state) => state.shared);
+
   let logoPath = '/';
 
   if (userType === 'Talent') {
