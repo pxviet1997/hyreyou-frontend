@@ -17,3 +17,5 @@ export const reqGetTalent = (_id) => ajax(`${BASE_URL}/talent`, { _id }, { heade
 export const reqVerifyEmail = (verifyInfo) => ajax(`${BASE_URL}/auth/verify`, verifyInfo);
 
 export const reqUpdate = (info) => ajax(`${BASE_URL}/talent/update`, info, 'POST', { headers: authHeader() });
+
+export const reqUpdateImage = (file, headers) => ajax(`${BASE_URL}/updateImage/upload`, file, 'POST', headers);

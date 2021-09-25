@@ -100,7 +100,20 @@ const initialValues = {
     }
   ],
   skills: [],
-  culturalPreferences: []
+  culturalPreferences: [],
+  profilePhoto: { data: { data: {} } }
+};
+
+export const getTalentProfileData = async (uid = '') => {
+  try {
+    const response = await API.get('/talent', {
+      _id: uid || '6138a8cc35389921daef2627' // FIXME: SERVER_BUG: change this to dynamic and can't send body with GET method
+    });
+    const { data } = response;
+    return data;
+  } catch (error) {
+    throw Error(error);
+  }
 };
 
 const TalentProfileDetails = (props) => {
@@ -125,11 +138,9 @@ const TalentProfileDetails = (props) => {
 
   const getTalentProfile = async () => {
     try {
-      const response = await API.get('/talent');
-      const { data } = response;
-      // console.log({ data });
+      const data = await getTalentProfileData(); // TODO: pass the logged in user id
 
-      if (!data || !data.length) {
+      if (!data) {
         setNewForm(true);
         setIsEditForm(true);
         return;
@@ -147,8 +158,10 @@ const TalentProfileDetails = (props) => {
         education,
         skills,
         culturalPreferences,
+        availability = [],
+        profilePhoto,
         ...rest
-      } = data[0];
+      } = data;
 
       setTalentForm({
         _id,
@@ -164,10 +177,11 @@ const TalentProfileDetails = (props) => {
         jobHistory,
         education,
         skills: skills.join(','),
-        culturalPreferences: culturalPreferences.join(',')
+        culturalPreferences: culturalPreferences.join(','),
+        profilePhoto
       });
     } catch (e) {
-      console.log(e);
+      alert(e);
     }
   };
 
@@ -184,14 +198,14 @@ const TalentProfileDetails = (props) => {
       alert('created talent profile');
     } catch (e) {
       console.log(e);
-      alert(`something went wrong with creating new profile${e.message}`);
+      alert(`something went wrong with creating new profile ${e.message}`);
     }
   };
 
   const handleUpdateForm = async (values) => {
     try {
       const body = normalizeData(values);
-      body.password = 'test'; // TODO:
+      body.password = 'test'; // FIXME: remove password field, this should not be here
       const response = await API.post(`/talent/update?_id=${body._id}`, {
         ...body,
         password: 'test'
@@ -201,7 +215,7 @@ const TalentProfileDetails = (props) => {
       alert('updated talent profile');
     } catch (e) {
       console.log(e);
-      alert(`something went wrong with updating profile${e.message}`);
+      alert(`something went wrong with updating profile ${e.message}`);
     }
   };
 
