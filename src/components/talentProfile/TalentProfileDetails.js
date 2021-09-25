@@ -72,38 +72,6 @@ const normalizeData = (values) => {
   };
 };
 
-const initialValues = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  mobileNumber: '',
-  streetName: '',
-  city: '',
-  state: '',
-  country: '',
-  postalCode: '',
-  jobHistory: [
-    {
-      id: `${Math.random()}`,
-      companyName: '',
-      jobPosition: '',
-      jobDescription: '',
-      yearOfExperience: ''
-    }
-  ],
-  education: [
-    {
-      id: `${Math.random()}`,
-      nameOfUniversity: '',
-      nameOfDegree: '',
-      degreeDuration: ''
-    }
-  ],
-  skills: [],
-  culturalPreferences: [],
-  profilePhoto: { data: { data: {} } }
-};
-
 export const getTalentProfileData = async (uid = '') => {
   try {
     const response = await API.get('/talent', {
@@ -119,109 +87,109 @@ export const getTalentProfileData = async (uid = '') => {
 const TalentProfileDetails = (props) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const [talentForm, setTalentForm] = useState(null);
+  // const [talentForm, setTalentForm] = useState(null);
   const [isNewForm, setNewForm] = useState(true);
-  const [isEditForm, setIsEditForm] = useState(false);
+  // const [isEditForm, setIsEditForm] = useState(false);
 
   const handleEdit = (edit) => {
     if (edit) {
       setValue(0);
     }
-    setIsEditForm(edit);
+    // setIsEditForm(edit);
   };
 
-  const isLastStep = () => value === 4; // change this dynamic
+  // const isLastStep = () => value === 4; // change this dynamic
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const getTalentProfile = async () => {
-    try {
-      const data = await getTalentProfileData(); // TODO: pass the logged in user id
+  // const getTalentProfile = async () => {
+  //   try {
+  //     const data = await getTalentProfileData(); // TODO: pass the logged in user id
 
-      if (!data) {
-        setNewForm(true);
-        setIsEditForm(true);
-        return;
-      }
+  //     if (!data) {
+  //       setNewForm(true);
+  //       setIsEditForm(true);
+  //       return;
+  //     }
 
-      setNewForm(false);
-      const {
-        _id,
-        firstName,
-        lastName,
-        email,
-        mobileNumber,
-        address: { streetName, city, state, country, postalCode } = {},
-        jobHistory,
-        education,
-        skills,
-        culturalPreferences,
-        availability = [],
-        profilePhoto,
-        ...rest
-      } = data;
+  //     setNewForm(false);
+  //     const {
+  //       _id,
+  //       firstName,
+  //       lastName,
+  //       email,
+  //       mobileNumber,
+  //       address: { streetName, city, state, country, postalCode } = {},
+  //       jobHistory,
+  //       education,
+  //       skills,
+  //       culturalPreferences,
+  //       availability = [],
+  //       profilePhoto,
+  //       ...rest
+  //     } = data;
 
-      setTalentForm({
-        _id,
-        firstName,
-        lastName,
-        email,
-        mobileNumber,
-        streetName,
-        city,
-        state,
-        country,
-        postalCode,
-        jobHistory,
-        education,
-        skills: skills.join(','),
-        culturalPreferences: culturalPreferences.join(','),
-        profilePhoto
-      });
-    } catch (e) {
-      alert(e);
-    }
-  };
+  //     setTalentForm({
+  //       _id,
+  //       firstName,
+  //       lastName,
+  //       email,
+  //       mobileNumber,
+  //       streetName,
+  //       city,
+  //       state,
+  //       country,
+  //       postalCode,
+  //       jobHistory,
+  //       education,
+  //       skills: skills.join(','),
+  //       culturalPreferences: culturalPreferences.join(','),
+  //       profilePhoto
+  //     });
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  // };
 
-  const handleCreateForm = async (values) => {
-    try {
-      const body = normalizeData(values);
-      console.log({ body });
-      const response = await API.post('/talent', {
-        ...body,
-        password: 'test'
-      });
-      const { data } = response;
-      console.log({ data });
-      alert('created talent profile');
-    } catch (e) {
-      console.log(e);
-      alert(`something went wrong with creating new profile ${e.message}`);
-    }
-  };
+  // const handleCreateForm = async (values) => {
+  //   try {
+  //     const body = normalizeData(values);
+  //     console.log({ body });
+  //     const response = await API.post('/talent', {
+  //       ...body,
+  //       password: 'test'
+  //     });
+  //     const { data } = response;
+  //     console.log({ data });
+  //     alert('created talent profile');
+  //   } catch (e) {
+  //     console.log(e);
+  //     alert(`something went wrong with creating new profile ${e.message}`);
+  //   }
+  // };
 
-  const handleUpdateForm = async (values) => {
-    try {
-      const body = normalizeData(values);
-      body.password = 'test'; // FIXME: remove password field, this should not be here
-      const response = await API.post(`/talent/update?_id=${body._id}`, {
-        ...body,
-        password: 'test'
-      });
-      const { data } = response;
-      console.log({ data });
-      alert('updated talent profile');
-    } catch (e) {
-      console.log(e);
-      alert(`something went wrong with updating profile ${e.message}`);
-    }
-  };
+  // const handleUpdateForm = async (values) => {
+  //   try {
+  //     const body = normalizeData(values);
+  //     body.password = 'test'; // FIXME: remove password field, this should not be here
+  //     const response = await API.post(`/talent/update?_id=${body._id}`, {
+  //       ...body,
+  //       password: 'test'
+  //     });
+  //     const { data } = response;
+  //     console.log({ data });
+  //     alert('updated talent profile');
+  //   } catch (e) {
+  //     console.log(e);
+  //     alert(`something went wrong with updating profile ${e.message}`);
+  //   }
+  // };
 
-  useEffect(() => {
-    getTalentProfile();
-  }, []);
+  // useEffect(() => {
+  //   getTalentProfile();
+  // }, []);
 
   return (
     // <Formik
@@ -298,13 +266,6 @@ const TalentProfileDetails = (props) => {
             </Tabs>
             <TabPanel value={value} index={0}>
               <PersonalDetails />
-              {/* // isEditForm={!isEditForm}
-              // values={values}
-              // handleChange={handleChange}
-              // handleBlur={handleBlur}
-              // touched={touched}
-              // errors={errors}
-              // /> */}
             </TabPanel>
             <TabPanel value={value} index={1}>
               <JobHistory />

@@ -24,13 +24,12 @@ import {
 } from 'react-feather';
 import NavItem from './NavItem';
 import { reqUpdateImage } from 'src/api';
-// import { getTalentProfileData } from './talent/Profile/ProfileDetails';
 
-const user = {
-  avatar: '/static/images/avatars/avatar_7.png',
-  jobTitle: 'Senior Developer',
-  name: 'John Doe'
-};
+// const user = {
+//   avatar: '/static/images/avatars/avatar_7.png',
+//   jobTitle: 'Senior Developer',
+//   name: 'John Doe'
+// };
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
@@ -41,8 +40,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const [fileChanged, setFileChanged] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  // const { userType } = useSelector((state) => state.auth);
-  const { userType } = useSelector((state) => state.shared);
+  const { userType, user } = useSelector((state) => state.shared);
 
   const dispatch = useDispatch();
 
@@ -103,59 +101,40 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
     }
   }, [location.pathname]);
 
-  const onLogoutClick = () => {
-    dispatch(logOut());
-  };
-
   const buf = (TYPED_ARRAY) => {
     return TYPED_ARRAY.reduce((data, byte) => {
       return data + String.fromCharCode(byte);
     }, '');
   };
 
-  // const getTalentProfile = async () => {
-  //   try {
-  //     const data = await getTalentProfileData(); // TODO: pass the logged in user id as the parameter
+  useEffect(() => {
+    // const { profilePhoto } = user;
+    const image = userType === 'Talent'
+      ? user.profilePhoto
+      : user.logo;
 
-  //     if (!data) {
-  //       return;
-  //     }
+    if (!image) return;
 
-  //     const { profilePhoto } = data;
-  //     let base64String;
-  //     let TYPED_ARRAY;
-  //     let STRING_CHAR;
+    const { data } = image;
+    const base64String = Buffer.from(data).toString('base64');
 
-  //     if (profilePhoto && profilePhoto.data && profilePhoto.data.data) {
-  //       const arrayBuffer = profilePhoto.data.data;
+    setSelectedFile({
+      preview: `data:image/png;base64,${base64String}`
+    });
+  }, []);
 
-  //       TYPED_ARRAY = new Uint8Array(arrayBuffer);
-
-  //       STRING_CHAR = buf(TYPED_ARRAY);
-
-  //       base64String = btoa(STRING_CHAR);
-  //     }
-
-  //     setSelectedFile({
-  //       preview: `data:image/png;base64,${base64String}`
-  //     });
-  //   } catch (e) {
-  //     alert(`sidebar error ${e}`);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getTalentProfile();
-  // }, []);
+  const onLogoutClick = () => {
+    dispatch(logOut());
+  };
 
   const uploadHandler = async () => {
     setUploading(true);
 
     try {
       const formData = new FormData();
-      formData.append('_id', '6138a8cc35389921daef2627'); // FIXME: change this to logged in user id
+      formData.append('_id', user._id); // FIXME: change this to logged in user id
       formData.append('type', userType);
-      formData.append('profilePhoto', selectedFile.raw, selectedFile.raw.name);
+      formData.append('image', selectedFile.raw, selectedFile.raw.name);
 
       await reqUpdateImage(formData);
       setUploading(false);
@@ -174,8 +153,6 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       preview: URL.createObjectURL(file)
     });
     setFileChanged(true);
-
-    // uploadHandler(file);
   };
 
   const content = (
@@ -231,7 +208,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           accept="image/*"
           id="file-upload"
           type="file"
-          name="profilePhoto"
+          name="image"
           className="form-control"
           onChange={fileChangedHandler}
           style={{ display: 'none' }}
