@@ -138,6 +138,18 @@ const initialValues = {
   type: ''
 };
 
+export const getBusinessProfileData = async (uid = '') => {
+  try {
+    const response = await API.get('/business', {
+      _id: uid || '6138a8cc35389921daef2627' // FIXME: SERVER_BUG: change this to dynamic and can't send body with GET method
+    });
+    const { data } = response;
+    return data;
+  } catch (error) {
+    throw Error(error);
+  }
+};
+
 const BusinessProfileDetails = (props) => {
   const [businessForm, setBusinessForm] = useState(null);
   const [isNewForm, setNewForm] = useState(true);
@@ -149,10 +161,9 @@ const BusinessProfileDetails = (props) => {
 
   const getBusinessProfile = async () => {
     try {
-      const response = await API.get('/business');
-      const { data } = response;
+      const data = await getBusinessProfileData(); // TODO: pass the logged in user id
 
-      if (!data.length) {
+      if (!data) {
         setNewForm(true);
         setIsEditForm(true);
         return;
@@ -168,7 +179,7 @@ const BusinessProfileDetails = (props) => {
         userType,
         address: { streetName, city, state, country, postalCode } = {},
         ...rest
-      } = data[0];
+      } = data;
 
       setBusinessForm({
         businessName,
@@ -185,7 +196,7 @@ const BusinessProfileDetails = (props) => {
         type: userType
       });
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 

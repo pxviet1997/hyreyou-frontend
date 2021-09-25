@@ -27,6 +27,7 @@ import {
 } from 'react-feather';
 import NavItem from './NavItem';
 import { getTalentProfileData } from './talent/Profile/ProfileDetails';
+import { getBusinessProfileData } from './profile/BusinessProfileDetails';
 
 const user = {
   avatar: '/static/images/avatars/avatar_7.png',
@@ -39,11 +40,6 @@ const items = [
     href: '/app/dashboard',
     icon: BarChartIcon,
     title: 'Dashboard'
-  },
-  {
-    href: '/app/talent-profile',
-    icon: UserPlusIcon,
-    title: 'Talent Register'
   },
   {
     href: '/app/business-profile',
@@ -179,9 +175,44 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
     }
   };
 
+  const getBusinessProfile = async () => {
+    try {
+      const data = await getBusinessProfileData(); // TODO: pass the logged in user id as the parameter
+
+      if (!data) {
+        return;
+      }
+
+      const { profilePhoto } = data;
+      let base64String;
+      let TYPED_ARRAY;
+      let STRING_CHAR;
+
+      if (profilePhoto && profilePhoto.data && profilePhoto.data.data) {
+        const arrayBuffer = profilePhoto.data.data;
+
+        TYPED_ARRAY = new Uint8Array(arrayBuffer);
+
+        STRING_CHAR = buf(TYPED_ARRAY);
+
+        base64String = btoa(STRING_CHAR);
+      }
+
+      setSelectedFile({
+        preview: `data:image/png;base64,${base64String}`
+      });
+    } catch (e) {
+      alert(`sidebar error ${e}`);
+    }
+  };
+
   useEffect(() => {
-    getTalentProfile();
-  }, []);
+    if (userType === 'Talent') {
+      getTalentProfile();
+    } else {
+      getBusinessProfile();
+    }
+  }, [userType]);
 
   const uploadHandler = async () => {
     setUploading(true);
@@ -219,6 +250,8 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
 
     // uploadHandler(file);
   };
+
+  const sideBarItems = userType === 'Talent' ? talentItems : items;
 
   const content = (
     <Box
@@ -300,7 +333,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       <Divider />
       <Box sx={{ p: 2 }}>
         <List>
-          {talentItems.map((item) => (
+          {sideBarItems.map((item) => (
             <NavItem
               href={item.href}
               key={item.title}

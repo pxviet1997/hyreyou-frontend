@@ -17,6 +17,7 @@ import Role from './pages/Role';
 import ShortList from './pages/ShortList';
 import SplashScreen from './pages/SplashScreen';
 import TalentRegister from './pages/TalentRegister';
+import ShortListCandidates from './pages/ShortListCandidates';
 
 const routes = [
   {
@@ -28,6 +29,7 @@ const routes = [
       { path: 'business-profile', element: <BusinessRegister /> },
       { path: 'role', element: <Role /> },
       { path: 'short-list', element: <ShortList /> },
+      { path: 'short-list/:id', element: <ShortListCandidates /> },
       { path: 'interview', element: <Interview /> },
       { path: '/app', element: <Navigate to="/app/dashboard" /> },
       { path: '*', element: <Navigate to="/404" /> }

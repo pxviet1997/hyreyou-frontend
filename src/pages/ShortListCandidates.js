@@ -15,16 +15,15 @@ import {
   ListItemButton
 } from '@material-ui/core';
 import NavItem from 'src/components/NavItem';
+import { useParams } from 'react-router';
 
-const ShortList = (props) => {
-  function handleNavigate() {
-    props.push('/app');
-  }
+const ShortListCandidates = () => {
+  const { id: roleId } = useParams();
 
   return (
     <>
       <Helmet>
-        <title>Short List</title>
+        <title>{`Short List - Role ${roleId}`}</title>
       </Helmet>
       <Box
         sx={{
@@ -38,7 +37,7 @@ const ShortList = (props) => {
             <Grid item lg={12} md={12} xs={12}>
               <Card>
                 <CardHeader
-                  title="Short List"
+                  title={`Short List - Role ${roleId}`}
                   subheader="Short Lists Candidates"
                 />
                 <Divider />
@@ -50,19 +49,15 @@ const ShortList = (props) => {
                       bgcolor: 'background.paper'
                     }}
                   >
-                    {[1, 2, 3, 4, 5].map((value) => (
+                    {[1, 2, 3].map((value) => (
                       <ListItem
                         key={value}
                         disableGutters
                         secondaryAction={
-                          // eslint-disable-next-line react/jsx-wrap-multilines
-                          <NavItem
-                            href={`/app/short-list/${value}`}
-                            title={`${value} CANDIDATES`}
-                          />
+                          <ListItemText primary={`test@test${value}.com`} />
                         }
                       >
-                        <ListItemText primary={`ROLE ${value}`} />
+                        <ListItemText primary={`CANDIDATE ${value}`} />
                       </ListItem>
                     ))}
                   </List>
@@ -76,4 +71,4 @@ const ShortList = (props) => {
   );
 };
 
-export default ShortList;
+export default ShortListCandidates;
