@@ -87,15 +87,12 @@ export const getTalentProfileData = async (uid = '') => {
 const TalentProfileDetails = (props) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  // const [talentForm, setTalentForm] = useState(null);
   const [isNewForm, setNewForm] = useState(true);
-  // const [isEditForm, setIsEditForm] = useState(false);
 
   const handleEdit = (edit) => {
     if (edit) {
       setValue(0);
     }
-    // setIsEditForm(edit);
   };
 
   // const isLastStep = () => value === 4; // change this dynamic
@@ -104,124 +101,7 @@ const TalentProfileDetails = (props) => {
     setValue(newValue);
   };
 
-  // const getTalentProfile = async () => {
-  //   try {
-  //     const data = await getTalentProfileData(); // TODO: pass the logged in user id
-
-  //     if (!data) {
-  //       setNewForm(true);
-  //       setIsEditForm(true);
-  //       return;
-  //     }
-
-  //     setNewForm(false);
-  //     const {
-  //       _id,
-  //       firstName,
-  //       lastName,
-  //       email,
-  //       mobileNumber,
-  //       address: { streetName, city, state, country, postalCode } = {},
-  //       jobHistory,
-  //       education,
-  //       skills,
-  //       culturalPreferences,
-  //       availability = [],
-  //       profilePhoto,
-  //       ...rest
-  //     } = data;
-
-  //     setTalentForm({
-  //       _id,
-  //       firstName,
-  //       lastName,
-  //       email,
-  //       mobileNumber,
-  //       streetName,
-  //       city,
-  //       state,
-  //       country,
-  //       postalCode,
-  //       jobHistory,
-  //       education,
-  //       skills: skills.join(','),
-  //       culturalPreferences: culturalPreferences.join(','),
-  //       profilePhoto
-  //     });
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  // };
-
-  // const handleCreateForm = async (values) => {
-  //   try {
-  //     const body = normalizeData(values);
-  //     console.log({ body });
-  //     const response = await API.post('/talent', {
-  //       ...body,
-  //       password: 'test'
-  //     });
-  //     const { data } = response;
-  //     console.log({ data });
-  //     alert('created talent profile');
-  //   } catch (e) {
-  //     console.log(e);
-  //     alert(`something went wrong with creating new profile ${e.message}`);
-  //   }
-  // };
-
-  // const handleUpdateForm = async (values) => {
-  //   try {
-  //     const body = normalizeData(values);
-  //     body.password = 'test'; // FIXME: remove password field, this should not be here
-  //     const response = await API.post(`/talent/update?_id=${body._id}`, {
-  //       ...body,
-  //       password: 'test'
-  //     });
-  //     const { data } = response;
-  //     console.log({ data });
-  //     alert('updated talent profile');
-  //   } catch (e) {
-  //     console.log(e);
-  //     alert(`something went wrong with updating profile ${e.message}`);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getTalentProfile();
-  // }, []);
-
   return (
-    // <Formik
-    //   initialValues={talentForm || initialValues}
-    //   validationSchema={validationSchema.talentProfileFormSchema}
-    //   enableReinitialize
-    //   onSubmit={async (values) => {
-    //     console.log({ values, last: isLastStep() });
-    //     if (isLastStep()) {
-    //       if (!isEditForm) return;
-    //       if (isNewForm) {
-    //         await handleCreateForm(values);
-    //       } else {
-    //         await handleUpdateForm(values);
-    //       }
-    //     } else {
-    //       setValue((s) => s + 1);
-    //     }
-    //   }}
-    // >
-    //   {({
-    //     errors,
-    //     handleBlur,
-    //     handleChange,
-    //     handleSubmit,
-    //     isSubmitting,
-    //     touched,
-    //     values
-    //   }) => {
-    //     console.log({ errors });
-    //     return (
-    //       <Form>
     <Card>
       <Grid container spacing={3}>
         <Grid item md={6} xs={8}>
@@ -269,23 +149,9 @@ const TalentProfileDetails = (props) => {
             </TabPanel>
             <TabPanel value={value} index={1}>
               <JobHistory />
-              {/* isEditForm={!isEditForm}
-              values={values}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              touched={touched}
-              errors={errors}
-              /> */}
             </TabPanel>
             <TabPanel value={value} index={2}>
               <EducationHistory />
-              {/* // isEditForm={!isEditForm}
-              // values={values}
-              // handleChange={handleChange}
-              // handleBlur={handleBlur}
-              // touched={touched}
-              // errors={errors}
-              /> */}
             </TabPanel>
             <TabPanel value={value} index={3}>
               <Certification />

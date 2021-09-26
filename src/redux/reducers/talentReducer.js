@@ -1,6 +1,8 @@
 import {
+  ADD_EDUCATION_HISTORY_SUCCESS,
   ADD_JOB_HISTORY_SUCCESS,
   SET_TALENT_ERROR,
+  UPDATE_EDUCATION_HISTORY_SUCCESS,
   UPDATE_JOB_HISTORY_SUCCESS,
   UPDATE_PERSONAL_DETAIL_SUCCESS
 } from '../actions/type';
@@ -21,6 +23,18 @@ export const talentReducer = (state = initialState, action) => {
       const { user } = state;
       // console.log(action.payload);
       user.jobHistory = [...action.payload];
+      // console.log(user);
+      return { ...state, user, error: false };
+    }
+    case ADD_EDUCATION_HISTORY_SUCCESS: {
+      const { user } = state;
+      user.education.unshift(action.payload);
+      return { ...state, user, error: false };
+    }
+    case UPDATE_EDUCATION_HISTORY_SUCCESS: {
+      const { user } = state;
+      // console.log(action.payload);
+      user.education = [...action.payload];
       // console.log(user);
       return { ...state, user, error: false };
     }

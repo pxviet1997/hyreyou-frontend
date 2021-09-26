@@ -41,11 +41,6 @@ const JobHistory = () => {
         jobPosition: '',
         jobDescription: '',
         yearOfExperience: ''
-      }, {
-        companyName: '',
-        jobPosition: '',
-        jobDescription: '',
-        yearOfExperience: ''
       }]
     };
 
@@ -86,7 +81,7 @@ const JobHistory = () => {
               return (
                 <>
                   <form onSubmit={handleSubmit}>
-                    <Grid container style={{ marginBottom: 23 }} spacing={2}>
+                    <Grid container style={{ marginBottom: 40 }} spacing={2}>
                       <Grid item>
                         <Button
                           color="primary"
@@ -136,7 +131,7 @@ const JobHistory = () => {
                     <Grid container spacing={7}>
                       {values.jobHistory.map((value, index) => {
                         return (
-                          <Grid item lg={12} md={12} xs={12}>
+                          <Grid key={value._id} item lg={12} md={12} xs={12}>
                             <Grid container spacing={2}>
                               <Grid item lg={12} md={12} xs={12}>
                                 <TextField

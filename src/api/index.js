@@ -21,3 +21,5 @@ export const reqUpdate = (info) => ajax(`${BASE_URL}/talent/update`, info, 'POST
 export const reqUpdateImage = (file, headers) => ajax(`${BASE_URL}/updateImage/upload`, file, 'POST', headers);
 
 export const reqAddJobHistory = (newJob) => ajax(`${BASE_URL}/talent/add-job-history`, newJob, 'POST');
+
+export const reqAddEducationHistory = (newEducation) => ajax(`${BASE_URL}/talent/add-education-history`, newEducation, 'POST');
