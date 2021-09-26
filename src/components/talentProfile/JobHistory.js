@@ -72,7 +72,7 @@ const JobHistory = () => {
             initialValues={initialValues}
             onSubmit={async (values) => {
               setIsEditing(false);
-              dispatch(updateJobHistory({ _id: user._id, jobHistory: values.jobHistory }));
+              dispatch(updateJobHistory({ _id: user._id, info: values }));
               setOpenAlert(true);
             }}
           >

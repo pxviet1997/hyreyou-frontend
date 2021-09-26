@@ -35,11 +35,11 @@ export const addJobHistory = (id, newJob) => async (dispatch) => {
   }
 };
 
-export const updateJobHistory = (info) => async (dispatch) => {
+export const updateJobHistory = (updatedJob) => async (dispatch) => {
   try {
-    const response = await reqUpdate(info);
+    const response = await reqUpdate(updatedJob);
     localStorage.setItem('user', JSON.stringify(response.user));
-    // console.log(info.jobHistory);
+    const { info } = updatedJob;
     dispatch({ type: UPDATE_JOB_HISTORY_SUCCESS, payload: info.jobHistory });
     dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
   } catch (error) {
