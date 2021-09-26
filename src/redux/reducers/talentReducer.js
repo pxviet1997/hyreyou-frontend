@@ -1,4 +1,4 @@
-import { UPDATE_PERSONAL_DETAIL_FAIL, UPDATE_PERSONAL_DETAIL_SUCCESS } from '../actions/type';
+import { ADD_JOB_HISTORY_SUCCESS, UPDATE_PERSONAL_DETAIL_FAIL, UPDATE_PERSONAL_DETAIL_SUCCESS } from '../actions/type';
 import { initialState } from './state/intinalState';
 
 export const talentReducer = (state = initialState, action) => {
@@ -11,6 +11,13 @@ export const talentReducer = (state = initialState, action) => {
       return {
         ...state, error: true
       };
+    case ADD_JOB_HISTORY_SUCCESS: {
+      const { user } = state;
+      user.jobHistory.unshift(action.payload);
+      return {
+        ...state, user, error: false
+      };
+    }
     default:
       return state;
   }
