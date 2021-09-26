@@ -14,6 +14,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { updatePersonalDetail } from 'src/redux/actions/talentAction';
+import { clearMessage } from 'src/redux/actions/messageAction';
 
 const PersonalDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -89,7 +90,7 @@ const PersonalDetails = () => {
             onSubmit={async (values) => {
               setIsEditing(!isEditing);
               const { _id } = user;
-              // console.log(values);
+              dispatch(clearMessage());
               dispatch(updatePersonalDetail({ _id, info: values }));
               setOpen(true);
             }}

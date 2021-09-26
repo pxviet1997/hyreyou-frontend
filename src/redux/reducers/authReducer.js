@@ -2,6 +2,7 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT, RESET_ERROR,
+  SET_AUTH_ERROR,
   SIGNUP_FAIL,
   SIGNUP_SUCCESS
 } from '../actions/type';
@@ -17,13 +18,6 @@ export const authReducer = (state = initialState, action) => {
         userType: action.payload.user.userType,
         error: false
       };
-    case LOGIN_FAIL:
-      return {
-        ...state,
-        isLoggedIn: false,
-        user: null,
-        error: true
-      };
     case SIGNUP_SUCCESS:
       return {
         ...state,
@@ -31,7 +25,7 @@ export const authReducer = (state = initialState, action) => {
         user: null,
         error: false
       };
-    case SIGNUP_FAIL:
+    case SET_AUTH_ERROR:
       return {
         ...state,
         isLoggedIn: false,

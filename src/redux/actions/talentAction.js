@@ -1,10 +1,10 @@
-import { ConstructionOutlined } from '@material-ui/icons';
 import { reqAddJobHistory, reqUpdate } from 'src/api';
 import {
   ADD_JOB_HISTORY_SUCCESS,
   SET_CONFIRM_MESSAGE,
+  SET_TALENT_ERROR,
   SET_ERROR_MESSAGE,
-  UPDATE_PERSONAL_DETAIL_FAIL,
+  UPDATE_JOB_HISTORY_SUCCESS,
   UPDATE_PERSONAL_DETAIL_SUCCESS
 } from './type';
 
@@ -18,20 +18,33 @@ export const updatePersonalDetail = (info) => async (dispatch) => {
     dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
   } catch (error) {
     dispatch({ type: SET_ERROR_MESSAGE, payload: error });
-    dispatch({ type: UPDATE_PERSONAL_DETAIL_FAIL });
+    dispatch({ type: SET_TALENT_ERROR });
   }
 };
 
 export const addJobHistory = (id, newJob) => async (dispatch) => {
   try {
     const response = await reqAddJobHistory({ _id: id, newJob });
-    console.log(response);
-    // localStorage.setItem('user', JSON.stringify(response.user));
+    localStorage.setItem('user', JSON.stringify(response.user));
 
-    // dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
     dispatch({ type: ADD_JOB_HISTORY_SUCCESS, payload: newJob });
+    dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
   } catch (error) {
-    dispatch({ type: ADD_JOB_HISTORY_SUCCESS });
+    dispatch({ type: SET_TALENT_ERROR });
+    dispatch({ type: SET_ERROR_MESSAGE, payload: error });
+  }
+};
+
+export const updateJobHistory = (info) => async (dispatch) => {
+  try {
+    const response = await reqUpdate(info);
+    localStorage.setItem('user', JSON.stringify(response.user));
+    // console.log(info.jobHistory);
+    dispatch({ type: UPDATE_JOB_HISTORY_SUCCESS, payload: info.jobHistory });
+    dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: SET_TALENT_ERROR });
     dispatch({ type: SET_ERROR_MESSAGE, payload: error });
   }
 };

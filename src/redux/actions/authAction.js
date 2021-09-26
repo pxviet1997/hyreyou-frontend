@@ -1,11 +1,10 @@
 import { reqSignIn, reqSignUp } from 'src/api';
 import {
-  LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
+  SET_AUTH_ERROR,
   SET_CONFIRM_MESSAGE,
   SET_ERROR_MESSAGE,
-  SIGNUP_FAIL,
   SIGNUP_SUCCESS
 } from './type';
 
@@ -19,7 +18,7 @@ export const signIn = (userInfo) => async (dispatch) => {
     dispatch({ type: LOGIN_SUCCESS, payload: response });
   } catch (error) {
     dispatch({ type: SET_ERROR_MESSAGE, payload: error });
-    dispatch({ type: LOGIN_FAIL });
+    dispatch({ type: SET_AUTH_ERROR });
   }
 };
 
@@ -30,7 +29,7 @@ export const signUp = (userInfo) => async (dispatch) => {
     dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
   } catch (error) {
     console.log(error);
-    dispatch({ type: SIGNUP_FAIL });
+    dispatch({ type: SET_AUTH_ERROR });
     dispatch({ type: SET_ERROR_MESSAGE, payload: error });
   }
 };

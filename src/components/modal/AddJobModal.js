@@ -12,6 +12,7 @@ import {
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { addJobHistory } from 'src/redux/actions/talentAction';
+import { clearMessage } from 'src/redux/actions/messageAction';
 
 const style = {
   position: 'absolute',
@@ -23,7 +24,7 @@ const style = {
   boxShadow: 24,
 };
 
-const AddJobModal = ({ open, setOpen, id }) => {
+const AddJobModal = ({ open, setOpenAlert, setOpen, id }) => {
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
 
@@ -51,8 +52,10 @@ const AddJobModal = ({ open, setOpen, id }) => {
             yearOfExperience: Yup.string().max(255).required('Email is required')
           })}
           onSubmit={async (values) => {
-            // console.log(values);
+            dispatch(clearMessage());
             dispatch(addJobHistory(id, values));
+            setOpen(false);
+            setOpenAlert(true);
           }}
         >
           {({

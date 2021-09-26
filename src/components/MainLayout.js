@@ -37,7 +37,6 @@ const MainLayout = () => {
   const { isLoggedIn, userType } = useSelector((state) => state.shared);
 
   if (isLoggedIn) {
-    console.log(userType === 'Talent');
     return userType === 'Talent'
       ? <Navigate to="/talent" />
       : <Navigate to="/business" />;
