@@ -1,9 +1,9 @@
 import {
-  LOGIN_FAIL,
+  // LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT, RESET_ERROR,
   SET_AUTH_ERROR,
-  SIGNUP_FAIL,
+  // SIGNUP_FAIL,
   SIGNUP_SUCCESS
 } from '../actions/type';
 import { initialState } from './state/intinalState';
