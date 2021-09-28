@@ -16,7 +16,7 @@ import Interview from './pages/Interview';
 import Role from './components/RoleManagement/Role';
 import ShortList from './pages/ShortList';
 import SplashScreen from './pages/SplashScreen';
-import CandidatLists from '../components/RoleManagement/roleCardContent/roleCandidatesComp';
+import CandidateList from './components/RoleManagement/roleCardContent/CandidateList';
 
 const routes = [
   {
@@ -26,7 +26,7 @@ const routes = [
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'business-profile', element: <BusinessRegister /> },
       { path: 'role', element: <Role /> },
-      { path: 'candidate-list/:roleId', element: <CandidatLists /> },
+      { path: 'role/candidate-list/:roleId', element: <CandidateList /> },
       { path: 'short-list', element: <ShortList /> },
       { path: 'interview', element: <Interview /> },
       { path: '/', element: <Navigate to="/app/dashboard" /> },
