@@ -20,7 +20,7 @@ const initialValues = {
 
 const _id = '612e3302a420646564c01214';
 
-const AddRole = ({ setIsShowRole, setisCreatingRole }) => {
+const AddRole = ({ setisCreatingRole }) => {
   // console.log(props);
   return (
     <Formik
@@ -30,7 +30,7 @@ const AddRole = ({ setIsShowRole, setisCreatingRole }) => {
           // const skillSet = values.skillSet;
           // console.log(Rvalues);
           const response = await reqCreateRole({ _id, ...values });
-          setIsShowRole(true);
+          // setIsShowRole(true);
           setisCreatingRole(false);
           console.log(response);
         } catch (error) {

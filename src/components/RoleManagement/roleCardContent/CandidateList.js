@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -29,11 +30,13 @@ const initialValues = {
   skillSet: ''
 };
 
-const CandidateList = ({ setisShowCandiateList, setIsShowRole, roleId }) => {
-  console.log(roleId);
+const CandidateList = ({ setisShowCandiateList, setIsShowRole }) => {
+  const navigate = useNavigate();
   const [isListCandidates, setIsListCandidates] = useState();
+  const { roleId } = useParams();
   useEffect(async () => {
     try {
+      console.log(roleId);
       const response = await listRoleCandidate({ roleId });
       console.log(response);
       setIsListCandidates(response);
@@ -43,6 +46,11 @@ const CandidateList = ({ setisShowCandiateList, setIsShowRole, roleId }) => {
   }, []);
   return (
     <Card>
+      <Button
+        onClick={() => navigate(-1)}
+      >
+        Back
+      </Button>
       <CardHeader />
       <Divider />
       <PerfectScrollbar>

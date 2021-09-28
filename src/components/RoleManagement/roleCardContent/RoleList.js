@@ -21,7 +21,7 @@ import moment from 'moment';
 import { v4 as uuid } from 'uuid';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { Navigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const initialValues = {
   title: '',
@@ -30,9 +30,10 @@ const initialValues = {
 };
 
 const RoleList = ({
-  listRole, setisShowCandiateList, setIsShowRole, setisCreatingRole, setRoleId
+  listRole,
 }) => {
-  console.log(listRole);
+  const navigate = useNavigate();
+  // console.log(listRole);
   return (
     <Card>
       <CardHeader />
@@ -68,9 +69,13 @@ const RoleList = ({
                     key={role.id}
                     // onClick={<CandidateList roleId={role.id} setisShowCandiateList setIsShowRole />}
                     onClick={() => {
-                      setisShowCandiateList(true);
-                      setIsShowRole(false);
-                      setRoleId(role.id);
+                      // setisShowCandiateList(true);
+                      // setIsShowRole(false);
+                      // setRoleId(role.id);
+                      console.log(`app/role/candidate-list/${role.id}`);
+                      // return <Navigate to={`app/role/candidate-list/${role.id}`} />;
+
+                      navigate(`candidate-list/${role.id}`);
                       // <Navigate />
                     }}
                   >

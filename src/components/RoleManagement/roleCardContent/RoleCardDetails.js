@@ -4,23 +4,16 @@
 /* eslint-disable implicit-arrow-linebreak */
 import { useState, useEffect } from 'react';
 import {
-  Box,
   Button,
   Card,
-  CardContent,
   CardHeader,
   Divider,
   Grid,
-  TextField
 } from '@material-ui/core';
-import { Formik } from 'formik';
 
-import API from 'src/services';
 import { listAllRoleAndNoCandidate } from 'src/api';
-import { validationSchema } from 'src/utils/index';
 import AddRole from './AddRole';
-import ShowRoleAndCount from './RoleList';
-import CandidateList from './CandidateList';
+import RoleList from './RoleList';
 
 const _id = '612e3302a420646564c01214';
 
@@ -41,7 +34,7 @@ const RoleCardDetails = (props) => {
   useEffect(async () => {
     try {
       const response = await listAllRoleAndNoCandidate({ _id });
-      console.log(response);
+      // console.log(response);
       setListRole(response);
     } catch (error) {
       console.log(error);
@@ -69,10 +62,10 @@ const RoleCardDetails = (props) => {
         </Grid>
       </Grid>
       <Divider />
-      {isCreatingRole && <AddRole setIsShowRole={setIsShowRole} setisCreatingRole={setisCreatingRole} />}
-      {isShowRole && <ShowRoleAndCount listRole={listRole} setRoleId={setRoleId} setIsShowRole={setIsShowRole} setisCreatingRole={setisCreatingRole} setisShowCandiateList={setisShowCandiateList} />}
-      {isShowCandiateList && <CandidateList roleId={roleId} />}
-      {/* isSHowCandidate && <Candidate/> */}
+      {isCreatingRole
+        ? <AddRole setisCreatingRole={setisCreatingRole} />
+        : <RoleList listRole={listRole} />
+      }
     </Card>
   );
 };
