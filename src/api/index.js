@@ -14,3 +14,7 @@ export const reqChangePassword = (passwordInfo) => ajax(`${BASE_URL}/auth/change
 export const reqGetTalent = (_id) => ajax(`${BASE_URL}/talent`, { _id });
 
 export const reqVerifyEmail = (verifyInfo) => ajax(`${BASE_URL}/auth/verify`, verifyInfo);
+
+export const reqCreateRole = (addRole) => ajax(`${BASE_URL}/business/createRole`, addRole, 'POST');
+export const listAllRoleAndNoCandidate = (showRole) => ajax(`${BASE_URL}/business/listAllRoleAndNoCandidate`, showRole, 'POST');
+export const listRoleCandidate = (listCandidate) => ajax(`${BASE_URL}/business/listRoleCandidate`, listCandidate, 'POST');
