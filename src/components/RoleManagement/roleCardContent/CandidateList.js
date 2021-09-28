@@ -29,7 +29,7 @@ const initialValues = {
   skillSet: ''
 };
 
-const showParticularRoleCandidate = ({ setisShowCandiateList, setIsShowRole, roleId }) => {
+const CandidateList = ({ setisShowCandiateList, setIsShowRole, roleId }) => {
   console.log(roleId);
   const [isListCandidates, setIsListCandidates] = useState();
   useEffect(async () => {
@@ -107,4 +107,4 @@ const showParticularRoleCandidate = ({ setisShowCandiateList, setIsShowRole, rol
   );
 };
 
-export default showParticularRoleCandidate;
+export default CandidateList;

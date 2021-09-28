@@ -18,13 +18,13 @@ import { Formik } from 'formik';
 import API from 'src/services';
 import { listAllRoleAndNoCandidate } from 'src/api';
 import { validationSchema } from 'src/utils/index';
-import AddRole from './createRoleComp';
-import ShowRoleAndCount from './listAllRoleComp';
-import CandidateList from './roleCandidatesComp';
+import AddRole from './AddRole';
+import ShowRoleAndCount from './RoleList';
+import CandidateList from './CandidateList';
 
 const _id = '612e3302a420646564c01214';
 
-const RoleCardDetailsDetails = (props) => {
+const RoleCardDetails = (props) => {
   const [open, setOpen] = useState(false);
   const [isCreatingRole, setisCreatingRole] = useState(false);
   const [isShowRole, setIsShowRole] = useState(true);
@@ -76,4 +76,4 @@ const RoleCardDetailsDetails = (props) => {
     </Card>
   );
 };
-export default RoleCardDetailsDetails;
+export default RoleCardDetails;

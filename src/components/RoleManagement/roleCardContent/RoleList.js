@@ -21,7 +21,7 @@ import moment from 'moment';
 import { v4 as uuid } from 'uuid';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import CandidateList from './roleCandidatesComp';
+import { Navigate } from 'react-router';
 
 const initialValues = {
   title: '',
@@ -29,7 +29,7 @@ const initialValues = {
   skillSet: ''
 };
 
-const showRoleAndCount = ({
+const RoleList = ({
   listRole, setisShowCandiateList, setIsShowRole, setisCreatingRole, setRoleId
 }) => {
   console.log(listRole);
@@ -71,6 +71,7 @@ const showRoleAndCount = ({
                       setisShowCandiateList(true);
                       setIsShowRole(false);
                       setRoleId(role.id);
+                      // <Navigate />
                     }}
                   >
                     <TableCell>
@@ -105,4 +106,4 @@ const showRoleAndCount = ({
   );
 };
 
-export default showRoleAndCount;
+export default RoleList;
