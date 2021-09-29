@@ -1,0 +1,287 @@
+// <Button variant="outlined" onClick={handleOpen}>
+            //   Create Role
+            // </Button>
+
+
+            /* eslint-disable object-curly-newline */
+/* eslint-disable operator-linebreak */
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
+// import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import * as React from 'react';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent, Typography,
+  CardHeader,
+  Divider, Fade,
+  Grid, Backdrop,
+  TextField, Modal
+} from '@material-ui/core';
+import { Formik } from 'formik';
+
+import API from 'src/services';
+import { validationSchema } from 'src/utils/index';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+const BusinessProfileDetails = (props) => {
+  const matchRolesToSkills = async (data) => {
+    try {
+      await API.post('/business/role', data);
+      alert('Data with roles successfull');
+    } catch (error) {
+      alert(error.message || 'something went wrong in creating profile');
+      console.log(error);
+    }
+  };
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <Card>
+      <Grid container spacing={3}>
+        <Grid item md={6} xs={8}>
+          <CardHeader title="Role Management" />
+        </Grid>
+        <Grid item md={6} xs={4}>
+          <div
+            style={{
+              padding: 16,
+              display: 'flex',
+              justifyContent: 'flex-end'
+            }}
+          >
+            <div>
+              <Button onClick={handleOpen}>Create Role</Button>
+              <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                  timeout: 500,
+                }}
+              >
+                <Fade in={open}>
+                  <Box sx={style}>
+                    <CardHeader id="transition-modal-title" variant="h6" component="h2">
+                      Create Role
+                    </Typography>
+                    <Divider />
+                    <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                      Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                    </Typography>
+                  </Box>
+                </Fade>
+              </Modal>
+            </div>
+
+          </div>
+        </Grid>
+      </Grid>
+      <Divider />
+      <CardContent />
+      <Divider />
+    </Card>
+  );
+};
+export default BusinessProfileDetails;
+
+
+
+
+
+
+<CardContent id="addrolecontent">
+        <Grid container spacing={3}>
+          <Grid item md={12} xs={12}>
+            <TextField
+              fullWidth
+              label="Role"
+              name="Role"
+              required
+              onChange={handleChange}
+              value={values.Role}
+            />
+          </Grid>
+
+          <Grid item md={12} xs={12}>
+            <TextField
+              fullWidth
+              label="Role Description"
+              name="Role Description"
+              onChange={handleChange}
+              required
+              value={values.Role_Description}
+              variant="outlined"
+            />
+          </Grid>
+
+          <Grid item md={12} xs={12}>
+            <TextField
+              fullWidth
+              label="Experience"
+              name="Experience"
+              onChange={handleChange}
+              required
+              value={values.Experience}
+              variant="outlined"
+            />
+          </Grid>
+
+        </Grid>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            p: 2
+          }}
+        >
+          <Button color="primary" variant="contained">
+            Save Role
+          </Button>
+        </Box>
+      </CardContent>
+
+
+      {values.map((value) => (
+        <RoleRow value={value}/>
+      ))
+      }
+
+
+import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
+  TextField
+} from '@material-ui/core';
+import { Formik } from 'formik';
+import { reqCreateRole } from 'src/api';
+
+const initialValues = {
+  title: '',
+  description: '',
+  skillSet: ''
+};
+
+const _id = '612e3302a420646564c01214';
+
+const showRoleAndCount = (props) => {
+  return (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={async (values) => {
+        try {
+          // const skillSet = values.skillSet;
+          // console.log(Rvalues);
+          const response = await reqCreateRole({ _id, ...values });
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      }}
+    >
+      {({
+        errors,
+        handleBlur,
+        handleChange,
+        handleSubmit,
+        isSubmitting,
+        touched,
+        values
+      }) => (
+        <CardContent id="showroledetails">
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={3}>
+              <Grid item md={12} xs={12}>
+                <TextField
+                  fullWidth
+                  label="Role Title"
+                  name="title"
+                  required
+                  onChange={handleChange}
+                  value={values.title}
+                />
+              </Grid>
+            </Grid>
+          </form>
+        </CardContent>
+      )}
+
+    </Formik>
+  );
+};
+
+export default showRoleAndCount;
+
+
+
+
+<TableBody>
+              {props.map((order) => (
+                <TableRow
+                  hover
+                  key={order.id}
+                >
+                  <TableCell>
+                    {order.ref}
+                  </TableCell>
+                  <TableCell>
+                    {order.customer.name}
+                  </TableCell>
+                  <TableCell>
+                    {moment(order.createdAt).format('DD/MM/YYYY')}
+                  </TableCell>
+                  <TableCell>
+                    <Chip
+                      color="primary"
+                      label={order.status}
+                      size="small"
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+
+
+<Grid container>
+                  <Grid
+                    item
+                    xs={6}
+                    md={4}
+                    style={{
+                      padding: 16,
+                      display: 'flex',
+                      justifyContent: 'flex-start'
+                    }}
+                  >
+                    <Button variant="outlined">
+                      Back
+                    </Button>
+                  </Grid>
+                  <Grid item xs={6} md={8}>
+                    <CardHeader title="Role Management" />
+                  </Grid>
+                </Grid>

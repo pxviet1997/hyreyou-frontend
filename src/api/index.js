@@ -23,3 +23,6 @@ export const reqUpdateImage = (file, headers) => ajax(`${BASE_URL}/updateImage/u
 export const reqAddJobHistory = (newJob) => ajax(`${BASE_URL}/talent/add-job-history`, newJob, 'POST');
 
 export const reqAddEducationHistory = (newEducation) => ajax(`${BASE_URL}/talent/add-education-history`, newEducation, 'POST');
+export const reqCreateRole = (addRole) => ajax(`${BASE_URL}/business/createRole`, addRole, 'POST');
+export const listAllRoleAndNoCandidate = (showRole) => ajax(`${BASE_URL}/business/listAllRoleAndNoCandidate`, showRole, 'POST');
+export const listRoleCandidate = (listCandidate) => ajax(`${BASE_URL}/business/listRoleCandidate`, listCandidate, 'POST');
