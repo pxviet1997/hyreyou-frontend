@@ -266,29 +266,22 @@ export default showRoleAndCount;
             </TableBody>
 
 
-
-
-            <TableBody>
-              {props.map((order) => (
-                <TableRow
-                  hover
-                  key={order.roleTitle}
-                >
-                  <TableCell>
-                    {order.roleTitle}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-
-
-
-            try {
-        
-          const response = await listRoleCandidate({ _id, ...values });
-          setIsShowRole(false);
-          setisCreatingRole(false);
-          console.log(response);
-        } catch (error) {
-          console.log(error);
-        }
+<Grid container>
+                  <Grid
+                    item
+                    xs={6}
+                    md={4}
+                    style={{
+                      padding: 16,
+                      display: 'flex',
+                      justifyContent: 'flex-start'
+                    }}
+                  >
+                    <Button variant="outlined">
+                      Back
+                    </Button>
+                  </Grid>
+                  <Grid item xs={6} md={8}>
+                    <CardHeader title="Role Management" />
+                  </Grid>
+                </Grid>

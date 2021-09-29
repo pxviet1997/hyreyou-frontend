@@ -26,7 +26,7 @@ const routes = [
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'business-profile', element: <BusinessRegister /> },
       { path: 'role', element: <Role /> },
-      { path: 'role/candidate-list/:roleId', element: <CandidateList /> },
+      { path: 'role/candidate-list', element: <CandidateList /> },
       { path: 'short-list', element: <ShortList /> },
       { path: 'interview', element: <Interview /> },
       { path: '/', element: <Navigate to="/app/dashboard" /> },
