@@ -21,6 +21,7 @@
     }
   },
   "rules": {
+    "no-param-reassign": "off",
     "linebreak-style": "off",
     "comma-dangle": "off",
     "jsx-a11y/anchor-is-valid": "off",

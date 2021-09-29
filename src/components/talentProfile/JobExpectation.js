@@ -21,6 +21,7 @@ import { useState } from 'react';
 import { updatePersonalDetail } from 'src/redux/actions/talentAction';
 import { clearMessage } from 'src/redux/actions/messageAction';
 import { skills } from './constant';
+import { useTheme } from '@material-ui/styles';
 
 const JobExpectation = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -31,12 +32,18 @@ const JobExpectation = () => {
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
   const [skillSet, setSkillSet] = useState([]);
+  const [availability, setAvailability] = useState([]);
+  const [salary, setSalary] = useState('');
+  const [salaryType, setSalaryType] = useState('');
+  const [workType, setWorkType] = useState('');
+  const theme = useTheme();
 
   const initialValues = {
-    skills: [],
-    availability: [],
-    salary: '',
-    salaryType: []
+    skillSet,
+    availability,
+    salary,
+    salaryType,
+    workType
   };
 
   const ITEM_HEIGHT = 48;
@@ -48,6 +55,16 @@ const JobExpectation = () => {
         width: 250,
       },
     },
+  };
+
+  const getStyles = (name, personName) => {
+    console.log(theme);
+    return {
+      fontWeight:
+        personName.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
   };
 
   // const names = [
@@ -63,7 +80,7 @@ const JobExpectation = () => {
   //   'Kelly Snyder',
   // ];
 
-  console.log(skillSet);
+  // console.log(skillSet);
 
   return (
     <>
@@ -78,72 +95,68 @@ const JobExpectation = () => {
         }}
       >
         <Container maxWidth="lg">
-          <Formik
+          {/* <Formik
             initialValues={initialValues}
-            validationSchema={Yup.object().shape({
-
-            })}
-            onSubmit={async (values) => {
-              console.log(values);
+            onSubmit={() => {
+              console.log(skillSet);
             }}
           >
-            {({
-              errors,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              isSubmitting,
-              touched,
-              values,
-              setTouched
-            }) => {
-              return (
-                <form onSubmit={handleSubmit}>
-                  <Grid container style={{ marginBottom: 40 }} spacing={2}>
-                    <Grid item lg={4} md={4} xs={12}>
-                      <FieldArray
-                        name="skills"
-                        render={(arrayHelpers) => {
-                          return (
-                            <FormControl>
-                              <InputLabel id="skill-set">Skill Set</InputLabel>
-                              <Select
-                                labelId="skill-set"
-                                multiple
-                                value={values.skills}
-                                onChange={(event) => {
-                                  const {
-                                    target: { value },
-                                  } = event;
-                                  console.log(value);
-                                  arrayHelpers.push(value[0]);
-
-                                  console.log(values.skills);
-                                  // setSkillSet(
-                                  //   // On autofill we get a the stringified value.
-                                  //   typeof value === 'string' ? value.split(',') : value,
-                                  // );
-                                }}
-                                // onChange={handleChange}
-                                input={<OutlinedInput label="Skill Set" />}
-                                MenuProps={MenuProps}
-                              >
-                                {skills.map((skill) => (
-                                  <MenuItem
-                                    key={skill}
-                                    value={skill}
-                                  // style={getStyles(name, personName, theme)}
-                                  >
-                                    {skill}
-                                  </MenuItem>
-                                ))}
-                              </Select>
-                            </FormControl>
-                          );
+            {({ handleSubmit, values }) => {
+              return ( */}
+          {/* <form onSubmit={handleSubmit}> */}
+          <Grid container style={{ marginBottom: 40 }} spacing={2}>
+            <Grid item>
+              <Button
+                color="primary"
+                variant="contained"
+                type="submit"
+              // disabled={isSubmitting}
+              >
+                Save
+              </Button>
+            </Grid>
+            <Grid item lg={4} md={4} xs={12}>
+              <FieldArray
+                name="skills"
+                render={(arrayHelpers) => {
+                  return (
+                    <FormControl>
+                      <InputLabel id="skill-set">Skill Set</InputLabel>
+                      <Select
+                        labelId="skill-set"
+                        multiple
+                        value={values.skillSet}
+                        onChange={(event) => {
+                          const {
+                            target: { value },
+                          } = event;
+                          setSkillSet(value);
                         }}
-                      />
+                        input={<OutlinedInput label="Skill Set" />}
+                        MenuProps={MenuProps}
+                      >
+                        {skills.map((skill) => (
+                          <MenuItem
+                            key={skill}
+                            value={skill}
+                          // style={getStyles(skill, values.skills, theme)}
+                          // style={{
+                          //   fontWeight:
+                          //     values.skills.indexOf(skill) === -1
+                          //       ? 'normal'
+                          //       : 'bold',
+                          // }}
+                          >
+                            {skill}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  );
+                }}
+              />
 
-                      {/* <TextField
+              {/* <TextField
                         fullWidth
                         label="Skill Set"
                         name="address.streetName"
@@ -157,8 +170,8 @@ const JobExpectation = () => {
                         helperText={isEditing && touched.address.streetName && errors.address && errors.address.streetName}
                         inputProps={{ readOnly: !isEditing, }}
                       /> */}
-                    </Grid>
-                    {/* <Grid item lg={4} md={4} xs={12}>
+            </Grid>
+            {/* <Grid item lg={4} md={4} xs={12}>
                       <TextField
                         fullWidth
                         label="State"
@@ -190,11 +203,11 @@ const JobExpectation = () => {
                         inputProps={{ readOnly: !isEditing, }}
                       />
                     </Grid> */}
-                  </Grid>
-                </form>
+          </Grid>
+          {/* </form>
               );
             }}
-          </Formik>
+          </Formik> */}
         </Container>
       </Box>
     </>
