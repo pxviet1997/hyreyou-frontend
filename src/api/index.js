@@ -12,7 +12,7 @@ export const reqSignUp = (newUser) => ajax(`${BASE_URL}/auth/signup`, newUser, '
 export const reqReset = (resetInfo) => ajax(`${BASE_URL}/auth/resetpassword`, resetInfo, 'POST', { headers: authHeader() });
 export const reqChangePassword = (passwordInfo) => ajax(`${BASE_URL}/auth/changepassword`, passwordInfo, 'POST', { headers: authHeader() });
 
-export const reqGetTalent = (_id) => ajax(`${BASE_URL}/talent`, { _id }, { headers: authHeader() });
+export const reqGetTalent = (_id) => ajax(`${BASE_URL}/talent/get-talent`, { _id }, 'GET', { headers: authHeader() });
 
 export const reqVerifyEmail = (verifyInfo) => ajax(`${BASE_URL}/auth/verify`, verifyInfo);
 

@@ -3,6 +3,8 @@ import axios from 'axios';
 export default function ajax(url, data = {}, type = 'GET', header = {}) {
   return new Promise((resolve, reject) => {
     let promise;
+    console.log(url);
+    console.log(type);
 
     if (type === 'GET') {
       promise = axios.get(url, {

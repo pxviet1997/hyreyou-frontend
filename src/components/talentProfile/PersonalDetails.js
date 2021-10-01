@@ -20,23 +20,39 @@ const PersonalDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const { user, error } = useSelector((state) => state.shared);
+  const {
+    user, error, talent, userType
+  } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
-  const initialValues = {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    mobileNumber: user.mobileNumber,
-    address: {
-      country: user.address.country,
-      city: user.address.city,
-      streetName: user.address.streetName,
-      state: user.address.state,
-      postalCode: user.address.postalCode
+  const initialValues = userType === 'Talent'
+    ? {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      mobileNumber: user.mobileNumber,
+      address: {
+        country: user.address.country,
+        city: user.address.city,
+        streetName: user.address.streetName,
+        state: user.address.state,
+        postalCode: user.address.postalCode
+      }
     }
-  };
+    : {
+      firstName: talent.firstName,
+      lastName: talent.lastName,
+      email: talent.email,
+      mobileNumber: talent.mobileNumber,
+      address: {
+        country: talent.address.country,
+        city: talent.address.city,
+        streetName: talent.address.streetName,
+        state: talent.address.state,
+        postalCode: talent.address.postalCode
+      }
+    };
 
   const originalTouched = {
     firstName: false,

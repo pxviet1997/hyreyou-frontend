@@ -21,9 +21,6 @@ const TalentProfile = () => (
           <Grid item lg={12} md={12} xs={12}>
             <TalentProfileDetail />
           </Grid>
-          {/* <Grid item lg={3} md={3} xs={12}>
-            <TalentProfileComponent />
-            </Grid> */}
         </Grid>
       </Container>
     </Box>
