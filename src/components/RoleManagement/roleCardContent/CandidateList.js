@@ -123,9 +123,7 @@ const CandidateList = ({ setisShowCandiateList, setIsShowRole }) => {
                             hover
                             key={row._id}
                             onClick={() => {
-                              // return <Navigate to={`app/role/candidate-list/${role.id}`} />;
-                              dispatch(getTalent(row._id));
-                              navigate('candidate');
+                              navigate('candidate', { state: row._id });
                             }}
                           >
                             <TableCell>

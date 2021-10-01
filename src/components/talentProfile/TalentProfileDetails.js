@@ -21,6 +21,9 @@ import { makeStyles } from '@material-ui/styles';
 import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
+import { getTalent } from 'src/redux/actions/businessAction';
 import API from 'src/services';
 import { validationSchema } from 'src/utils';
 import Certification from './Certification';
@@ -72,22 +75,12 @@ const normalizeData = (values) => {
   };
 };
 
-export const getTalentProfileData = async (uid = '') => {
-  try {
-    const response = await API.get('/talent', {
-      _id: uid || '6138a8cc35389921daef2627' // FIXME: SERVER_BUG: change this to dynamic and can't send body with GET method
-    });
-    const { data } = response;
-    return data;
-  } catch (error) {
-    throw Error(error);
-  }
-};
-
 const TalentProfileDetails = (props) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [isNewForm, setNewForm] = useState(true);
+  const { state } = useLocation();
+  const dispatch = useDispatch();
 
   const handleEdit = (edit) => {
     if (edit) {
@@ -145,7 +138,7 @@ const TalentProfileDetails = (props) => {
               <Tab label="Job Expectation" />
             </Tabs>
             <TabPanel value={value} index={0}>
-              <PersonalDetails />
+              <PersonalDetails roleId={state} />
             </TabPanel>
             <TabPanel value={value} index={1}>
               <JobHistory />
@@ -155,23 +148,9 @@ const TalentProfileDetails = (props) => {
             </TabPanel>
             <TabPanel value={value} index={3}>
               <Certification />
-              {/* // isEditForm={!isEditForm}
-              // values={values}
-              // handleChange={handleChange}
-              // handleBlur={handleBlur}
-              // touched={touched}
-              // errors={errors}
-              /> */}
             </TabPanel>
             <TabPanel value={value} index={4}>
               <JobExpectation />
-              {/* // isEditForm={!isEditForm}
-              // values={values}
-              // handleChange={handleChange}
-              // handleBlur={handleBlur}
-              // touched={touched}
-              // errors={errors}
-              /> */}
             </TabPanel>
           </div>
         </Grid>
