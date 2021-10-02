@@ -18,23 +18,23 @@ import { reqUpdate } from 'src/api';
 import { updateJobExpectation } from 'src/redux/actions/talentAction';
 import { clearMessage } from 'src/redux/actions/messageAction';
 
-const JobExpectation = () => {
+const JobExpectation = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const { user, error } = useSelector((state) => state.shared);
+  const { userType, error } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
-  const [expectedSkillSet, setExpectedSkillSet] = useState(user.expectedSkillSet ? user.expectedSkillSet : []);
-  const [expectedAvailability, setExpectedAvailability] = useState(user.expectedAvailability ? user.expectedAvailability : []);
-  const [expectedSalary, setExpectedSalary] = useState(user.expectedSalary ? user.expectedSalary : '');
-  const [expectedSalaryType, setExpectedSalaryType] = useState(user.expectedSalaryType ? user.expectedSalaryType : []);
-  const [expectedWorkType, setExpectedWorkType] = useState(user.expectedWorkType ? user.expectedWorkType : []);
+  const [expectedSkillSet, setExpectedSkillSet] = useState(data.expectedSkillSet ? data.expectedSkillSet : []);
+  const [expectedAvailability, setExpectedAvailability] = useState(data.expectedAvailability ? data.expectedAvailability : []);
+  const [expectedSalary, setExpectedSalary] = useState(data.expectedSalary ? data.expectedSalary : '');
+  const [expectedSalaryType, setExpectedSalaryType] = useState(data.expectedSalaryType ? data.expectedSalaryType : []);
+  const [expectedWorkType, setExpectedWorkType] = useState(data.expectedWorkType ? data.expectedWorkType : []);
 
   const onClick = async () => {
     try {
       dispatch(updateJobExpectation({
-        _id: user._id,
+        _id: data._id,
         info: {
           expectedWorkType, expectedAvailability, expectedSalaryType, expectedSkillSet, expectedSalary
         }
@@ -69,30 +69,33 @@ const JobExpectation = () => {
         }}
       >
         <Container maxWidth="lg">
-          <Grid container style={{ marginBottom: 40 }} spacing={2}>
-            <Grid item>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={() => setIsEditing(!isEditing)}
-              >
-                {!isEditing ? 'Edit' : 'Cancel'}
-              </Button>
-            </Grid>
-            {isEditing
-              && (
+          {userType === 'Talent'
+            && (
+              <Grid container style={{ marginBottom: 40 }} spacing={2}>
                 <Grid item>
                   <Button
                     color="primary"
                     variant="contained"
-                    type="submit"
-                    onClick={onClick}
+                    onClick={() => setIsEditing(!isEditing)}
                   >
-                    Save
+                    {!isEditing ? 'Edit' : 'Cancel'}
                   </Button>
                 </Grid>
-              )}
-          </Grid>
+                {isEditing
+                  && (
+                    <Grid item>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        type="submit"
+                        onClick={onClick}
+                      >
+                        Save
+                      </Button>
+                    </Grid>
+                  )}
+              </Grid>
+            )}
           <Grid container spacing={2}>
             <Grid item lg={12} md={12} xs={12}>
               <DropDownMenu

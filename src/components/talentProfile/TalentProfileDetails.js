@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Certification from './Certification';
 import EducationHistory from './EducationHistory';
 import JobExpectation from './JobExpectation';
@@ -49,14 +49,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TalentProfileDetails = (props) => {
+const TalentProfileDetails = ({ data }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const [isNewForm, setNewForm] = useState(true);
-  // const { state } = useLocation();
-  // const dispatch = useDispatch();
-
-  const handleEdit = (edit) => { if (edit) setValue(0); };
 
   const handleTabChange = (event, newValue) => setValue(newValue);
 
@@ -84,19 +79,19 @@ const TalentProfileDetails = (props) => {
               <Tab label="Job Expectation" />
             </Tabs>
             <TabPanel value={value} index={0}>
-              <PersonalDetails />
+              <PersonalDetails data={data} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <JobHistory />
+              <JobHistory data={data} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-              <EducationHistory />
+              <EducationHistory data={data} />
             </TabPanel>
             <TabPanel value={value} index={3}>
-              <Certification />
+              <Certification data={data} />
             </TabPanel>
             <TabPanel value={value} index={4}>
-              <JobExpectation />
+              <JobExpectation data={data} />
             </TabPanel>
           </div>
         </Grid>

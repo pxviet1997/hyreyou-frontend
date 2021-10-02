@@ -7,7 +7,7 @@ import {
   CardHeader,
   Divider
 } from '@material-ui/core';
-import RoleCardDetails from 'src/components/RoleManagement/roleCardContent/RoleCardDetails';
+import RoleCardDetails from 'src/components/roleManagement/RoleCardDetails';
 
 const Role = () => (
   <>

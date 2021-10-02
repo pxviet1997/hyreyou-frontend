@@ -12,12 +12,13 @@ import PaymentInfo from 'src/pages/PaymentInfo';
 import Register from 'src/pages/Register';
 // import Settings from 'src/pages/Settings';
 import Reset from 'src/pages/Reset';
-import Role from './components/RoleManagement/Role';
+import Role from './pages/Role';
 import ShortList from './pages/ShortList';
 import SplashScreen from './pages/SplashScreen';
 import TalentProfile from 'src/pages/TalentProfile';
 import Verify from 'src/pages/Verify';
-import CandidateList from './components/RoleManagement/roleCardContent/CandidateList';
+import CandidateList from './pages/CandidateList';
+import TalentProfileBusiness from './pages/TalentProfileBusiness';
 
 const routes = [
   {
@@ -28,7 +29,7 @@ const routes = [
       { path: 'business-profile', element: <BusinessRegister /> },
       { path: 'role', element: <Role /> },
       { path: 'role/candidate-list', element: <CandidateList /> },
-      { path: 'role/candidate-list/candidate', element: <TalentProfile /> },
+      { path: 'role/candidate-list/candidate', element: <TalentProfileBusiness /> },
       { path: 'short-list', element: <ShortList /> },
       { path: 'interview', element: <Interview /> },
       { path: '/', element: <Navigate to="/business/dashboard" /> },

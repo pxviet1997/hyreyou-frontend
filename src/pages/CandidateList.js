@@ -2,32 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
-  Box,
-  Button,
-  Card,
-  Chip,
-  CardContent,
-  CardHeader,
-  Divider,
-  Grid,
-  TextField,
-  Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TableSortLabel,
-  Tooltip
+  Box, Button, Card, CardHeader, Divider, Grid, Container, Table, TableBody, TableCell, TableHead, TableRow,
 } from '@material-ui/core';
-import moment from 'moment';
-import { v4 as uuid } from 'uuid';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { listRoleCandidate } from 'src/api';
 import { useDispatch } from 'react-redux';
 import { getTalent } from 'src/redux/actions/businessAction';
-// import CandaidateModal from './CandidateModal';
 
 const initialValues = {
   title: '',

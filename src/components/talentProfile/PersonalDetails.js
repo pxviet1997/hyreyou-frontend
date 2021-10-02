@@ -15,29 +15,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { updatePersonalDetail } from 'src/redux/actions/talentAction';
 import { clearMessage } from 'src/redux/actions/messageAction';
-import { getTalent } from 'src/redux/actions/businessAction';
 
-const PersonalDetails = ({ roleId }) => {
+const PersonalDetails = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [open, setOpen] = useState(false);
 
   const {
-    user, error, talent, userType
+    userType, error
   } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
   const initialValues = {
-    firstName: user.firstName || '',
-    lastName: user.lastName || '',
-    email: user.email || '',
-    mobileNumber: user.mobileNumber || '',
+    firstName: data.firstName || '',
+    lastName: data.lastName || '',
+    email: data.email || '',
+    mobileNumber: data.mobileNumber || '',
     address: {
-      country: user.address ? user.address.country : '',
-      city: user.address ? user.address.city : '',
-      streetName: user.address ? user.address.streetName : '',
-      state: user.address ? user.address.state : '',
-      postalCode: user.address ? user.address.postalCode : ''
+      country: data.address ? data.address.country : '',
+      city: data.address ? data.address.city : '',
+      streetName: data.address ? data.address.streetName : '',
+      state: data.address ? data.address.state : '',
+      postalCode: data.address ? data.address.postalCode : ''
     }
   };
 
@@ -55,44 +54,16 @@ const PersonalDetails = ({ roleId }) => {
     }
   };
 
-  useEffect(() => {
-    // console.log(roleId);
-    dispatch(getTalent(roleId));
-  }, []);
-
-  // useEffect(() => {
-  //   initialValues = {
-  //     // firstName: talent ? talent.firstName : '',
-  //     // lastName: talent ? talent.lastName : '',
-  //     // email: talent ? talent.email : '',
-  //     // mobileNumber: talent ? talent.mobileNumber : '',
-  //     // address: {
-  //     //   country: talent ? talent.address.country : '',
-  //     //   city: talent ? talent.address.city : '',
-  //     //   streetName: talent ? talent.address.streetName : '',
-  //     //   state: talent ? talent.address.state : '',
-  //     //   postalCode: talent ? talent.address.postalCode : ''
-  //     // }
-  //     firstName: talent && talent.firstName,
-  //     lastName: talent && talent.lastName,
-  //     email: talent && talent.email,
-  //     mobileNumber: talent && talent.mobileNumber,
-  //     address: {
-  //       country: talent && talent.address.country,
-  //       city: talent && talent.address.city,
-  //       streetName: talent && talent.address.streetName,
-  //       state: talent && talent.address.state,
-  //       postalCode: talent && talent.address.postalCode
-  //     }
-  //   };
-  // }, [talent]);
-
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
     setOpen(false);
   };
+
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, []);
 
   return (
     <>
@@ -124,9 +95,11 @@ const PersonalDetails = ({ roleId }) => {
               }),
             })}
             onSubmit={async (values) => {
-              // setIsEditing(!isEditing);
-              // setOpen(true);
-              console.log(values);
+              setIsEditing(!isEditing);
+              const { _id } = data;
+              dispatch(clearMessage());
+              dispatch(updatePersonalDetail({ _id, info: values }));
+              setOpen(true);
             }}
           >
             {({

@@ -24,17 +24,16 @@ import AddEducationModal from '../modal/AddEducationModal';
 import { updateEducationHistory } from 'src/redux/actions/talentAction';
 // import { updateJobHistory } from 'src/redux/actions/talentAction';
 
-const EducationHistory = () => {
+const EducationHistory = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const { user, error } = useSelector((state) => state.shared);
+  const { userType, error } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
-  const { education } = user;
-  // console.log(typeof jobHistory);
+  const { education } = data;
   const initialValues = education.length !== 0
     ? { education }
     : {
@@ -69,7 +68,7 @@ const EducationHistory = () => {
             onSubmit={async (values) => {
               setIsEditing(false);
               // dispatch(updateJobHistory({ _id: user._id, info: values }));
-              dispatch(updateEducationHistory({ _id: user._id, info: values }));
+              dispatch(updateEducationHistory({ _id: data._id, info: values }));
               setOpenAlert(true);
             }}
           >
@@ -83,52 +82,55 @@ const EducationHistory = () => {
               return (
                 <>
                   <form onSubmit={handleSubmit}>
-                    <Grid container style={{ marginBottom: 40 }} spacing={2}>
-                      <Grid item>
-                        <Button
-                          color="primary"
-                          variant="contained"
-                          onClick={() => {
-                            setIsAdding(false);
-                            setIsEditing(!isEditing);
-                            // setTouched(originalTouched, false);
-                          }}
-                        >
-                          {!isEditing ? 'Edit' : 'Cancel'}
-                        </Button>
-                      </Grid>
-                      {isEditing
-                        && (
-                          <Grid item>
-                            <Button
-                              color="primary"
-                              variant="contained"
-                              type="submit"
-                              disabled={isSubmitting}
-                            >
-                              Save
-                            </Button>
-                          </Grid>
-                        )}
-                      {!isEditing
-                        && (
+                    {userType === 'Talent'
+                      && (
+                        <Grid container style={{ marginBottom: 40 }} spacing={2}>
                           <Grid item>
                             <Button
                               color="primary"
                               variant="contained"
                               onClick={() => {
+                                setIsAdding(false);
+                                setIsEditing(!isEditing);
                                 // setTouched(originalTouched, false);
-                                setIsAdding(!isAdding);
-                                setOpen(true);
                               }}
                             >
-                              Add
+                              {!isEditing ? 'Edit' : 'Cancel'}
                             </Button>
                           </Grid>
-                        )}
-                    </Grid>
+                          {isEditing
+                            && (
+                              <Grid item>
+                                <Button
+                                  color="primary"
+                                  variant="contained"
+                                  type="submit"
+                                  disabled={isSubmitting}
+                                >
+                                  Save
+                                </Button>
+                              </Grid>
+                            )}
+                          {!isEditing
+                            && (
+                              <Grid item>
+                                <Button
+                                  color="primary"
+                                  variant="contained"
+                                  onClick={() => {
+                                    // setTouched(originalTouched, false);
+                                    setIsAdding(!isAdding);
+                                    setOpen(true);
+                                  }}
+                                >
+                                  Add
+                                </Button>
+                              </Grid>
+                            )}
+                        </Grid>
+                      )}
 
-                    <AddEducationModal open={open} setOpenAlert={setOpenAlert} setOpen={setOpen} id={user._id} />
+                    <AddEducationModal open={open} setOpenAlert={setOpenAlert} setOpen={setOpen} id={data._id} />
 
                     <Grid container spacing={7}>
                       {values.education.map((value, index) => {

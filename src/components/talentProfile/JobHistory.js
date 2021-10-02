@@ -22,16 +22,16 @@ import * as Yup from 'yup';
 import AddJobModal from '../modal/AddJobModal';
 import { updateJobHistory } from 'src/redux/actions/talentAction';
 
-const JobHistory = () => {
+const JobHistory = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const { user, error } = useSelector((state) => state.shared);
+  const { userType, error } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
-  const { jobHistory } = user;
+  const { jobHistory } = data;
   // console.log(typeof jobHistory);
   const initialValues = jobHistory.length !== 0
     ? { jobHistory }
@@ -67,7 +67,7 @@ const JobHistory = () => {
             initialValues={initialValues}
             onSubmit={async (values) => {
               setIsEditing(false);
-              dispatch(updateJobHistory({ _id: user._id, info: values }));
+              dispatch(updateJobHistory({ _id: data._id, info: values }));
               setOpenAlert(true);
             }}
           >
@@ -81,52 +81,54 @@ const JobHistory = () => {
               return (
                 <>
                   <form onSubmit={handleSubmit}>
-                    <Grid container style={{ marginBottom: 40 }} spacing={2}>
-                      <Grid item>
-                        <Button
-                          color="primary"
-                          variant="contained"
-                          onClick={() => {
-                            setIsAdding(false);
-                            setIsEditing(!isEditing);
-                            // setTouched(originalTouched, false);
-                          }}
-                        >
-                          {!isEditing ? 'Edit Role' : 'Cancel'}
-                        </Button>
-                      </Grid>
-                      {isEditing
-                        && (
-                          <Grid item>
-                            <Button
-                              color="primary"
-                              variant="contained"
-                              type="submit"
-                              disabled={isSubmitting}
-                            >
-                              Save
-                            </Button>
-                          </Grid>
-                        )}
-                      {!isEditing
-                        && (
+                    {userType === 'Talent'
+                      && (
+                        <Grid container style={{ marginBottom: 40 }} spacing={2}>
                           <Grid item>
                             <Button
                               color="primary"
                               variant="contained"
                               onClick={() => {
-                                // setTouched(originalTouched, false);
-                                setIsAdding(!isAdding);
-                                setOpen(true);
+                                setIsAdding(false);
+                                setIsEditing(!isEditing);
                               }}
                             >
-                              Add Role
+                              {!isEditing ? 'Edit Role' : 'Cancel'}
                             </Button>
                           </Grid>
-                        )}
-                    </Grid>
+                          {isEditing
+                            && (
+                              <Grid item>
+                                <Button
+                                  color="primary"
+                                  variant="contained"
+                                  type="submit"
+                                  disabled={isSubmitting}
+                                >
+                                  Save
+                                </Button>
+                              </Grid>
+                            )}
+                          {!isEditing
+                            && (
+                              <Grid item>
+                                <Button
+                                  color="primary"
+                                  variant="contained"
+                                  onClick={() => {
+                                    // setTouched(originalTouched, false);
+                                    setIsAdding(!isAdding);
+                                    setOpen(true);
+                                  }}
+                                >
+                                  Add Role
+                                </Button>
+                              </Grid>
+                            )}
+                        </Grid>
+                      )}
 
-                    <AddJobModal open={open} setOpenAlert={setOpenAlert} setOpen={setOpen} id={user._id} />
+                    <AddJobModal open={open} setOpenAlert={setOpenAlert} setOpen={setOpen} id={data._id} />
 
                     <Grid container spacing={7}>
                       {values.jobHistory.map((value, index) => {
