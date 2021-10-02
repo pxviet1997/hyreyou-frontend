@@ -55,7 +55,7 @@ const JobExpectation = () => {
 
   useEffect(() => {
     return dispatch(clearMessage());
-  });
+  }, []);
 
   return (
     <>
