@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet';
 import {
   Box, CircularProgress, Container, Grid
 } from '@material-ui/core';
-import TalentProfileDetail from '../components/talentProfile/TalentProfileDetails';
+import TalentProfileDetails from '../components/talentProfile/TalentProfileDetails';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
@@ -53,7 +53,7 @@ const TalentProfileBusiness = () => {
             <Container maxWidth="lg">
               <Grid container spacing={3}>
                 <Grid item lg={12} md={12} xs={12}>
-                  <TalentProfileDetail data={data} />
+                  <TalentProfileDetails data={data} />
                 </Grid>
               </Grid>
             </Container>
