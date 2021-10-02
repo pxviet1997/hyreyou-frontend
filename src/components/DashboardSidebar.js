@@ -14,7 +14,6 @@ import {
   List,
   Typography
 } from '@material-ui/core';
-import API from 'src/services';
 import {
   BarChart as BarChartIcon,
   User as UserIcon,

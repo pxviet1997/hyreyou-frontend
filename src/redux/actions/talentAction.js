@@ -7,7 +7,8 @@ import {
   UPDATE_JOB_HISTORY_SUCCESS,
   UPDATE_PERSONAL_DETAIL_SUCCESS,
   ADD_EDUCATION_HISTORY_SUCCESS,
-  UPDATE_EDUCATION_HISTORY_SUCCESS
+  UPDATE_EDUCATION_HISTORY_SUCCESS,
+  UPDATE_JOB_EXPECTATION_SUCCESS
 } from './type';
 
 export const updatePersonalDetail = (info) => async (dispatch) => {
@@ -72,6 +73,20 @@ export const updateEducationHistory = (updatedEducation) => async (dispatch) => 
     localStorage.setItem('user', JSON.stringify(response.user));
     const { info } = updatedEducation;
     dispatch({ type: UPDATE_EDUCATION_HISTORY_SUCCESS, payload: info.education });
+    dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: SET_TALENT_ERROR });
+    dispatch({ type: SET_ERROR_MESSAGE, payload: error });
+  }
+};
+
+export const updateJobExpectation = (updatedJobExpectation) => async (dispatch) => {
+  try {
+    const response = await reqUpdate(updatedJobExpectation);
+    localStorage.setItem('user', JSON.stringify(response.user));
+    const { info } = updatedJobExpectation;
+    dispatch({ type: UPDATE_JOB_EXPECTATION_SUCCESS, payload: info });
     dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
   } catch (error) {
     console.log(error);

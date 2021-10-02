@@ -3,21 +3,10 @@ import { FieldArray, Formik } from 'formik';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import {
-  Alert,
-  Box,
-  Container,
-  Grid,
-  TextField,
-  Button,
-  Snackbar,
-  FormControl,
-  InputLabel,
-  Select,
-  OutlinedInput,
-  MenuItem,
+  Box, Container, Grid, TextField, Button, Snackbar, Alert,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   skills,
   availabilities,
@@ -25,35 +14,48 @@ import {
   workTypes
 } from './constant';
 import DropDownMenu from './DropDownMenu';
+import { reqUpdate } from 'src/api';
+import { updateJobExpectation } from 'src/redux/actions/talentAction';
+import { clearMessage } from 'src/redux/actions/messageAction';
 
 const JobExpectation = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [isAdding, setIsAdding] = useState(false);
-  const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const { user, error } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
-  const [expectedSkillSet, setExpectedSkillSet] = useState([]);
-  const [expectedAvailability, setExpectedAvailability] = useState([]);
-  const [expectedSalary, setExpectedSalary] = useState('');
-  const [expectedSalaryType, setExpectedSalaryType] = useState([]);
-  const [expectedWorkType, setExpectedWorkType] = useState([]);
+  const [expectedSkillSet, setExpectedSkillSet] = useState(user.expectedSkillSet ? user.expectedSkillSet : []);
+  const [expectedAvailability, setExpectedAvailability] = useState(user.expectedAvailability ? user.expectedAvailability : []);
+  const [expectedSalary, setExpectedSalary] = useState(user.expectedSalary ? user.expectedSalary : '');
+  const [expectedSalaryType, setExpectedSalaryType] = useState(user.expectedSalaryType ? user.expectedSalaryType : []);
+  const [expectedWorkType, setExpectedWorkType] = useState(user.expectedWorkType ? user.expectedWorkType : []);
 
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      },
-    },
+  const onClick = async () => {
+    try {
+      dispatch(updateJobExpectation({
+        _id: user._id,
+        info: {
+          expectedWorkType, expectedAvailability, expectedSalaryType, expectedSkillSet, expectedSalary
+        }
+      }));
+      setIsEditing(false);
+      setOpenAlert(true);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const onClick = () => {
-    console.log(expectedSkillSet);
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
   };
+
+  useEffect(() => {
+    return dispatch(clearMessage());
+  });
 
   return (
     <>
@@ -67,15 +69,29 @@ const JobExpectation = () => {
         }}
       >
         <Container maxWidth="lg">
-          <Grid container style={{ marginBottom: 40 }}>
-            <Button
-              color="primary"
-              variant="contained"
-              type="submit"
-              onClick={onClick}
-            >
-              Save
-            </Button>
+          <Grid container style={{ marginBottom: 40 }} spacing={2}>
+            <Grid item>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => setIsEditing(!isEditing)}
+              >
+                {!isEditing ? 'Edit' : 'Cancel'}
+              </Button>
+            </Grid>
+            {isEditing
+              && (
+                <Grid item>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                    onClick={onClick}
+                  >
+                    Save
+                  </Button>
+                </Grid>
+              )}
           </Grid>
           <Grid container spacing={2}>
             <Grid item lg={12} md={12} xs={12}>
@@ -127,6 +143,16 @@ const JobExpectation = () => {
             </Grid>
           </Grid>
         </Container>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity={error ? 'error' : 'success'} sx={{ width: '100%' }} variant="filled">
+            {message}
+          </Alert>
+        </Snackbar>
       </Box>
     </>
   );

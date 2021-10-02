@@ -25,16 +25,16 @@ const PersonalDetails = () => {
   const dispatch = useDispatch();
 
   const initialValues = {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    mobileNumber: user.mobileNumber,
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
+    email: user.email || '',
+    mobileNumber: user.mobileNumber || '',
     address: {
-      country: user.address.country,
-      city: user.address.city,
-      streetName: user.address.streetName,
-      state: user.address.state,
-      postalCode: user.address.postalCode
+      country: user.address ? user.address.country : '',
+      city: user.address ? user.address.city : '',
+      streetName: user.address ? user.address.streetName : '',
+      state: user.address ? user.address.state : '',
+      postalCode: user.address ? user.address.postalCode : ''
     }
   };
 

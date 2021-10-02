@@ -15,7 +15,6 @@ import {
 } from '@material-ui/core';
 import { Formik } from 'formik';
 
-import API from 'src/services';
 import { validationSchema } from 'src/utils/index';
 
 const gender = [
@@ -147,88 +146,88 @@ const BusinessProfileDetails = (props) => {
     setIsEditForm(edit);
   };
 
-  const getBusinessProfile = async () => {
-    try {
-      const response = await API.get('/business');
-      const { data } = response;
+  // const getBusinessProfile = async () => {
+  //   try {
+  //     const response = await API.get('/business');
+  //     const { data } = response;
 
-      if (!data.length) {
-        setNewForm(true);
-        setIsEditForm(true);
-        return;
-      }
+  //     if (!data.length) {
+  //       setNewForm(true);
+  //       setIsEditForm(true);
+  //       return;
+  //     }
 
-      setNewForm(false);
-      const {
-        businessName,
-        businessABN,
-        contactNumber,
-        email,
-        culturalInformation,
-        userType,
-        address: { streetName, city, state, country, postalCode } = {},
-        ...rest
-      } = data[0];
+  //     setNewForm(false);
+  //     const {
+  //       businessName,
+  //       businessABN,
+  //       contactNumber,
+  //       email,
+  //       culturalInformation,
+  //       userType,
+  //       address: { streetName, city, state, country, postalCode } = {},
+  //       ...rest
+  //     } = data[0];
 
-      setBusinessForm({
-        businessName,
-        businessABN,
-        contactNumber,
-        email,
-        streetName: streetName || '',
-        city: city || '',
-        state: state || '',
-        country: country || '',
-        postalCode: postalCode || '',
-        business_description: '',
-        culturalInformation: '',
-        type: userType
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     setBusinessForm({
+  //       businessName,
+  //       businessABN,
+  //       contactNumber,
+  //       email,
+  //       streetName: streetName || '',
+  //       city: city || '',
+  //       state: state || '',
+  //       country: country || '',
+  //       postalCode: postalCode || '',
+  //       business_description: '',
+  //       culturalInformation: '',
+  //       type: userType
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getBusinessProfile();
-  }, []);
+  // useEffect(() => {
+  //   getBusinessProfile();
+  // }, []);
 
-  const handleCreateForm = async (data) => {
-    try {
-      await API.post('/business/createBusiness', data);
-      alert('Profile created successfully');
-      setIsEditForm(false);
-    } catch (error) {
-      alert(error.message || 'something went wrong in creating profile');
-      console.log(error);
-    }
-  };
+  // const handleCreateForm = async (data) => {
+  //   try {
+  //     await API.post('/business/createBusiness', data);
+  //     alert('Profile created successfully');
+  //     setIsEditForm(false);
+  //   } catch (error) {
+  //     alert(error.message || 'something went wrong in creating profile');
+  //     console.log(error);
+  //   }
+  // };
 
-  const handleUpdateForm = async (data) => {
-    try {
-      await API.post('/business/updateBusiness', data);
-      alert('Profile updated successfully');
-      setIsEditForm(false);
-    } catch (error) {
-      alert(error.message || 'something went wrong in updating profile');
-      console.log(error);
-    }
-  };
+  // const handleUpdateForm = async (data) => {
+  //   try {
+  //     await API.post('/business/updateBusiness', data);
+  //     alert('Profile updated successfully');
+  //     setIsEditForm(false);
+  //   } catch (error) {
+  //     alert(error.message || 'something went wrong in updating profile');
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <Formik
       initialValues={businessForm || initialValues}
       validationSchema={validationSchema.businessProfileFormSchema}
       enableReinitialize
-      onSubmit={async (values) => {
-        if (!isEditForm) return;
+    // onSubmit={async (values) => {
+    //   // if (!isEditForm) return;
 
-        if (isNewForm) {
-          await handleCreateForm(values);
-        } else {
-          await handleUpdateForm(values);
-        }
-      }}
+    //   // if (isNewForm) {
+    //   //   await handleCreateForm(values);
+    //   // } else {
+    //   //   await handleUpdateForm(values);
+    //   // }
+    // }}
     >
       {({
         errors,
