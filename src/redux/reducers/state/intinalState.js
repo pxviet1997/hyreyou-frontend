@@ -5,13 +5,15 @@ export const initialState = user
     isLoggedIn: true,
     user,
     userType: user.userType,
-    error: false
+    error: false,
+    talent: null,
   }
   : {
     isLoggedIn: false,
     user: null,
     userType: '',
-    error: false
+    error: false,
+    talent: null,
   };
 
 export const initialMessageState = {

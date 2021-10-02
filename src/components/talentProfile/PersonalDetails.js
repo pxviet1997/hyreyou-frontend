@@ -12,15 +12,18 @@ import {
   Snackbar,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { updatePersonalDetail } from 'src/redux/actions/talentAction';
 import { clearMessage } from 'src/redux/actions/messageAction';
+import { getTalent } from 'src/redux/actions/businessAction';
 
-const PersonalDetails = () => {
+const PersonalDetails = ({ roleId }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const { user, error } = useSelector((state) => state.shared);
+  const {
+    user, error, talent, userType
+  } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
@@ -52,6 +55,38 @@ const PersonalDetails = () => {
     }
   };
 
+  useEffect(() => {
+    // console.log(roleId);
+    dispatch(getTalent(roleId));
+  }, []);
+
+  // useEffect(() => {
+  //   initialValues = {
+  //     // firstName: talent ? talent.firstName : '',
+  //     // lastName: talent ? talent.lastName : '',
+  //     // email: talent ? talent.email : '',
+  //     // mobileNumber: talent ? talent.mobileNumber : '',
+  //     // address: {
+  //     //   country: talent ? talent.address.country : '',
+  //     //   city: talent ? talent.address.city : '',
+  //     //   streetName: talent ? talent.address.streetName : '',
+  //     //   state: talent ? talent.address.state : '',
+  //     //   postalCode: talent ? talent.address.postalCode : ''
+  //     // }
+  //     firstName: talent && talent.firstName,
+  //     lastName: talent && talent.lastName,
+  //     email: talent && talent.email,
+  //     mobileNumber: talent && talent.mobileNumber,
+  //     address: {
+  //       country: talent && talent.address.country,
+  //       city: talent && talent.address.city,
+  //       streetName: talent && talent.address.streetName,
+  //       state: talent && talent.address.state,
+  //       postalCode: talent && talent.address.postalCode
+  //     }
+  //   };
+  // }, [talent]);
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -74,6 +109,7 @@ const PersonalDetails = () => {
         <Container maxWidth="lg">
           <Formik
             initialValues={initialValues}
+            enableReinitialize
             validationSchema={Yup.object().shape({
               firstName: Yup.string().max(255).required('Email is required'),
               lastName: Yup.string().max(255).required('Last name is required'),
@@ -88,11 +124,9 @@ const PersonalDetails = () => {
               }),
             })}
             onSubmit={async (values) => {
-              setIsEditing(!isEditing);
-              const { _id } = user;
-              dispatch(clearMessage());
-              dispatch(updatePersonalDetail({ _id, info: values }));
-              setOpen(true);
+              // setIsEditing(!isEditing);
+              // setOpen(true);
+              console.log(values);
             }}
           >
             {({
@@ -122,6 +156,7 @@ const PersonalDetails = () => {
                         error={Boolean(isEditing && touched.firstName && errors.firstName)}
                         helperText={isEditing && touched.firstName && errors.firstName}
                         inputProps={{ readOnly: !isEditing, }}
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                     <Grid item lg={6} md={6} xs={12}>
@@ -138,6 +173,7 @@ const PersonalDetails = () => {
                         error={Boolean(isEditing && touched.lastName && errors.lastName)}
                         helperText={isEditing && touched.lastName && errors.lastName}
                         inputProps={{ readOnly: !isEditing, }}
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                     <Grid item lg={12} md={12} xs={12}>
@@ -154,6 +190,7 @@ const PersonalDetails = () => {
                         error={Boolean(isEditing && touched.email && errors.email)}
                         helperText={isEditing && touched.email && errors.email}
                         inputProps={{ readOnly: !isEditing, }}
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                     <Grid item lg={12} md={12} xs={12}>
@@ -170,6 +207,7 @@ const PersonalDetails = () => {
                         error={Boolean(isEditing && touched.mobileNumber && errors.mobileNumber)}
                         helperText={isEditing && touched.mobileNumber && errors.mobileNumber}
                         inputProps={{ readOnly: !isEditing, }}
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                     <Grid item lg={6} md={6} xs={12}>
@@ -190,6 +228,7 @@ const PersonalDetails = () => {
                         error={Boolean(isEditing && touched.address.country && errors.address && errors.address.country)}
                         helperText={isEditing && touched.address.country && errors.address && errors.address.country}
                         inputProps={{ readOnly: !isEditing, }}
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                     <Grid item lg={6} md={6} xs={12}>
@@ -206,6 +245,7 @@ const PersonalDetails = () => {
                         error={Boolean(isEditing && touched.address.city && errors.address && errors.address.city)}
                         helperText={isEditing && touched.address.city && errors.address && errors.address.city}
                         inputProps={{ readOnly: !isEditing, }}
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                     <Grid item lg={4} md={4} xs={12}>
@@ -222,6 +262,8 @@ const PersonalDetails = () => {
                         error={Boolean(isEditing && touched.address.streetName && errors.address && errors.address.streetName)}
                         helperText={isEditing && touched.address.streetName && errors.address && errors.address.streetName}
                         inputProps={{ readOnly: !isEditing, }}
+                        InputLabelProps={{ shrink: true }}
+
                       />
                     </Grid>
                     <Grid item lg={4} md={4} xs={12}>
@@ -238,6 +280,7 @@ const PersonalDetails = () => {
                         error={Boolean(isEditing && touched.address.state && errors.address && errors.address.state)}
                         helperText={isEditing && touched.address.state && errors.address && errors.address.state}
                         inputProps={{ readOnly: !isEditing, }}
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                     <Grid item lg={4} md={4} xs={12}>
@@ -254,22 +297,26 @@ const PersonalDetails = () => {
                         error={Boolean(isEditing && touched.address.postalCode && errors.address && errors.address.postalCode)}
                         helperText={isEditing && touched.address.postalCode && errors.address && errors.address.postalCode}
                         inputProps={{ readOnly: !isEditing, }}
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                   </Grid>
+
                   <Grid container style={{ marginTop: 23 }} spacing={2}>
-                    <Grid item>
-                      <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={() => {
-                          setIsEditing(!isEditing);
-                          setTouched(originalTouched, false);
-                        }}
-                      >
-                        {!isEditing ? 'Edit' : 'Cancel'}
-                      </Button>
-                    </Grid>
+                    {userType === 'Talent' && (
+                      <Grid item>
+                        <Button
+                          color="primary"
+                          variant="contained"
+                          onClick={() => {
+                            setIsEditing(!isEditing);
+                            setTouched(originalTouched, false);
+                          }}
+                        >
+                          {!isEditing ? 'Edit' : 'Cancel'}
+                        </Button>
+                      </Grid>
+                    )}
                     {isEditing && (
                       <Grid item>
                         <Button

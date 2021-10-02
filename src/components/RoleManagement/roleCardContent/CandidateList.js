@@ -25,6 +25,8 @@ import { v4 as uuid } from 'uuid';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { listRoleCandidate } from 'src/api';
+import { useDispatch } from 'react-redux';
+import { getTalent } from 'src/redux/actions/businessAction';
 // import CandaidateModal from './CandidateModal';
 
 const initialValues = {
@@ -39,6 +41,7 @@ const CandidateList = ({ setisShowCandiateList, setIsShowRole }) => {
   // const [currentCandidateId, setCurrentCandidateId] = useState('');
   const { state } = useLocation();
   const [isListCandidates, setIsListCandidates] = useState();
+  const dispatch = useDispatch();
   useEffect(async () => {
     try {
       // console.log(state);
@@ -120,9 +123,7 @@ const CandidateList = ({ setisShowCandiateList, setIsShowRole }) => {
                             hover
                             key={row._id}
                             onClick={() => {
-                              console.log(row._id);
-                              // setOpenModal(true);
-                              // setCurrentCandidateId(row._id);
+                              navigate('candidate', { state: row._id });
                             }}
                           >
                             <TableCell>

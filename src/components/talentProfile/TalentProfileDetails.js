@@ -53,6 +53,8 @@ const TalentProfileDetails = (props) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [isNewForm, setNewForm] = useState(true);
+  // const { state } = useLocation();
+  // const dispatch = useDispatch();
 
   const handleEdit = (edit) => { if (edit) setValue(0); };
 
