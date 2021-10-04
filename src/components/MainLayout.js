@@ -2,6 +2,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { experimentalStyled } from '@material-ui/core';
 import MainNavbar from './MainNavbar';
+import { useEffect, useState } from 'react';
 
 const MainLayoutRoot = experimentalStyled('div')(
   ({ theme }) => ({
@@ -33,10 +34,10 @@ const MainLayoutContent = experimentalStyled('div')({
 });
 
 const MainLayout = () => {
-  // const { isLoggedIn, userType } = useSelector((state) => state.auth);
-  const { isLoggedIn, userType } = useSelector((state) => state.shared);
+  const token = JSON.parse(localStorage.getItem('token'));
+  const userType = JSON.parse(localStorage.getItem('userType'));
 
-  if (isLoggedIn) {
+  if (token) {
     return userType === 'Talent'
       ? <Navigate to="/talent" />
       : <Navigate to="/business" />;

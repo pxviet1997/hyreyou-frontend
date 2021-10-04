@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable operator-linebreak */
 import { useEffect, useRef, useState } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut } from 'src/redux/actions/authAction';
 import PropTypes from 'prop-types';
@@ -16,30 +16,22 @@ import {
 } from '@material-ui/core';
 import {
   BarChart as BarChartIcon,
-  User as UserIcon,
   UserPlus as UserPlusIcon,
-  Users as UsersIcon,
   LogOut as LogOutIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 import { reqUpdateImage } from 'src/api';
 
-// const user = {
-//   avatar: '/static/images/avatars/avatar_7.png',
-//   jobTitle: 'Senior Developer',
-//   name: 'John Doe'
-// };
-
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
   const avatarRef = useRef();
-  const talentType = window.location.pathname.includes('talent'); // TODO: either we do better or can change this logged in user type, either Talent or Business;
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileChanged, setFileChanged] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  const { userType, user } = useSelector((state) => state.shared);
+  const { user } = useSelector((state) => state.shared);
+  const userType = JSON.parse(localStorage.getItem('userType'));
 
   const dispatch = useDispatch();
 
@@ -100,14 +92,9 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
     }
   }, [location.pathname]);
 
-  const buf = (TYPED_ARRAY) => {
-    return TYPED_ARRAY.reduce((data, byte) => {
-      return data + String.fromCharCode(byte);
-    }, '');
-  };
-
   useEffect(() => {
     // const { profilePhoto } = user;
+    if (!user) return;
     const image = userType === 'Talent'
       ? user.profilePhoto
       : user.logo;
@@ -120,7 +107,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
     setSelectedFile({
       preview: `data:image/png;base64,${base64String}`
     });
-  }, []);
+  }, [user]);
 
   const onLogoutClick = () => {
     dispatch(logOut());

@@ -14,6 +14,8 @@ export const reqChangePassword = (passwordInfo) => ajax(`${BASE_URL}/auth/change
 
 export const reqGetTalent = (_id) => ajax(`${BASE_URL}/talent/get-talent`, { _id }, 'GET', { headers: authHeader() });
 
+export const reqGetUser = (userInfo) => ajax(`${BASE_URL}/auth/get-user`, userInfo);
+
 export const reqVerifyEmail = (verifyInfo) => ajax(`${BASE_URL}/auth/verify`, verifyInfo);
 
 export const reqUpdate = (info) => ajax(`${BASE_URL}/talent/update`, info, 'POST', { headers: authHeader() });

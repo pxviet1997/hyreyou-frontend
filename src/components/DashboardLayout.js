@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { experimentalStyled } from '@material-ui/core';
+import { Box, CircularProgress, experimentalStyled } from '@material-ui/core';
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
 
@@ -42,27 +42,51 @@ const DashboardLayoutContent = experimentalStyled('div')({
 const DashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
-  // const { isLoggedIn } = useSelector((state) => state.auth);
-  const { isLoggedIn } = useSelector((state) => state.shared);
+  const { user } = useSelector((state) => state.shared);
+  const token = JSON.parse(localStorage.getItem('token'));
+  const [loading, setLoading] = useState(true);
 
-  if (!isLoggedIn) {
+  if (!token) {
     return <Navigate to="/" />;
   }
+
+  useEffect(async () => {
+    if (!user) return;
+    console.log(user);
+    setLoading(false);
+  }, [user]);
 
   return (
     <DashboardLayoutRoot>
       <DashboardNavbar onMobileNavOpen={() => setMobileNavOpen(true)} />
-      <DashboardSidebar
-        onMobileClose={() => setMobileNavOpen(false)}
-        openMobile={isMobileNavOpen}
-      />
-      <DashboardLayoutWrapper>
-        <DashboardLayoutContainer>
-          <DashboardLayoutContent>
-            <Outlet />
-          </DashboardLayoutContent>
-        </DashboardLayoutContainer>
-      </DashboardLayoutWrapper>
+      {loading
+        ? (
+          <Box
+            sx={{
+              minHeight: '100%',
+              minWidth: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <CircularProgress />
+          </Box>)
+        : (
+          <>
+            <DashboardSidebar
+              onMobileClose={() => setMobileNavOpen(false)}
+              openMobile={isMobileNavOpen}
+            />
+            <DashboardLayoutWrapper>
+              <DashboardLayoutContainer>
+                <DashboardLayoutContent>
+                  <Outlet />
+                </DashboardLayoutContent>
+              </DashboardLayoutContainer>
+            </DashboardLayoutWrapper>
+          </>
+        )}
     </DashboardLayoutRoot>
   );
 };

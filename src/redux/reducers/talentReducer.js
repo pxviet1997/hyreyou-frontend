@@ -1,6 +1,7 @@
 import {
   ADD_EDUCATION_HISTORY_SUCCESS,
   ADD_JOB_HISTORY_SUCCESS,
+  SET_TALENT,
   SET_TALENT_ERROR,
   UPDATE_EDUCATION_HISTORY_SUCCESS,
   UPDATE_JOB_EXPECTATION_SUCCESS,
@@ -11,6 +12,10 @@ import { initialState } from './state/intinalState';
 
 export const talentReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_TALENT:
+      return {
+        ...state, user: action.payload
+      };
     case UPDATE_PERSONAL_DETAIL_SUCCESS:
       return {
         ...state, user: action.payload, error: false,

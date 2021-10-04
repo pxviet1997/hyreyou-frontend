@@ -1,11 +1,13 @@
-import { reqSignIn, reqSignUp } from 'src/api';
+import { reqGetUser, reqSignIn, reqSignUp } from 'src/api';
 import {
+  SET_TALENT,
   LOGIN_SUCCESS,
   LOGOUT,
   SET_AUTH_ERROR,
   SET_CONFIRM_MESSAGE,
   SET_ERROR_MESSAGE,
-  SIGNUP_SUCCESS
+  SIGNUP_SUCCESS,
+  SET_BUSINESS
 } from './type';
 
 export const signIn = (userInfo) => async (dispatch) => {
@@ -15,9 +17,24 @@ export const signIn = (userInfo) => async (dispatch) => {
     console.log(response);
 
     localStorage.setItem('token', JSON.stringify(response.token));
-    localStorage.setItem('user', JSON.stringify(response.user));
+    localStorage.setItem('userType', JSON.stringify(response.userType));
 
     dispatch({ type: LOGIN_SUCCESS, payload: response });
+  } catch (error) {
+    dispatch({ type: SET_ERROR_MESSAGE, payload: error });
+    dispatch({ type: SET_AUTH_ERROR });
+  }
+};
+
+export const getUser = () => async (dispatch) => {
+  try {
+    const token = JSON.parse(localStorage.getItem('token'));
+    const userType = JSON.parse(localStorage.getItem('userType'));
+
+    const response = await reqGetUser({ token, userType });
+
+    const type = userType === 'Talent' ? SET_TALENT : SET_BUSINESS;
+    dispatch({ type, payload: response.user });
   } catch (error) {
     dispatch({ type: SET_ERROR_MESSAGE, payload: error });
     dispatch({ type: SET_AUTH_ERROR });
@@ -37,7 +54,7 @@ export const signUp = (userInfo) => async (dispatch) => {
 };
 
 export const logOut = () => {
-  localStorage.removeItem('user');
+  localStorage.removeItem('userType');
   localStorage.removeItem('token');
   return { type: LOGOUT };
 };
