@@ -2,17 +2,13 @@
 import PropTypes from 'prop-types';
 
 import { Helmet } from 'react-helmet';
-import { Box, Container, Grid, TextField } from '@material-ui/core';
+import { Box, Button, Container, Grid, TextField } from '@material-ui/core';
+import { useState } from 'react';
+import AddCertificationModal from '../modal/AddCertificationModal';
 
-const Certification = ({
-  isEditForm,
-  values,
-  handleChange,
-  handleBlur,
-  touched,
-  errors
-}) => {
-  console.log('[Certification]', { values });
+const Certification = () => {
+  // console.log('[Certification]', { values });
+  const [open, setOpen] = useState(false);
   return (
     <>
       <Helmet>
@@ -25,22 +21,17 @@ const Certification = ({
         }}
       >
         <Container maxWidth="lg">
+          <AddCertificationModal open={open} setOpen={setOpen} />
           <Grid container spacing={3}>
             <Grid item lg={12} md={12} xs={12}>
-              <TextField
-                fullWidth
-                label="Skill"
-                name="skills"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
-                type="text"
-                value={values.skills}
-                variant="outlined"
-                helperText={touched.skills && errors.skills}
-                error={Boolean(touched.skills && errors.skills)}
-                disabled={isEditForm}
-              />
+              <Button
+                color="primary"
+                variant="contained"
+                type="submit"
+                onClick={() => setOpen(true)}
+              >
+                Add
+              </Button>
             </Grid>
           </Grid>
         </Container>
@@ -49,12 +40,3 @@ const Certification = ({
   );
 };
 export default Certification;
-
-Certification.propTypes = {
-  isEditForm: PropTypes.bool,
-  values: PropTypes.arrayOf(PropTypes.string),
-  handleChange: PropTypes.func,
-  handleBlur: PropTypes.func,
-  errors: PropTypes.object,
-  touched: PropTypes.object
-};

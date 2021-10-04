@@ -12,7 +12,7 @@ import {
   Grid,
 } from '@material-ui/core';
 
-import { listAllRoleAndNoCandidate } from 'src/api';
+import { reqListAllRoleAndNoCandidate } from 'src/api';
 import AddRole from './AddRole';
 import RoleList from './RoleList';
 
@@ -34,7 +34,7 @@ const RoleCardDetails = (props) => {
 
   useEffect(async () => {
     try {
-      const response = await listAllRoleAndNoCandidate({ _id });
+      const response = await reqListAllRoleAndNoCandidate({ _id });
       // console.log(response);
       setListRole(response);
     } catch (error) {

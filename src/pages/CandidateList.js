@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { listRoleCandidate } from 'src/api';
+import { reqListRoleCandidate } from 'src/api';
 import { useDispatch } from 'react-redux';
 import { getTalent } from 'src/redux/actions/businessAction';
 
@@ -18,15 +18,13 @@ const initialValues = {
 
 const CandidateList = ({ setisShowCandiateList, setIsShowRole }) => {
   const navigate = useNavigate();
-  // const [openModal, setOpenModal] = useState(false);
-  // const [currentCandidateId, setCurrentCandidateId] = useState('');
   const { state } = useLocation();
   const [isListCandidates, setIsListCandidates] = useState();
-  const dispatch = useDispatch();
+
   useEffect(async () => {
     try {
       // console.log(state);
-      const response = await listRoleCandidate({ roleId: state.roleId });
+      const response = await reqListRoleCandidate({ roleId: state.roleId });
       console.log(response);
       setIsListCandidates(response);
     } catch (error) {
