@@ -29,3 +29,5 @@ export const reqCreateRole = (addRole) => ajax(`${BASE_URL}/business/createRole`
 export const reqListAllRoleAndNoCandidate = (showRole) => ajax(`${BASE_URL}/business/listAllRoleAndNoCandidate`, showRole, 'POST');
 
 export const reqListRoleCandidate = (listCandidate) => ajax(`${BASE_URL}/business/listRoleCandidate`, listCandidate, 'POST');
+
+export const reqUpdateCertification = (certification) => ajax(`${BASE_URL}/talent/update-certification`, certification, 'POST');

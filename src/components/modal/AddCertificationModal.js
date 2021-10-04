@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
   CardContent,
@@ -9,6 +9,7 @@ import {
   Modal,
   Typography
 } from '@material-ui/core';
+import { reqUpdateCertification } from 'src/api/index';
 
 const style = {
   position: 'absolute',
@@ -24,10 +25,19 @@ const AddCertificationModal = ({ open, setOpen }) => {
   const [file, setFile] = useState();
   const [certificationName, setCertificationName] = useState();
   const handleClose = () => setOpen(false);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.shared);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     console.log(file);
     console.log(certificationName);
+
+    const formData = new FormData();
+    formData.append('_id', user._id); // FIXME: change this to logged in user id
+    formData.append('certification', file, file.name);
+    formData.append('certificationName', certificationName);
+
+    await reqUpdateCertification(formData);
   };
 
   return (
@@ -50,6 +60,7 @@ const AddCertificationModal = ({ open, setOpen }) => {
               name="upload-photo"
               type="file"
               onChange={(e) => setFile(e.target.files[0])}
+              inputProps={{ accept: '.doc,.docx,.pdf' }}
             />
           </Grid>
           <Grid item lg={12} md={12} xs={12}>

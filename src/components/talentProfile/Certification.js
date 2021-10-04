@@ -2,13 +2,19 @@
 import PropTypes from 'prop-types';
 
 import { Helmet } from 'react-helmet';
-import { Box, Button, Container, Grid, TextField } from '@material-ui/core';
+import { Box, Button, Container, Grid, Table, TableBody, TableCell, TableRow, TextField } from '@material-ui/core';
 import { useState } from 'react';
 import AddCertificationModal from '../modal/AddCertificationModal';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Certification = () => {
   // console.log('[Certification]', { values });
   const [open, setOpen] = useState(false);
+  const disptach = useDispatch();
+  const { user } = useSelector((state) => state.shared);
+
+  console.log(user);
+
   return (
     <>
       <Helmet>
@@ -32,6 +38,20 @@ const Certification = () => {
               >
                 Add
               </Button>
+            </Grid>
+            <Grid item>
+              <Table
+                fullwidth
+              >
+                <TableBody>
+                  {user.certifications && user.certifications.map((certification) => (
+                    <TableRow>
+                      <TableCell>{certification.name}</TableCell>
+                      <TableCell>{certification.fileName}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </Grid>
           </Grid>
         </Container>

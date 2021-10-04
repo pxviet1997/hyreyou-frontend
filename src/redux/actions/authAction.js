@@ -12,6 +12,8 @@ export const signIn = (userInfo) => async (dispatch) => {
   try {
     const response = await reqSignIn(userInfo);
 
+    console.log(response);
+
     localStorage.setItem('token', JSON.stringify(response.token));
     localStorage.setItem('user', JSON.stringify(response.user));
 
