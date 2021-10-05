@@ -1,11 +1,13 @@
 /* eslint-disable object-curly-newline */
 import PropTypes from 'prop-types';
-
+import fs from 'fs';
 import { Helmet } from 'react-helmet';
 import { Box, Button, Container, Grid, Table, TableBody, TableCell, TableRow, TextField } from '@material-ui/core';
 import { useState } from 'react';
 import AddCertificationModal from '../modal/AddCertificationModal';
 import { useDispatch, useSelector } from 'react-redux';
+import { BASE_URL, reqDownload } from 'src/api';
+import { Link } from 'react-router-dom';
 
 const Certification = () => {
   // console.log('[Certification]', { values });
@@ -13,7 +15,10 @@ const Certification = () => {
   const disptach = useDispatch();
   const { user } = useSelector((state) => state.shared);
 
-  console.log(user);
+  const onClick = async (certificationId) => {
+    // await reqDownload({ _id: user._id, certificationId });
+    window.open(`${BASE_URL}/talent/download/?_id=${user._id}&&certificationId=${certificationId}`);
+  };
 
   return (
     <>
@@ -39,15 +44,15 @@ const Certification = () => {
                 Add
               </Button>
             </Grid>
-            <Grid item>
-              <Table
-                fullwidth
-              >
+            <Grid item lg={12} md={12} xs={12}>
+              <Table style={{ width: '100%' }}>
                 <TableBody>
                   {user.certifications && user.certifications.map((certification) => (
                     <TableRow>
                       <TableCell>{certification.name}</TableCell>
-                      <TableCell>{certification.fileName}</TableCell>
+                      <TableCell align="right">
+                        <a href={`${BASE_URL}/talent/download/?_id=${user._id}&&certificationId=${certification._id}`}>{certification.fileName}</a>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

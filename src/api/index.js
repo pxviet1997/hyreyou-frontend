@@ -1,7 +1,7 @@
 import ajax from './ajax';
 import { authHeader } from './header';
 
-const BASE_URL = 'http://localhost:5000';
+export const BASE_URL = 'http://localhost:5000';
 
 export const reqTalentSignIn = (user) => ajax(`${BASE_URL}/auth/talentlogin`, user, 'POST');
 export const reqBusinessSignIn = (user) => ajax(`${BASE_URL}/auth/businesslogin`, user, 'POST');
@@ -32,4 +32,6 @@ export const reqListAllRoleAndNoCandidate = (showRole) => ajax(`${BASE_URL}/busi
 
 export const reqListRoleCandidate = (listCandidate) => ajax(`${BASE_URL}/business/listRoleCandidate`, listCandidate, 'POST');
 
-export const reqUpdateCertification = (certification) => ajax(`${BASE_URL}/talent/update-certification`, certification, 'POST');
+export const reqAddCertification = (certification) => ajax(`${BASE_URL}/talent/add-certification`, certification, 'POST');
+
+export const reqDownload = (downloadInfo) => ajax(`${BASE_URL}/talent/download`, downloadInfo);

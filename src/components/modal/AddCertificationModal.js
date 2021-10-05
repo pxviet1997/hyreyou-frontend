@@ -9,7 +9,7 @@ import {
   Modal,
   Typography
 } from '@material-ui/core';
-import { reqUpdateCertification } from 'src/api/index';
+import { addCertification } from 'src/redux/actions/talentAction';
 
 const style = {
   position: 'absolute',
@@ -29,15 +29,13 @@ const AddCertificationModal = ({ open, setOpen }) => {
   const { user } = useSelector((state) => state.shared);
 
   const onSubmit = async () => {
-    console.log(file);
-    console.log(certificationName);
-
     const formData = new FormData();
     formData.append('_id', user._id); // FIXME: change this to logged in user id
     formData.append('certification', file, file.name);
     formData.append('certificationName', certificationName);
-
-    await reqUpdateCertification(formData);
+    dispatch(addCertification(formData));
+    handleClose();
+    // await reqAddCertification(formData);
   };
 
   return (

@@ -1,4 +1,5 @@
 import {
+  ADD_CERTIFICATION,
   ADD_EDUCATION_HISTORY_SUCCESS,
   ADD_JOB_HISTORY_SUCCESS,
   SET_TALENT,
@@ -55,6 +56,13 @@ export const talentReducer = (state = initialState, action) => {
       return {
         ...state, expectedWorkType, expectedAvailability, expectedSalaryType, expectedSkillSet, expectedSalary
       };
+    }
+    case ADD_CERTIFICATION: {
+      const certification = action.payload;
+      console.log(certification);
+      const { user } = state;
+      user.certifications.push(certification);
+      return { ...state, user, error: false };
     }
     case SET_TALENT_ERROR:
       return { ...state, error: true };
