@@ -14,7 +14,7 @@ import {
   workTypes
 } from './constant';
 import DropDownMenu from './DropDownMenu';
-import { reqUpdate } from 'src/api';
+import { reqUpdateTalent } from 'src/api';
 import { updateJobExpectation } from 'src/redux/actions/talentAction';
 import { clearMessage } from 'src/redux/actions/messageAction';
 
