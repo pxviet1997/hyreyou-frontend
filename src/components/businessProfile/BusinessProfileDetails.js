@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import BusinessDetails from './BusinessDetails';
+import BusinessInformation from './BusinessInfomation';
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -78,9 +79,10 @@ const BusinessProfileDetails = ({ data }) => {
             <TabPanel value={value} index={0}>
               <BusinessDetails data={data} />
             </TabPanel>
-            {/* <TabPanel value={value} index={1}> */}
-            {/* <JobHistory data={data} /> */}
-            {/* </TabPanel> */}
+            <TabPanel value={value} index={1}>
+              {/* <JobHistory data={data} /> */}
+              <BusinessInformation data={data} />
+            </TabPanel>
           </div>
         </Grid>
       </CardContent>

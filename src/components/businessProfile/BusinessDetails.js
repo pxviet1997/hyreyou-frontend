@@ -95,7 +95,7 @@ const BusinessDetails = ({ data }) => {
             onSubmit={async (values) => {
               setIsEditing(!isEditing);
               const { _id } = data;
-              dispatch(clearMessage());
+              // dispatch(clearMessage());
               dispatch(updateBusinessDetail({ _id, info: values }));
               // dispatch(updatePersonalDetail({ _id, info: values }));
               setOpen(true);

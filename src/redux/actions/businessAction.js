@@ -15,9 +15,6 @@ export const getTalent = (talentId) => async (dispatch) => {
 export const updateBusinessDetail = (info) => async (dispatch) => {
   try {
     const response = await reqUpdateBusiness(info);
-
-    // localStorage.setItem('user', JSON.stringify(response.user));
-
     dispatch({ type: UPDATE_BUSINESS_DETAIL_SUCCESS, payload: response.user });
     dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
   } catch (error) {
