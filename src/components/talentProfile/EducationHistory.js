@@ -7,22 +7,14 @@ import {
   Box,
   Button,
   Container,
-  CardContent,
-  Divider,
   Grid,
   TextField,
-  Modal,
-  Typography,
   Snackbar,
   Alert
 } from '@material-ui/core';
-import { FieldArray, Formik } from 'formik';
-import { MyTextField } from 'src/components/shared';
-import * as Yup from 'yup';
-import AddJobModal from '../modal/AddJobModal';
-import AddEducationModal from '../modal/AddEducationModal';
+import { Formik } from 'formik';
+import AddEducationModal from './modal/AddEducationModal';
 import { updateEducationHistory } from 'src/redux/actions/talentAction';
-// import { updateJobHistory } from 'src/redux/actions/talentAction';
 
 const EducationHistory = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);

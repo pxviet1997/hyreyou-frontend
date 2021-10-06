@@ -1,6 +1,6 @@
 import {
   reqAddCertification,
-  reqAddEducationHistory, reqAddJobHistory, reqUpdate,
+  reqAddEducationHistory, reqAddJobHistory, reqUpdateTalent,
 } from 'src/api';
 import {
   ADD_JOB_HISTORY_SUCCESS, SET_CONFIRM_MESSAGE, SET_TALENT_ERROR, SET_ERROR_MESSAGE,
@@ -10,7 +10,7 @@ import {
 
 export const updatePersonalDetail = (info) => async (dispatch) => {
   try {
-    const response = await reqUpdate(info);
+    const response = await reqUpdateTalent(info);
 
     // localStorage.setItem('user', JSON.stringify(response.user));
 
@@ -38,7 +38,7 @@ export const addJobHistory = (id, newJob) => async (dispatch) => {
 
 export const updateJobHistory = (updatedJob) => async (dispatch) => {
   try {
-    const response = await reqUpdate(updatedJob);
+    const response = await reqUpdateTalent(updatedJob);
     // localStorage.setItem('user', JSON.stringify(response.user));
     const { info } = updatedJob;
     dispatch({ type: UPDATE_JOB_HISTORY_SUCCESS, payload: info.jobHistory });
@@ -66,7 +66,7 @@ export const addEducationHistory = (id, newEducation) => async (dispatch) => {
 
 export const updateEducationHistory = (updatedEducation) => async (dispatch) => {
   try {
-    const response = await reqUpdate(updatedEducation);
+    const response = await reqUpdateTalent(updatedEducation);
     // localStorage.setItem('user', JSON.stringify(response.user));
     const { info } = updatedEducation;
     dispatch({ type: UPDATE_EDUCATION_HISTORY_SUCCESS, payload: info.education });
@@ -80,7 +80,7 @@ export const updateEducationHistory = (updatedEducation) => async (dispatch) => 
 
 export const updateJobExpectation = (updatedJobExpectation) => async (dispatch) => {
   try {
-    const response = await reqUpdate(updatedJobExpectation);
+    const response = await reqUpdateTalent(updatedJobExpectation);
     const { info } = updatedJobExpectation;
     dispatch({ type: UPDATE_JOB_EXPECTATION_SUCCESS, payload: info });
     dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });

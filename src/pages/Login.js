@@ -66,8 +66,10 @@ const Login = () => {
             initialValues={{
               // email: '',
               // password: ''
-              email: 'pxviet1997@gmail.com',
-              password: '1234'
+              // email: 'pxviet1997@gmail.com',
+              // password: '1234'
+              email: 'pxviet_1997@yahoo.com',
+              password: '123'
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),

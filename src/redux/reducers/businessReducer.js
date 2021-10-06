@@ -1,4 +1,4 @@
-import { GET_TALENT, SET_BUSINESS } from '../actions/type';
+import { GET_TALENT, SET_BUSINESS, UPDATE_BUSINESS_DETAIL_SUCCESS } from '../actions/type';
 import { initialState } from './state/intinalState';
 
 export const businessReducer = (state = initialState, action) => {
@@ -9,6 +9,16 @@ export const businessReducer = (state = initialState, action) => {
       return {
         ...state, user: action.payload
       };
+    case UPDATE_BUSINESS_DETAIL_SUCCESS: {
+      const {
+        businessName, businessABN, email, contactNumber, address
+      } = action.payload;
+      let { user } = state;
+      user = {
+        ...user, businessName, businessABN, email, contactNumber, address
+      };
+      return { ...state, user, error: false };
+    }
     default:
       return state;
   }

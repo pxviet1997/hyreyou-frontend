@@ -16,10 +16,8 @@ import {
   Snackbar,
   Alert
 } from '@material-ui/core';
-import { FieldArray, Formik } from 'formik';
-import { MyTextField } from 'src/components/shared';
-import * as Yup from 'yup';
-import AddJobModal from '../modal/AddJobModal';
+import { Formik } from 'formik';
+import AddJobModal from './modal/AddJobModal';
 import { updateJobHistory } from 'src/redux/actions/talentAction';
 
 const JobHistory = ({ data }) => {

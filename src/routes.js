@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import Activity from 'src/pages/Activity';
-import BusinessRegister from './pages/BusinessRegister';
+import BusinessProfile from './pages/BusinessProfile';
 import DashboardLayout from 'src/components/DashboardLayout';
 import MainLayout from 'src/components/MainLayout';
 import DashboardBusiness from 'src/pages/DashboardBusiness';
@@ -30,7 +30,7 @@ const routes = [
     element: <DashboardLayout />,
     children: [
       { path: 'dashboard', element: <DashboardBusiness /> },
-      { path: 'business-profile', element: <BusinessRegister /> },
+      { path: 'business-profile', element: <BusinessProfile /> },
       { path: 'role', element: <Role /> },
       { path: 'role/candidate-list', element: <CandidateList /> },
       { path: 'role/candidate-list/candidate', element: <TalentProfileBusiness /> },
@@ -56,7 +56,6 @@ const routes = [
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
-
   {
     path: '/',
     element: <MainLayout />,

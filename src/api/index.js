@@ -18,7 +18,9 @@ export const reqGetUser = (userInfo) => ajax(`${BASE_URL}/auth/get-user`, userIn
 
 export const reqVerifyEmail = (verifyInfo) => ajax(`${BASE_URL}/auth/verify`, verifyInfo);
 
-export const reqUpdate = (info) => ajax(`${BASE_URL}/talent/update`, info, 'POST', { headers: authHeader() });
+export const reqUpdateTalent = (info) => ajax(`${BASE_URL}/talent/update`, info, 'POST', { headers: authHeader() });
+
+export const reqUpdateBusiness = (info) => ajax(`${BASE_URL}/business/update`, info, 'POST');
 
 export const reqUpdateImage = (file, headers) => ajax(`${BASE_URL}/updateImage/upload`, file, 'POST', headers);
 
