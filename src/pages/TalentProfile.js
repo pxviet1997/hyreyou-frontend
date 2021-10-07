@@ -5,7 +5,7 @@ import TalentProfileDetail from '../components/talentProfile/TalentProfileDetail
 import { useSelector } from 'react-redux';
 
 const TalentProfile = () => {
-  const { user } = useSelector((state) => state.shared);
+  const { user, userType, error } = useSelector((state) => state.shared);
 
   return (
     <>
@@ -22,7 +22,7 @@ const TalentProfile = () => {
         <Container maxWidth="lg">
           <Grid container spacing={3}>
             <Grid item lg={12} md={12} xs={12}>
-              <TalentProfileDetail data={user} />
+              <TalentProfileDetail data={{ user, userType, error }} />
             </Grid>
           </Grid>
         </Container>

@@ -21,11 +21,11 @@ const EducationHistory = ({ data }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const { userType, error } = useSelector((state) => state.shared);
+  // const { userType, error } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
-
-  const { education } = data;
+  const { user, userType, error } = data;
+  const { education } = user;
   const initialValues = education.length !== 0
     ? { education }
     : {
@@ -60,7 +60,7 @@ const EducationHistory = ({ data }) => {
             onSubmit={async (values) => {
               setIsEditing(false);
               // dispatch(updateJobHistory({ _id: user._id, info: values }));
-              dispatch(updateEducationHistory({ _id: data._id, info: values }));
+              dispatch(updateEducationHistory({ _id: user._id, info: values }));
               setOpenAlert(true);
             }}
           >
@@ -122,7 +122,7 @@ const EducationHistory = ({ data }) => {
                         </Grid>
                       )}
 
-                    <AddEducationModal open={open} setOpenAlert={setOpenAlert} setOpen={setOpen} id={data._id} />
+                    <AddEducationModal open={open} setOpenAlert={setOpenAlert} setOpen={setOpen} id={user._id} />
 
                     <Grid container spacing={7}>
                       {values.education.map((value, index) => {

@@ -19,24 +19,21 @@ import { clearMessage } from 'src/redux/actions/messageAction';
 const PersonalDetails = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [open, setOpen] = useState(false);
-
-  const {
-    userType, error
-  } = useSelector((state) => state.shared);
+  const { user, userType, error } = data;
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
   const initialValues = {
-    firstName: data.firstName || '',
-    lastName: data.lastName || '',
-    email: data.email || '',
-    mobileNumber: data.mobileNumber || '',
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
+    email: user.email || '',
+    mobileNumber: user.mobileNumber || '',
     address: {
-      country: data.address ? data.address.country : '',
-      city: data.address ? data.address.city : '',
-      streetName: data.address ? data.address.streetName : '',
-      state: data.address ? data.address.state : '',
-      postalCode: data.address ? data.address.postalCode : ''
+      country: user.address ? user.address.country : '',
+      city: user.address ? user.address.city : '',
+      streetName: user.address ? user.address.streetName : '',
+      state: user.address ? user.address.state : '',
+      postalCode: user.address ? user.address.postalCode : ''
     }
   };
 
@@ -96,7 +93,7 @@ const PersonalDetails = ({ data }) => {
             })}
             onSubmit={async (values) => {
               setIsEditing(!isEditing);
-              const { _id } = data;
+              const { _id } = user;
               dispatch(clearMessage());
               dispatch(updatePersonalDetail({ _id, info: values }));
               setOpen(true);

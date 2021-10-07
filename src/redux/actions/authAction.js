@@ -34,7 +34,7 @@ export const getUser = () => async (dispatch) => {
     const response = await reqGetUser({ token, userType });
 
     const type = userType === 'Talent' ? SET_TALENT : SET_BUSINESS;
-    dispatch({ type, payload: response.user });
+    dispatch({ type, payload: response });
   } catch (error) {
     dispatch({ type: SET_ERROR_MESSAGE, payload: error });
     dispatch({ type: SET_AUTH_ERROR });
