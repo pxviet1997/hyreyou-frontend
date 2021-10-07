@@ -41,6 +41,8 @@
     "camelcase": "off",
     "import/order": "off",
     "react/jsx-wrap-multilines": "off",
-    "no-nested-ternary": "off"
+    "no-nested-ternary": "off",
+    "prefer-template": "off",
+    "space-infix-ops": "off"
   }
 }

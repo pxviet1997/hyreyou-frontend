@@ -1,6 +1,7 @@
-import { reqGetTalent, reqUpdateBusiness } from 'src/api';
+import { reqGetTalent, reqUpdateBusiness, reqRejectCandidate, reqShortlistingCandidate } from 'src/api';
 import {
-  GET_TALENT, SET_CONFIRM_MESSAGE, SET_ERROR_MESSAGE, SET_TALENT_ERROR, UPDATE_BUSINESS_DETAIL_SUCCESS, UPDATE_BUSINESS_INFORMATION_SUCCESS
+  GET_TALENT, SET_CONFIRM_MESSAGE, SET_ERROR_MESSAGE, SET_TALENT_ERROR, UPDATE_BUSINESS_DETAIL_SUCCESS, UPDATE_BUSINESS_INFORMATION_SUCCESS,
+  REJECT_TALENT, SHORTLIST_TALENT
 } from './type';
 
 export const getTalent = (talentId) => async (dispatch) => {
@@ -31,5 +32,22 @@ export const updateBusinessInformation = (info) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: SET_ERROR_MESSAGE, payload: error });
     dispatch({ type: SET_TALENT_ERROR });
+  }
+};
+export const shortlistTalent = (talentInfo) => async (dispatch) => {
+  try {
+    const response = await reqShortlistingCandidate(talentInfo);
+    dispatch({ type: SHORTLIST_TALENT, payload: response });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const rejectTalent = (talentInfo) => async (dispatch) => {
+  try {
+    const response = await reqRejectCandidate(talentInfo);
+    dispatch({ type: REJECT_TALENT, payload: response });
+  } catch (error) {
+    console.log(error);
   }
 };
