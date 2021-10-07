@@ -1,6 +1,6 @@
 import { reqGetTalent, reqUpdateBusiness } from 'src/api';
 import {
-  GET_TALENT, SET_CONFIRM_MESSAGE, SET_ERROR_MESSAGE, SET_TALENT_ERROR, UPDATE_BUSINESS_DETAIL_SUCCESS
+  GET_TALENT, SET_CONFIRM_MESSAGE, SET_ERROR_MESSAGE, SET_TALENT_ERROR, UPDATE_BUSINESS_DETAIL_SUCCESS, UPDATE_BUSINESS_INFORMATION_SUCCESS
 } from './type';
 
 export const getTalent = (talentId) => async (dispatch) => {
@@ -23,6 +23,13 @@ export const updateBusinessDetail = (info) => async (dispatch) => {
   }
 };
 
-// export const u =(w) => {
-//   return {type: 'KO', payload: w};
-// }
+export const updateBusinessInformation = (info) => async (dispatch) => {
+  try {
+    const response = await reqUpdateBusiness(info);
+    dispatch({ type: UPDATE_BUSINESS_INFORMATION_SUCCESS, payload: response.user });
+    dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
+  } catch (error) {
+    dispatch({ type: SET_ERROR_MESSAGE, payload: error });
+    dispatch({ type: SET_TALENT_ERROR });
+  }
+};

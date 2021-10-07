@@ -7,8 +7,6 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { reqListRoleCandidate } from 'src/api';
-import { useDispatch } from 'react-redux';
-import { getTalent } from 'src/redux/actions/businessAction';
 
 const initialValues = {
   title: '',
@@ -16,7 +14,7 @@ const initialValues = {
   skillSet: ''
 };
 
-const CandidateList = ({ setisShowCandiateList, setIsShowRole }) => {
+const CandidateList = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [isListCandidates, setIsListCandidates] = useState();

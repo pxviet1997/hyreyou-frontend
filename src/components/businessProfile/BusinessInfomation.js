@@ -13,15 +13,13 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { clearMessage } from 'src/redux/actions/messageAction';
-import { updateBusinessDetail } from 'src/redux/actions/businessAction';
+import { updateBusinessInformation } from 'src/redux/actions/businessAction';
 
 const BusinessInformation = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const {
-    userType, error
-  } = useSelector((state) => state.shared);
+  const { error } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
@@ -64,7 +62,9 @@ const BusinessInformation = ({ data }) => {
             onSubmit={async (values) => {
               setIsEditing(!isEditing);
               const { _id } = data;
+              dispatch(updateBusinessInformation({ _id, info: values }));
               setOpen(true);
+              // console.log(values);
             }}
           >
             {({
@@ -82,7 +82,6 @@ const BusinessInformation = ({ data }) => {
                   <Grid container spacing={2}>
                     <Grid item lg={12} md={12} xs={12}>
                       <TextField
-                        style={{ height: '50%' }}
                         fullWidth
                         label="Business Description"
                         name="description"
@@ -91,6 +90,8 @@ const BusinessInformation = ({ data }) => {
                         variant="outlined"
                         onChange={handleChange}
                         onBlur={(event) => { if (isEditing) handleBlur(event); }}
+                        multiline
+                        rows={4}
                         // required
                         // error={Boolean(isEditing && touched.description && errors.businessName)}
                         // helperText={isEditing && touched.businessName && errors.businessName}
@@ -108,6 +109,8 @@ const BusinessInformation = ({ data }) => {
                         variant="outlined"
                         onChange={handleChange}
                         onBlur={(event) => { if (isEditing) handleBlur(event); }}
+                        multiline
+                        rows={4}
                         // required
                         // error={Boolean(isEditing && touched.businessABN && errors.businessABN)}
                         // helperText={isEditing && touched.businessABN && errors.businessABN}
