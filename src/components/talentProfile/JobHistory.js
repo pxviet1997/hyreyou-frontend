@@ -25,11 +25,11 @@ const JobHistory = ({ data }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const { userType, error } = useSelector((state) => state.shared);
+  // const { userType, error } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
-
-  const { jobHistory } = data;
+  const { user, userType, error } = data;
+  const { jobHistory } = user;
   // console.log(typeof jobHistory);
   const initialValues = jobHistory.length !== 0
     ? { jobHistory }
@@ -65,7 +65,7 @@ const JobHistory = ({ data }) => {
             initialValues={initialValues}
             onSubmit={async (values) => {
               setIsEditing(false);
-              dispatch(updateJobHistory({ _id: data._id, info: values }));
+              dispatch(updateJobHistory({ _id: user._id, info: values }));
               setOpenAlert(true);
             }}
           >
@@ -126,7 +126,7 @@ const JobHistory = ({ data }) => {
                         </Grid>
                       )}
 
-                    <AddJobModal open={open} setOpenAlert={setOpenAlert} setOpen={setOpen} id={data._id} />
+                    <AddJobModal open={open} setOpenAlert={setOpenAlert} setOpen={setOpen} id={user._id} />
 
                     <Grid container spacing={7}>
                       {values.jobHistory.map((value, index) => {

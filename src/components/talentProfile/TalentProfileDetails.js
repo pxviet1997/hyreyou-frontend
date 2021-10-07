@@ -5,11 +5,11 @@
 /* eslint-disable operator-linebreak */
 /* eslint-disable object-curly-newline */
 import {
-  Box, Card, CardContent, CardHeader, Divider, Grid, Tab, Tabs, Typography,
+  Box, Card, CardContent, CardHeader, Container, Divider, Grid, Tab, Tabs, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Certification from './Certification';
 import EducationHistory from './EducationHistory';
 import JobExpectation from './JobExpectation';
@@ -66,18 +66,22 @@ const TalentProfileDetails = ({ data }) => {
       <CardContent>
         <Grid container spacing={2}>
           <div className={classes.root}>
-            <Tabs
-              value={value}
-              onChange={handleTabChange}
-              indicatorColor="primary"
-              textColor="primary"
-            >
-              <Tab label="Personal" />
-              <Tab label="Job History" />
-              <Tab label="Education History" />
-              <Tab label="Certification" />
-              <Tab label="Job Expectation" />
-            </Tabs>
+            <Box px={3}>
+              <Container maxWidth="lg">
+                <Tabs
+                  value={value}
+                  onChange={handleTabChange}
+                  indicatorColor="primary"
+                  textColor="primary"
+                >
+                  <Tab label="Personal" />
+                  <Tab label="Job History" />
+                  <Tab label="Education History" />
+                  <Tab label="Certification" />
+                  <Tab label="Job Expectation" />
+                </Tabs>
+              </Container>
+            </Box>
             <TabPanel value={value} index={0}>
               <PersonalDetails data={data} />
             </TabPanel>

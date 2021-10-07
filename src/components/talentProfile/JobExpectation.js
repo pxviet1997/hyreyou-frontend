@@ -21,20 +21,20 @@ import { clearMessage } from 'src/redux/actions/messageAction';
 const JobExpectation = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const { userType, error } = useSelector((state) => state.shared);
+  const { user, userType, error } = data;
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
-  const [expectedSkillSet, setExpectedSkillSet] = useState(data.expectedSkillSet ? data.expectedSkillSet : []);
-  const [expectedAvailability, setExpectedAvailability] = useState(data.expectedAvailability ? data.expectedAvailability : []);
-  const [expectedSalary, setExpectedSalary] = useState(data.expectedSalary ? data.expectedSalary : '');
-  const [expectedSalaryType, setExpectedSalaryType] = useState(data.expectedSalaryType ? data.expectedSalaryType : []);
-  const [expectedWorkType, setExpectedWorkType] = useState(data.expectedWorkType ? data.expectedWorkType : []);
+  const [expectedSkillSet, setExpectedSkillSet] = useState(user.expectedSkillSet ? user.expectedSkillSet : []);
+  const [expectedAvailability, setExpectedAvailability] = useState(user.expectedAvailability ? user.expectedAvailability : []);
+  const [expectedSalary, setExpectedSalary] = useState(user.expectedSalary ? user.expectedSalary : '');
+  const [expectedSalaryType, setExpectedSalaryType] = useState(user.expectedSalaryType ? user.expectedSalaryType : []);
+  const [expectedWorkType, setExpectedWorkType] = useState(user.expectedWorkType ? user.expectedWorkType : []);
 
   const onClick = async () => {
     try {
       dispatch(updateJobExpectation({
-        _id: data._id,
+        _id: user._id,
         info: {
           expectedWorkType, expectedAvailability, expectedSalaryType, expectedSkillSet, expectedSalary
         }

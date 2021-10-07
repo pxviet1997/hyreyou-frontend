@@ -6,16 +6,10 @@ import AddCertificationModal from './modal/AddCertificationModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL } from 'src/api';
 
-const Certification = () => {
-  // console.log('[Certification]', { values });
+const Certification = ({ data }) => {
   const [open, setOpen] = useState(false);
-  const disptach = useDispatch();
-  const { user } = useSelector((state) => state.shared);
-
-  const onClick = async (certificationId) => {
-    // await reqDownload({ _id: user._id, certificationId });
-    window.open(`${BASE_URL}/talent/download/?_id=${user._id}&&certificationId=${certificationId}`);
-  };
+  // const disptach = useDispatch();
+  const { user, userType, error } = data;
 
   return (
     <>
@@ -31,16 +25,19 @@ const Certification = () => {
         <Container maxWidth="lg">
           <AddCertificationModal open={open} setOpen={setOpen} />
           <Grid container spacing={3}>
-            <Grid item lg={12} md={12} xs={12}>
-              <Button
-                color="primary"
-                variant="contained"
-                type="submit"
-                onClick={() => setOpen(true)}
-              >
-                Add
-              </Button>
-            </Grid>
+            {userType === 'Talent'
+              && (
+                <Grid item lg={12} md={12} xs={12}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                    onClick={() => setOpen(true)}
+                  >
+                    Add
+                  </Button>
+                </Grid>
+              )}
             <Grid item lg={12} md={12} xs={12}>
               <Table style={{ width: '100%' }}>
                 <TableBody>

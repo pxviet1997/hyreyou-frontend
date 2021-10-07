@@ -159,18 +159,6 @@ const Login = () => {
                     )
                   }}
                 />
-                {/* <Box sx={{ mt: 2, mb: 2 }}>
-                  <Typography
-                    color="textSecondary"
-                    variant="body2"
-                  >
-                    Sign In As
-                  </Typography>
-                  <RadioGroup row aria-label="gender" name="gender1" value={userType} onChange={onUserChange}>
-                    <FormControlLabel value="Talent" control={<Radio />} label="Talent" />
-                    <FormControlLabel value="Business" control={<Radio />} label="Business" />
-                  </RadioGroup>
-                </Box> */}
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"

@@ -13,10 +13,14 @@ import { initialState } from './state/intinalState';
 
 export const talentReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_TALENT:
+    case SET_TALENT: {
+      const { user } = action.payload;
+      const { userType } = user;
+      console.log(userType);
       return {
-        ...state, user: action.payload
+        ...state, user, userType, isLoggedIn: true, error: false
       };
+    }
     case UPDATE_PERSONAL_DETAIL_SUCCESS:
       return {
         ...state, user: action.payload, error: false,
@@ -53,6 +57,7 @@ export const talentReducer = (state = initialState, action) => {
       user = {
         ...user, expectedWorkType, expectedAvailability, expectedSalaryType, expectedSkillSet, expectedSalary
       };
+      console.log(user);
       return {
         ...state, expectedWorkType, expectedAvailability, expectedSalaryType, expectedSkillSet, expectedSalary
       };
