@@ -53,16 +53,8 @@ const RoleList = ({
                   <TableRow
                     hover
                     key={role.id}
-                    // onClick={<CandidateList roleId={role.id} setisShowCandiateList setIsShowRole />}
                     onClick={() => {
-                      // setisShowCandiateList(true);
-                      // setIsShowRole(false);
-                      // setRoleId(role.id);
-                      // console.log(`app/role/candidate-list/${role.id}`);
-                      // return <Navigate to={`app/role/candidate-list/${role.id}`} />;
-
                       navigate('candidate-list', { state: { roleId: role.id, roleTitle: role.roleTitle } });
-                      // <Navigate />
                     }}
                   >
                     <TableCell>

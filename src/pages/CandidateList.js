@@ -7,14 +7,6 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { reqListRoleCandidate } from 'src/api';
-import { useDispatch } from 'react-redux';
-import { getTalent } from 'src/redux/actions/businessAction';
-
-const initialValues = {
-  title: '',
-  description: '',
-  skillSet: ''
-};
 
 const CandidateList = () => {
   const navigate = useNavigate();
