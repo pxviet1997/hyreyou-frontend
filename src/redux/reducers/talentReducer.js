@@ -58,9 +58,7 @@ export const talentReducer = (state = initialState, action) => {
         ...user, expectedWorkType, expectedAvailability, expectedSalaryType, expectedSkillSet, expectedSalary
       };
       console.log(user);
-      return {
-        ...state, expectedWorkType, expectedAvailability, expectedSalaryType, expectedSkillSet, expectedSalary
-      };
+      return { ...state, user, error: false };
     }
     case ADD_CERTIFICATION: {
       const certification = action.payload;
