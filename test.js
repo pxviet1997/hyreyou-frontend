@@ -208,3 +208,36 @@ const TalentProfileDetails = (props) => {
 
 export default TalentProfileDetails;
 
+
+
+<Grid container spacing={3}>
+        <Grid item md={6} xs={6}>
+          <CardHeader title="Talent Profile" />
+        </Grid>
+        <Grid
+          item
+          md={3}
+          xs={3}
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end'
+          }}
+        >
+          <Button variant="outlined" onClick={() => navigate(-1)}>
+            Back
+          </Button>
+        </Grid>
+        <Grid
+          item
+          md={2}
+          xs={2}
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end'
+          }}
+        >
+          <Button variant="outlined">
+            Shortlist
+          </Button>
+        </Grid>
+      </Grid>

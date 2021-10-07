@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { listRoleCandidate } from 'src/api';
+import { reqListRoleCandidate } from 'src/api';
 import { useDispatch } from 'react-redux';
 import { getTalent } from 'src/redux/actions/businessAction';
 
@@ -25,8 +25,8 @@ const CandidateList = ({ setisShowCandiateList, setIsShowRole }) => {
   const dispatch = useDispatch();
   useEffect(async () => {
     try {
-      // console.log(state);
-      const response = await listRoleCandidate({ roleId: state.roleId });
+      console.log(state);
+      const response = await reqListRoleCandidate({ roleId: state.roleId });
       console.log(response);
       setIsListCandidates(response);
     } catch (error) {
@@ -77,12 +77,13 @@ const CandidateList = ({ setisShowCandiateList, setIsShowRole }) => {
                   </Grid>
                 </Grid>
                 <Divider />
-                <Grid container spacing={2}>
-                  <Grid item xs={12} md={12}>
-                    <CardHeader justifycontent="center" alignitems="center" title={`Role -- ${state.roleTitle}`} />
+                <Grid container spacing={3}>
+                  <Grid item xs />
+                  <Grid item xs={6}>
+                    <CardHeader justifycontent="center" alignitems="center" title={`Role - ${state.roleTitle}`} />
                   </Grid>
+                  <Grid item xs />
                 </Grid>
-
                 <Divider />
                 <PerfectScrollbar>
                   <Box sx={{ minWidth: 800 }}>
@@ -104,7 +105,7 @@ const CandidateList = ({ setisShowCandiateList, setIsShowRole }) => {
                             hover
                             key={row._id}
                             onClick={() => {
-                              navigate('candidate', { state: row._id });
+                              navigate('candidate', { state: { candidateId: row._id, roleId: state.roleId } });
                             }}
                           >
                             <TableCell>

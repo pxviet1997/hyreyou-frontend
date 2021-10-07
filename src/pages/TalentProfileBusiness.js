@@ -14,8 +14,10 @@ const TalentProfileBusiness = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
-    const response = await reqGetTalent(state);
-    setData(response);
+    const response = await reqGetTalent(state.candidateId);
+    const user = { ...response, roleId: state.roleId };
+    console.log(user);
+    setData(user);
   }, []);
 
   useEffect(async () => {

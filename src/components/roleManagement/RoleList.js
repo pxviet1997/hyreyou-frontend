@@ -19,7 +19,7 @@ const RoleList = ({
   listRole,
 }) => {
   const navigate = useNavigate();
-  // console.log(listRole);
+  console.log(listRole);
   return (
     <Card>
       <CardHeader />

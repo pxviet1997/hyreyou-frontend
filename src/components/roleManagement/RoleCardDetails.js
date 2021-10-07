@@ -12,11 +12,11 @@ import {
   Grid,
 } from '@material-ui/core';
 
-import { listAllRoleAndNoCandidate } from 'src/api';
+import { reqListAllRoleAndNoCandidate } from 'src/api';
 import AddRole from './AddRole';
 import RoleList from './RoleList';
 
-const _id = '612e3302a420646564c01214';
+// const _id = '612e3302a420646564c01214';
 
 const RoleCardDetails = (props) => {
   const [open, setOpen] = useState(false);
@@ -24,6 +24,7 @@ const RoleCardDetails = (props) => {
   const [isShowRole, setIsShowRole] = useState(true);
   const [isShowCandiateList, setisShowCandiateList] = useState(false);
   const [roleId, setRoleId] = useState();
+  const { user } = useSelector((state) => state.shared);
 
   const handleOpen = () => {
     setisCreatingRole(!isCreatingRole);
@@ -34,8 +35,8 @@ const RoleCardDetails = (props) => {
 
   useEffect(async () => {
     try {
-      const response = await listAllRoleAndNoCandidate({ _id });
-      // console.log(response);
+      const response = await reqListAllRoleAndNoCandidate({ _id: user._id });
+      console.log(response);
       setListRole(response);
     } catch (error) {
       console.log(error);
