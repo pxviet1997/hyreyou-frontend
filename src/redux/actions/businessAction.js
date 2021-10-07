@@ -1,4 +1,6 @@
-import { reqGetTalent, reqUpdateBusiness, reqRejectCandidate, reqShortlistingCandidate } from 'src/api';
+import {
+  reqGetTalent, reqUpdateBusiness, reqRejectCandidate, reqShortlistingCandidate
+} from 'src/api';
 import {
   GET_TALENT, SET_CONFIRM_MESSAGE, SET_ERROR_MESSAGE, SET_TALENT_ERROR, UPDATE_BUSINESS_DETAIL_SUCCESS, UPDATE_BUSINESS_INFORMATION_SUCCESS,
   REJECT_TALENT, SHORTLIST_TALENT
