@@ -1,25 +1,16 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   Box, Button, Card, CardHeader, Divider, Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel, Tooltip
 } from '@material-ui/core';
-import moment from 'moment';
-import { v4 as uuid } from 'uuid';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const initialValues = {
-  title: '',
-  description: '',
-  skillSet: ''
-};
-
-const RoleList = ({
-  listRole,
-}) => {
+const RoleList = () => {
   const navigate = useNavigate();
-  console.log(listRole);
+  const { user } = useSelector((state) => state.shared);
+
   return (
     <Card>
       <CardHeader />
@@ -48,20 +39,20 @@ const RoleList = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {listRole
-                && listRole.map((role) => (
+              {user.roles
+                && user.roles.map((role) => (
                   <TableRow
                     hover
                     key={role.id}
                     onClick={() => {
-                      navigate('candidate-list', { state: { roleId: role.id, roleTitle: role.roleTitle } });
+                      navigate('talent-list', { state: { roleId: role._id, roleTitle: role.title } });
                     }}
                   >
                     <TableCell>
-                      {role.roleTitle}
+                      {role.title}
                     </TableCell>
                     <TableCell>
-                      {role.numberOfTalents}
+                      {role.talentIds.length}
                     </TableCell>
                   </TableRow>
                 ))}

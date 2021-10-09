@@ -91,7 +91,7 @@ const TalentProfileBusiness = () => {
   );
 
   useEffect(async () => {
-    const response = await reqGetTalent(state.candidateId);
+    const response = await reqGetTalent(state.talentId);
     setUser({ ...response, roleId: state.roleId });
   }, []);
 

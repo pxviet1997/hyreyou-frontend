@@ -4,12 +4,15 @@ import { authHeader } from './header';
 export const BASE_URL = 'http://localhost:5000';
 
 export const reqTalentSignIn = (user) => ajax(`${BASE_URL}/auth/talentlogin`, user, 'POST');
+
 export const reqBusinessSignIn = (user) => ajax(`${BASE_URL}/auth/businesslogin`, user, 'POST');
+
 export const reqSignIn = (userInfo) => ajax(`${BASE_URL}/auth/login`, userInfo, 'POST');
 
 export const reqSignUp = (newUser) => ajax(`${BASE_URL}/auth/signup`, newUser, 'POST');
 
 export const reqReset = (resetInfo) => ajax(`${BASE_URL}/auth/resetpassword`, resetInfo, 'POST', { headers: authHeader() });
+
 export const reqChangePassword = (passwordInfo) => ajax(`${BASE_URL}/auth/changepassword`, passwordInfo, 'POST', { headers: authHeader() });
 
 export const reqGetTalent = (_id) => ajax(`${BASE_URL}/talent/get-talent`, { _id }, 'GET');
@@ -32,11 +35,11 @@ export const reqCreateRole = (addRole) => ajax(`${BASE_URL}/business/createRole`
 
 export const reqListAllRoleAndNoCandidate = (showRole) => ajax(`${BASE_URL}/business/listAllRoleAndNoCandidate`, showRole, 'POST');
 
-export const reqListRoleCandidate = (listCandidate) => ajax(`${BASE_URL}/business/listRoleCandidate`, listCandidate, 'POST');
+export const reqTalentList = (listCandidate) => ajax(`${BASE_URL}/business/listRoleCandidate`, listCandidate, 'POST');
 
-export const reqShortlistingCandidate = (shortlistCandidate) => ajax(`${BASE_URL}/business/shortlistingCandidate`, shortlistCandidate, 'POST');
+export const reqShortlistTalent = (shortlistCandidate) => ajax(`${BASE_URL}/business/shortlistingCandidate`, shortlistCandidate, 'POST');
 
-export const reqRejectCandidate = (rejectCandidate) => ajax(`${BASE_URL}/business/rejectCandidate`, rejectCandidate, 'POST');
+export const reqRejectTalent = (rejectCandidate) => ajax(`${BASE_URL}/business/rejectCandidate`, rejectCandidate, 'POST');
 
 export const reqAddCertification = (certification) => ajax(`${BASE_URL}/talent/add-certification`, certification, 'POST');
 

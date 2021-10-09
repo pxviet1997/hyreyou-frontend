@@ -21,7 +21,7 @@ import Role from './pages/Role';
 import SplashScreen from './pages/SplashScreen';
 import TalentProfile from 'src/pages/TalentProfile';
 import Verify from 'src/pages/Verify';
-import CandidateList from './pages/CandidateList';
+import TalentList from './pages/TalentList';
 import TalentProfileBusiness from './pages/TalentProfileBusiness';
 
 const routes = [
@@ -32,8 +32,8 @@ const routes = [
       { path: 'dashboard', element: <DashboardBusiness /> },
       { path: 'business-profile', element: <BusinessProfile /> },
       { path: 'role', element: <Role /> },
-      { path: 'role/candidate-list', element: <CandidateList /> },
-      { path: 'role/candidate-list/candidate', element: <TalentProfileBusiness /> },
+      { path: 'role/talent-list', element: <TalentList /> },
+      { path: 'role/talent-list/talent', element: <TalentProfileBusiness /> },
       { path: 'short-list', element: <ShortList /> },
       { path: 'interview', element: <Interview /> },
       { path: '/', element: <Navigate to="/business/dashboard" /> },

@@ -2,8 +2,7 @@
 /* eslint-disable operator-linebreak */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
 import {
   Button,
   Card,
@@ -11,37 +10,17 @@ import {
   Divider,
   Grid,
 } from '@material-ui/core';
-
-import { reqListAllRoleAndNoCandidate } from 'src/api';
 import AddRole from './AddRole';
 import RoleList from './RoleList';
 
-// const _id = '612e3302a420646564c01214';
-
-const RoleCardDetails = (props) => {
-  const [open, setOpen] = useState(false);
+const RoleCardDetails = () => {
   const [isCreatingRole, setisCreatingRole] = useState(false);
   const [isShowRole, setIsShowRole] = useState(true);
-  const [isShowCandiateList, setisShowCandiateList] = useState(false);
-  const [roleId, setRoleId] = useState();
-  const { user } = useSelector((state) => state.shared);
 
   const handleOpen = () => {
     setisCreatingRole(!isCreatingRole);
     setIsShowRole(!isShowRole);
   };
-  const handleClose = () => setisCreatingRole(false);
-  const [listRole, setListRole] = useState();
-
-  useEffect(async () => {
-    try {
-      const response = await reqListAllRoleAndNoCandidate({ _id: user._id });
-      console.log(response);
-      setListRole(response);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
 
   return (
     <Card>
@@ -66,7 +45,7 @@ const RoleCardDetails = (props) => {
       <Divider />
       {isCreatingRole
         ? <AddRole setisCreatingRole={setisCreatingRole} />
-        : <RoleList listRole={listRole} />
+        : <RoleList />
       }
     </Card>
   );

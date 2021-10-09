@@ -3,7 +3,7 @@ export const initialState = {
   user: null,
   userType: '',
   error: false,
-  talent: null,
+  talentList: null,
 };
 
 export const initialMessageState = {

@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Button,
-  Card,
   CardContent,
-  CardHeader,
-  Divider,
   Grid,
   TextField
 } from '@material-ui/core';
 import { Formik } from 'formik';
-import { reqCreateRole } from 'src/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { createRole } from 'src/redux/actions/businessAction';
 
 const initialValues = {
   title: '',
@@ -18,33 +16,25 @@ const initialValues = {
   skillSet: ''
 };
 
-const _id = '612e3302a420646564c01214';
-
 const AddRole = ({ setisCreatingRole }) => {
-  // console.log(props);
+  const { user } = useSelector((state) => state.shared);
+  const dispatch = useDispatch();
+
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={async (values) => {
         try {
-          // const skillSet = values.skillSet;
-          // console.log(Rvalues);
-          const response = await reqCreateRole({ _id, ...values });
-          // setIsShowRole(true);
+          dispatch(createRole({ _id: user._id, ...values }));
           setisCreatingRole(false);
-          console.log(response);
         } catch (error) {
           console.log(error);
         }
       }}
     >
       {({
-        errors,
-        handleBlur,
         handleChange,
         handleSubmit,
-        isSubmitting,
-        touched,
         values
       }) => (
         <CardContent id="addrolecontent">
