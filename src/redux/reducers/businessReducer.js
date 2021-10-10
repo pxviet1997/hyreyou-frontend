@@ -1,5 +1,5 @@
 import {
-  GET_TALENT, SET_BUSINESS, UPDATE_BUSINESS_DETAIL_SUCCESS, REJECT_TALENT, SHORTLIST_TALENT, CREATE_ROLE, GET_TALENT_LIST
+  GET_TALENT, SET_BUSINESS, UPDATE_BUSINESS_DETAIL_SUCCESS, REJECT_TALENT, SHORTLIST_TALENT, CREATE_ROLE, GET_TALENT_LIST, REMOVE_TALENT_FROM_LIST
 } from '../actions/type';
 import { initialState } from './state/intinalState';
 
@@ -34,6 +34,11 @@ export const businessReducer = (state = initialState, action) => {
     }
     case GET_TALENT_LIST:
       return { ...state, talentList: action.payload };
+    case REMOVE_TALENT_FROM_LIST: {
+      let { talentList } = state;
+      talentList = talentList.filter((talent) => talent._id !== action.payload);
+      return { ...state, talentList, error: false };
+    }
     default:
       return state;
   }

@@ -18,8 +18,8 @@ const TalentProfileBusiness = () => {
 
   const transfer = async () => {
     try {
-      console.log(user._id);
-      dispatch(shortlistTalent({ roleId: user.roleId, candidateId: user._id }));
+      // console.log(user._id);
+      dispatch(shortlistTalent({ roleId: user.roleId, talentId: user._id }));
       navigate(-1);
     } catch (error) {
       console.log(error);
@@ -28,8 +28,8 @@ const TalentProfileBusiness = () => {
 
   const reject = async () => {
     try {
-      console.log(user._id);
-      dispatch(rejectTalent({ roleId: user.roleId, candidateId: user._id }));
+      // console.log(user._id);
+      dispatch(rejectTalent({ roleId: user.roleId, talentId: user._id }));
       navigate(-1);
     } catch (error) {
       console.log(error);
