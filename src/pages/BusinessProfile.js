@@ -8,9 +8,6 @@ const BusinessProfile = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Business Register</title>
-      </Helmet>
       <Box
         sx={{
           backgroundColor: 'background.default',

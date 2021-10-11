@@ -1,15 +1,21 @@
 /* eslint-disable object-curly-newline */
 import { Helmet } from 'react-helmet';
-import { Box, Button, Container, Grid, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
+import { Alert, Box, Button, Container, Grid, Snackbar, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { useState } from 'react';
 import AddCertificationModal from './modal/AddCertificationModal';
-import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL } from 'src/api';
 
 const Certification = ({ data }) => {
   const [open, setOpen] = useState(false);
-  // const disptach = useDispatch();
-  const { user, userType, error } = data;
+  const [openAlert, setOpenAlert] = useState(false);
+  const { user, userType, error, message } = data;
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
+  };
 
   return (
     <>
@@ -23,7 +29,7 @@ const Certification = ({ data }) => {
         }}
       >
         <Container maxWidth="lg">
-          <AddCertificationModal open={open} setOpen={setOpen} />
+          <AddCertificationModal open={open} setOpen={setOpen} setOpenAlert={setOpenAlert} />
           <Grid container spacing={3}>
             {userType === 'Talent'
               && (
@@ -54,8 +60,19 @@ const Certification = ({ data }) => {
             </Grid>
           </Grid>
         </Container>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity={error ? 'error' : 'success'} sx={{ width: '100%' }} variant="filled">
+            {message}
+          </Alert>
+        </Snackbar>
       </Box>
     </>
   );
 };
+
 export default Certification;

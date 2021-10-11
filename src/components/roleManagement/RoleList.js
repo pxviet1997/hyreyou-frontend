@@ -13,53 +13,51 @@ const RoleList = () => {
 
   return (
     <Card>
-      <CardHeader />
-      <Divider />
-      <PerfectScrollbar>
-        <Box sx={{ minWidth: 800 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  Role
-                </TableCell>
-                <TableCell sortDirection="desc">
-                  <Tooltip
-                    enterDelay={300}
-                    title="Sort"
+      {/* <PerfectScrollbar> */}
+      <Box sx={{ minWidth: 800, paddingX: 6 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                Role
+              </TableCell>
+              <TableCell sortDirection="desc">
+                <Tooltip
+                  enterDelay={300}
+                  title="Sort"
+                >
+                  <TableSortLabel
+                    active
+                    direction="desc"
                   >
-                    <TableSortLabel
-                      active
-                      direction="desc"
-                    >
-                      No of Talents
-                    </TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {user.roles
-                && user.roles.map((role) => (
-                  <TableRow
-                    hover
-                    key={role.id}
-                    onClick={() => {
-                      navigate('talent-list', { state: { roleId: role._id, roleTitle: role.title } });
-                    }}
-                  >
-                    <TableCell>
-                      {role.title}
-                    </TableCell>
-                    <TableCell>
-                      {role.talentIds.length}
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </Box>
-      </PerfectScrollbar>
+                    No of Talents
+                  </TableSortLabel>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {user.roles
+              && user.roles.map((role) => (
+                <TableRow
+                  hover
+                  key={role.id}
+                  onClick={() => {
+                    navigate('talent-list', { state: { roleId: role._id, roleTitle: role.title } });
+                  }}
+                >
+                  <TableCell>
+                    {role.title}
+                  </TableCell>
+                  <TableCell>
+                    {role.talentIds.length}
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </Box>
+      {/* </PerfectScrollbar> */}
       <Box
         sx={{
           display: 'flex',

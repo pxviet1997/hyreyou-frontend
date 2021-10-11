@@ -198,19 +198,3 @@ const EducationHistory = ({ data }) => {
 };
 
 export default EducationHistory;
-
-// EducationHistory.propTypes = {
-//   isEditForm: PropTypes.bool,
-//   values: PropTypes.shape({
-//     education: PropTypes.arrayOf({
-//       id: PropTypes.string,
-//       nameOfUniversity: PropTypes.string,
-//       nameOfDegree: PropTypes.string,
-//       degreeDuration: PropTypes.string
-//     })
-//   }),
-//   handleChange: PropTypes.func,
-//   handleBlur: PropTypes.func,
-//   errors: PropTypes.object,
-//   touched: PropTypes.object
-// };

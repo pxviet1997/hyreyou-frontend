@@ -3,7 +3,7 @@ import {
 } from 'src/api';
 import {
   GET_TALENT, SET_CONFIRM_MESSAGE, SET_ERROR_MESSAGE, SET_BUSINESS_ERROR, UPDATE_BUSINESS_DETAIL_SUCCESS, UPDATE_BUSINESS_INFORMATION_SUCCESS,
-  REJECT_TALENT, SHORTLIST_TALENT, CREATE_ROLE, GET_TALENT_LIST, REMOVE_TALENT_FROM_LIST
+  REJECT_TALENT, SHORTLIST_TALENT, CREATE_ROLE, GET_TALENT_LIST, REMOVE_TALENT_FROM_LIST, RESET_TALENT_LIST
 } from './type';
 
 export const getTalent = (talentId) => async (dispatch) => {
@@ -12,8 +12,12 @@ export const getTalent = (talentId) => async (dispatch) => {
     dispatch({ type: GET_TALENT, payload: response });
   } catch (error) {
     console.log(error);
+    dispatch({ type: SET_ERROR_MESSAGE, payload: error });
+    dispatch({ type: SET_BUSINESS_ERROR });
   }
 };
+
+export const resetTalentList = () => ({ type: RESET_TALENT_LIST });
 
 export const updateBusinessDetail = (info) => async (dispatch) => {
   try {

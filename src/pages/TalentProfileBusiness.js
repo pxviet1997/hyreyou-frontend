@@ -53,8 +53,6 @@ const TalentProfileBusiness = () => {
           <Grid
             item
             py={2}
-          // display="flex"
-          // justify="center"
           >
             <Button
               variant="outlined"
@@ -68,13 +66,6 @@ const TalentProfileBusiness = () => {
             item
             py={2}
             mr={4}
-          // display="flex"
-          // justify="center"
-          // style={{
-          //   padding: 16,
-          //   display: 'flex',
-          //   justifyContent: 'flex-end'
-          // }}
           >
             <Button
               variant="outlined"
@@ -84,7 +75,6 @@ const TalentProfileBusiness = () => {
               Shortlist
             </Button>
           </Grid>
-          {/* </Grid> */}
         </Grid>
       </Grid>
     </Box>

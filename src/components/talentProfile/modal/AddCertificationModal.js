@@ -21,7 +21,7 @@ const style = {
   boxShadow: 24,
 };
 
-const AddCertificationModal = ({ open, setOpen }) => {
+const AddCertificationModal = ({ open, setOpen, setOpenAlert }) => {
   const [file, setFile] = useState();
   const [certificationName, setCertificationName] = useState();
   const handleClose = () => setOpen(false);
@@ -35,7 +35,7 @@ const AddCertificationModal = ({ open, setOpen }) => {
     formData.append('certificationName', certificationName);
     dispatch(addCertification(formData));
     handleClose();
-    // await reqAddCertification(formData);
+    setOpenAlert(true);
   };
 
   return (

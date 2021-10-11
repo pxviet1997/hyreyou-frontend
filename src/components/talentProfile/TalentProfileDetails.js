@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 const TalentProfileDetails = ({ data, header }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const { userType, user, talent } = useSelector((state) => state.shared);
+  // const { userType, user, talent } = useSelector((state) => state.shared);
 
   const handleTabChange = (event, newValue) => setValue(newValue);
 

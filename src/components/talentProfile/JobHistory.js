@@ -1,18 +1,13 @@
 /* eslint-disable object-curly-newline */
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Box,
   Button,
   Container,
-  CardContent,
-  Divider,
   Grid,
   TextField,
-  Modal,
-  Typography,
   Snackbar,
   Alert
 } from '@material-ui/core';
@@ -25,12 +20,11 @@ const JobHistory = ({ data }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  // const { userType, error } = useSelector((state) => state.shared);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
   const { user, userType, error } = data;
   const { jobHistory } = user;
-  // console.log(typeof jobHistory);
+
   const initialValues = jobHistory.length !== 0
     ? { jobHistory }
     : {

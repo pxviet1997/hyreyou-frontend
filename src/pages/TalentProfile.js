@@ -6,7 +6,9 @@ import TalentProfileDetail from '../components/talentProfile/TalentProfileDetail
 import { useSelector } from 'react-redux';
 
 const TalentProfile = () => {
-  const { user, userType, error } = useSelector((state) => state.shared);
+  const {
+    user, userType, error, message
+  } = useSelector((state) => state.shared);
 
   const header = (
     <Box px={4}>
@@ -33,7 +35,12 @@ const TalentProfile = () => {
         <Container maxWidth="lg">
           <Grid container spacing={3}>
             <Grid item lg={12} md={12} xs={12}>
-              <TalentProfileDetail data={{ user, userType, error }} header={header} />
+              <TalentProfileDetail
+                data={{
+                  user, userType, error, message
+                }}
+                header={header}
+              />
             </Grid>
           </Grid>
         </Container>
