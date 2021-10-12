@@ -33,15 +33,27 @@ const Certification = ({ data }) => {
           <Grid container spacing={3}>
             {userType === 'Talent'
               && (
-                <Grid item lg={12} md={12} xs={12}>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    type="submit"
-                    onClick={() => setOpen(true)}
-                  >
-                    Add
-                  </Button>
+                <Grid container item spacing={2}>
+                  <Grid item lg={12} md={12} xs={12}>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      type="submit"
+                    // onClick={() => setOpen(true)}
+                    >
+                      Edit
+                    </Button>
+                  </Grid>
+                  <Grid item lg={12} md={12} xs={12}>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      type="submit"
+                      onClick={() => setOpen(true)}
+                    >
+                      Add
+                    </Button>
+                  </Grid>
                 </Grid>
               )}
             <Grid item lg={12} md={12} xs={12}>

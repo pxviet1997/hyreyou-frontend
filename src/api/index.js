@@ -44,3 +44,5 @@ export const reqRejectTalent = (rejectCandidate) => ajax(`${BASE_URL}/business/r
 export const reqAddCertification = (certification) => ajax(`${BASE_URL}/talent/add-certification`, certification, 'POST');
 
 export const reqDownload = (downloadInfo) => ajax(`${BASE_URL}/talent/download`, downloadInfo);
+
+// export const reqRemoveJobHistory = (jobInfo) => ajax(`${BASE_URL}/talent/remove-job-history`, jobInfo, 'POST');

@@ -5,7 +5,8 @@ import {
 import {
   ADD_JOB_HISTORY_SUCCESS, SET_CONFIRM_MESSAGE, SET_TALENT_ERROR, SET_ERROR_MESSAGE,
   UPDATE_JOB_HISTORY_SUCCESS, UPDATE_PERSONAL_DETAIL_SUCCESS, ADD_EDUCATION_HISTORY_SUCCESS,
-  UPDATE_EDUCATION_HISTORY_SUCCESS, UPDATE_JOB_EXPECTATION_SUCCESS, ADD_CERTIFICATION
+  UPDATE_EDUCATION_HISTORY_SUCCESS, UPDATE_JOB_EXPECTATION_SUCCESS, ADD_CERTIFICATION, REMOVE_JOB_HISTORY,
+  REMOVE_EDUCATION_HISTORY
 } from './type';
 
 export const updatePersonalDetail = (info) => async (dispatch) => {
@@ -95,6 +96,32 @@ export const addCertification = (addedCertification) => async (dispatch) => {
   try {
     const response = await reqAddCertification(addedCertification);
     dispatch({ type: ADD_CERTIFICATION, payload: response.certification });
+    dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: SET_TALENT_ERROR });
+    dispatch({ type: SET_ERROR_MESSAGE, payload: error });
+  }
+};
+
+export const removeJobHistory = (jobInfo) => async (dispatch) => {
+  try {
+    const response = await reqUpdateTalent(jobInfo);
+    // console.log(jobInfo);
+    dispatch({ type: REMOVE_JOB_HISTORY, payload: jobInfo.info.jobHistory });
+    dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: SET_TALENT_ERROR });
+    dispatch({ type: SET_ERROR_MESSAGE, payload: error });
+  }
+};
+
+export const removeEducationHistory = (educationInfo) => async (dispatch) => {
+  try {
+    const response = await reqUpdateTalent(educationInfo);
+    // console.log(jobInfo);
+    dispatch({ type: REMOVE_EDUCATION_HISTORY, payload: educationInfo.info.education });
     dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
   } catch (error) {
     console.log(error);

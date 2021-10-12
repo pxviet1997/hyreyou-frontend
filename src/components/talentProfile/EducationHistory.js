@@ -14,33 +14,43 @@ import {
 } from '@material-ui/core';
 import { Formik } from 'formik';
 import AddEducationModal from './modal/AddEducationModal';
-import { updateEducationHistory } from 'src/redux/actions/talentAction';
+import { removeEducationHistory, updateEducationHistory } from 'src/redux/actions/talentAction';
+import { XCircle } from 'react-feather';
+import RemoveModal from './modal/RemoveModal';
 
 const EducationHistory = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  // const { userType, error } = useSelector((state) => state.shared);
+  const [openRemoveModal, setOpenRemoveModal] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState();
+
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
   const { user, userType, error } = data;
   const { education } = user;
-  const initialValues = education.length !== 0
-    ? { education }
-    : {
-      education: [{
-        nameOfUniversity: '',
-        nameOfDegree: '',
-        degreeDuration: ''
-      }],
-    };
+
+  // const initialValues = education.length !== 0
+  //   ? { education }
+  //   : {
+  //     education: [{
+  //       nameOfUniversity: '',
+  //       nameOfDegree: '',
+  //       degreeDuration: ''
+  //     }],
+  //   };
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
     setOpenAlert(false);
+  };
+
+  const removePressed = () => {
+    education.splice(currentIndex, 1);
+    dispatch(removeEducationHistory({ _id: user._id, info: { education } }));
   };
 
   return (
@@ -56,10 +66,10 @@ const EducationHistory = ({ data }) => {
       >
         <Container maxWidth="lg">
           <Formik
-            initialValues={initialValues}
+            initialValues={{ education }}
+            enableReinitialize
             onSubmit={async (values) => {
               setIsEditing(false);
-              // dispatch(updateJobHistory({ _id: user._id, info: values }));
               dispatch(updateEducationHistory({ _id: user._id, info: values }));
               setOpenAlert(true);
             }}
@@ -128,48 +138,64 @@ const EducationHistory = ({ data }) => {
                       {values.education.map((value, index) => {
                         return (
                           <Grid key={value._id} item lg={12} md={12} xs={12}>
-                            <Grid container spacing={2}>
-                              <Grid item lg={12} md={12} xs={12}>
-                                <TextField
-                                  fullWidth
-                                  label="Name of Education Insitute"
-                                  name={`education[${index}]nameOfUniversity`}
-                                  type="text"
-                                  value={value.nameOfUniversity}
-                                  variant="outlined"
-                                  onChange={handleChange}
-                                  onBlur={(event) => { if (isEditing) handleBlur(event); }}
-                                  required
-                                  inputProps={{ readOnly: !isEditing, }}
-                                />
-                              </Grid>
-                              <Grid item lg={12} md={12} xs={12}>
-                                <TextField
-                                  fullWidth
-                                  label="Name of Degree"
-                                  name={`education[${index}]nameOfDegree`}
-                                  type="text"
-                                  value={value.nameOfDegree}
-                                  variant="outlined"
-                                  onChange={handleChange}
-                                  onBlur={(event) => { if (isEditing) handleBlur(event); }}
-                                  required
-                                  inputProps={{ readOnly: !isEditing, }}
-                                />
-                              </Grid>
-                              <Grid item lg={12} md={12} xs={12}>
-                                <TextField
-                                  fullWidth
-                                  label="Duration"
-                                  name={`education[${index}]degreeDuration`}
-                                  type="text"
-                                  value={value.degreeDuration}
-                                  variant="outlined"
-                                  onChange={handleChange}
-                                  onBlur={(event) => { if (isEditing) handleBlur(event); }}
-                                  required
-                                  inputProps={{ readOnly: !isEditing, }}
-                                />
+                            <RemoveModal open={openRemoveModal} setOpen={setOpenRemoveModal} setOpenAlert={setOpenAlert} removePressed={removePressed} />
+                            <Grid container>
+                              {isEditing
+                                && (
+                                  <Grid item lg={1}>
+                                    <Button
+                                      onClick={() => {
+                                        setOpenRemoveModal(true);
+                                        setCurrentIndex(index);
+                                      }}
+                                    >
+                                      <XCircle color="red" />
+                                    </Button>
+                                  </Grid>
+                                )}
+                              <Grid container item spacing={2} lg={isEditing ? 11 : 12}>
+                                <Grid item lg={12} md={12} xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label="Name of Education Insitute"
+                                    name={`education[${index}]nameOfUniversity`}
+                                    type="text"
+                                    value={value.nameOfUniversity}
+                                    variant="outlined"
+                                    onChange={handleChange}
+                                    onBlur={(event) => { if (isEditing) handleBlur(event); }}
+                                    required
+                                    inputProps={{ readOnly: !isEditing, }}
+                                  />
+                                </Grid>
+                                <Grid item lg={12} md={12} xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label="Name of Degree"
+                                    name={`education[${index}]nameOfDegree`}
+                                    type="text"
+                                    value={value.nameOfDegree}
+                                    variant="outlined"
+                                    onChange={handleChange}
+                                    onBlur={(event) => { if (isEditing) handleBlur(event); }}
+                                    required
+                                    inputProps={{ readOnly: !isEditing, }}
+                                  />
+                                </Grid>
+                                <Grid item lg={12} md={12} xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label="Duration"
+                                    name={`education[${index}]degreeDuration`}
+                                    type="text"
+                                    value={value.degreeDuration}
+                                    variant="outlined"
+                                    onChange={handleChange}
+                                    onBlur={(event) => { if (isEditing) handleBlur(event); }}
+                                    required
+                                    inputProps={{ readOnly: !isEditing, }}
+                                  />
+                                </Grid>
                               </Grid>
                             </Grid>
                           </Grid>

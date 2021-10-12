@@ -2,6 +2,8 @@ import {
   ADD_CERTIFICATION,
   ADD_EDUCATION_HISTORY_SUCCESS,
   ADD_JOB_HISTORY_SUCCESS,
+  REMOVE_EDUCATION_HISTORY,
+  REMOVE_JOB_HISTORY,
   SET_TALENT,
   SET_TALENT_ERROR,
   UPDATE_EDUCATION_HISTORY_SUCCESS,
@@ -16,7 +18,6 @@ export const talentReducer = (state = initialState, action) => {
     case SET_TALENT: {
       const { user } = action.payload;
       const { userType } = user;
-      console.log(userType);
       return {
         ...state, user, userType, isLoggedIn: true, error: false
       };
@@ -32,9 +33,7 @@ export const talentReducer = (state = initialState, action) => {
     }
     case UPDATE_JOB_HISTORY_SUCCESS: {
       const { user } = state;
-      // console.log(action.payload);
       user.jobHistory = [...action.payload];
-      // console.log(user);
       return { ...state, user, error: false };
     }
     case ADD_EDUCATION_HISTORY_SUCCESS: {
@@ -44,9 +43,7 @@ export const talentReducer = (state = initialState, action) => {
     }
     case UPDATE_EDUCATION_HISTORY_SUCCESS: {
       const { user } = state;
-      // console.log(action.payload);
       user.education = [...action.payload];
-      // console.log(user);
       return { ...state, user, error: false };
     }
     case UPDATE_JOB_EXPECTATION_SUCCESS: {
@@ -69,6 +66,16 @@ export const talentReducer = (state = initialState, action) => {
     }
     case SET_TALENT_ERROR:
       return { ...state, error: true };
+    case REMOVE_JOB_HISTORY: {
+      let { user } = state;
+      user = { ...user, jobHistory: action.payload };
+      return { ...state, user, error: false };
+    }
+    case REMOVE_EDUCATION_HISTORY: {
+      let { user } = state;
+      user = { ...user, education: action.payload };
+      return { ...state, user, error: false };
+    }
     default:
       return state;
   }
