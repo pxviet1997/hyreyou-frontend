@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-newline */
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   Button,
@@ -14,6 +14,8 @@ import * as Yup from 'yup';
 import { addJobHistory } from 'src/redux/actions/talentAction';
 import { clearMessage } from 'src/redux/actions/messageAction';
 import { createRole } from 'src/redux/actions/businessAction';
+import DropDownMenu from 'src/components/talentProfile/DropDownMenu';
+import { skills } from 'src/components/talentProfile/constant';
 
 const style = {
   position: 'absolute',
@@ -29,10 +31,12 @@ const AddRoleModal = ({ open, setOpenAlert, setOpen, userId }) => {
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
 
+  const [skillSet, setSkillSet] = useState([]);
+
   const initialValues = {
     title: '',
     description: '',
-    skillSet: ''
+    // skillSet: []
   };
 
   return (
@@ -46,7 +50,7 @@ const AddRoleModal = ({ open, setOpenAlert, setOpen, userId }) => {
         <Formik
           initialValues={initialValues}
           onSubmit={async (values) => {
-            dispatch(createRole({ _id: userId, ...values }));
+            dispatch(createRole({ _id: userId, skillSet, ...values }));
             setOpen(false);
             setOpenAlert(true);
           }}
@@ -90,7 +94,7 @@ const AddRoleModal = ({ open, setOpenAlert, setOpen, userId }) => {
                     </Grid>
 
                     <Grid item md={12} xs={12}>
-                      <TextField
+                      {/* <TextField
                         fullWidth
                         label="Skill Set"
                         name="skillSet"
@@ -98,6 +102,12 @@ const AddRoleModal = ({ open, setOpenAlert, setOpen, userId }) => {
                         required
                         value={values.skillSet}
                         variant="outlined"
+                      /> */}
+                      <DropDownMenu
+                        value={skillSet}
+                        setValue={setSkillSet}
+                        values={skills}
+                        label="Skill Set"
                       />
                     </Grid>
                     <Grid item>

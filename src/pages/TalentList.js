@@ -20,7 +20,7 @@ const TalentList = () => {
   }, []);
 
   useEffect(async () => {
-    if (talentList.length === 0) return;
+    if (!talentList || talentList.length === 0) return;
     setLoading(false);
   }, [talentList]);
 

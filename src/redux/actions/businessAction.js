@@ -69,8 +69,8 @@ export const rejectTalent = (talentInfo) => async (dispatch) => {
 export const createRole = (newRoleInfo) => async (dispatch) => {
   try {
     const response = await reqCreateRole(newRoleInfo);
-    const { _id, ...newRole } = newRoleInfo;
-    dispatch({ type: CREATE_ROLE, payload: newRole });
+    // const { _id, ...newRole } = newRoleInfo;
+    dispatch({ type: CREATE_ROLE, payload: response.user });
     dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
   } catch (error) {
     console.log(error);

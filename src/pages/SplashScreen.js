@@ -1,5 +1,4 @@
-import { Link as RouterLink, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
   Box,
@@ -52,7 +51,7 @@ const SplashScreen = () => {
                 fontWeight: 600
               }}
             >
-              <p>HIRING IS DIFFICULT...</p>
+              HIRING IS DIFFICULT...
             </Typography>
 
             <Typography
@@ -96,6 +95,7 @@ const SplashScreen = () => {
                 fullWidth
                 size="large"
                 variant="contained"
+                data-testid="loginBtn"
               >
                 Sign In
               </Button>
@@ -111,6 +111,7 @@ const SplashScreen = () => {
                 fullWidth
                 size="large"
                 variant="contained"
+                data-testid="signupBtn"
               >
                 Sign Up
               </Button>

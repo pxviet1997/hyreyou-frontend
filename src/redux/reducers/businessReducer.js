@@ -28,9 +28,9 @@ export const businessReducer = (state = initialState, action) => {
     case REJECT_TALENT:
       return { ...state, user: action.payload };
     case CREATE_ROLE: {
-      const { user } = state;
-      user.roles.unshift({ ...action.payload, talentIds: [], shortlistTalentId: [] });
-      return { ...state, user, error: false };
+      // const { user } = action.payload;
+      // user.roles.unshift({ ...action.payload, talentIds: [], shortlistTalentId: [] });
+      return { ...state, user: action.payload, error: false };
     }
     case GET_TALENT_LIST:
       return { ...state, talentList: action.payload };
