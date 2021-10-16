@@ -10,9 +10,6 @@ import {
   Typography
 } from '@material-ui/core';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { addJobHistory } from 'src/redux/actions/talentAction';
-import { clearMessage } from 'src/redux/actions/messageAction';
 import { createRole } from 'src/redux/actions/businessAction';
 import DropDownMenu from 'src/components/talentProfile/DropDownMenu';
 import { skills } from 'src/components/talentProfile/constant';
@@ -28,15 +25,17 @@ const style = {
 };
 
 const AddRoleModal = ({ open, setOpenAlert, setOpen, userId }) => {
-  const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
-
   const [skillSet, setSkillSet] = useState([]);
 
   const initialValues = {
     title: '',
     description: '',
-    // skillSet: []
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSkillSet([]);
   };
 
   return (
@@ -53,6 +52,7 @@ const AddRoleModal = ({ open, setOpenAlert, setOpen, userId }) => {
             dispatch(createRole({ _id: userId, skillSet, ...values }));
             setOpen(false);
             setOpenAlert(true);
+            setSkillSet([]);
           }}
         >
           {({

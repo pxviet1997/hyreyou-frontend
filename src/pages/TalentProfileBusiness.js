@@ -3,23 +3,24 @@ import {
   Box, Button, CardHeader, CircularProgress, Container, Grid
 } from '@material-ui/core';
 import TalentProfileDetails from '../components/talentProfile/TalentProfileDetails';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { reqGetTalent } from 'src/api';
 import { rejectTalent, shortlistTalent } from 'src/redux/actions/businessAction';
 
 const TalentProfileBusiness = () => {
-  const [user, setUser] = useState();
+  const [talent, setTalent] = useState();
   const { state } = useLocation();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const transfer = async () => {
+  const { user } = useSelector((reduxState) => reduxState.shared);
+
+  const shortList = async () => {
     try {
-      // console.log(user._id);
-      dispatch(shortlistTalent({ roleId: user.roleId, talentId: user._id }));
+      dispatch(shortlistTalent({ roleId: talent.roleId, talentId: talent._id, _id: user._id }));
       navigate(-1);
     } catch (error) {
       console.log(error);
@@ -28,13 +29,23 @@ const TalentProfileBusiness = () => {
 
   const reject = async () => {
     try {
-      // console.log(user._id);
-      dispatch(rejectTalent({ roleId: user.roleId, talentId: user._id }));
+      dispatch(rejectTalent({ roleId: talent.roleId, talentId: talent._id, _id: user._id }));
       navigate(-1);
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(async () => {
+    const response = await reqGetTalent(state.talentId);
+    setTalent({ ...response, roleId: state.roleId });
+  }, []);
+
+  useEffect(async () => {
+    if (!talent) return;
+    // console.log(user);
+    setLoading(false);
+  }, [talent]);
 
   const header = (
     <Box px={4}>
@@ -70,7 +81,7 @@ const TalentProfileBusiness = () => {
             <Button
               variant="outlined"
               style={{ color: 'green' }}
-              onClick={transfer}
+              onClick={shortList}
             >
               Shortlist
             </Button>
@@ -79,17 +90,6 @@ const TalentProfileBusiness = () => {
       </Grid>
     </Box>
   );
-
-  useEffect(async () => {
-    const response = await reqGetTalent(state.talentId);
-    setUser({ ...response, roleId: state.roleId });
-  }, []);
-
-  useEffect(async () => {
-    if (!user) return;
-    console.log(user);
-    setLoading(false);
-  }, [user]);
 
   return (
     <>
@@ -120,7 +120,7 @@ const TalentProfileBusiness = () => {
             <Container maxWidth="lg">
               <Grid container spacing={3}>
                 <Grid item lg={12} md={12} xs={12}>
-                  <TalentProfileDetails data={{ user, userType: 'Business' }} header={header} />
+                  <TalentProfileDetails data={{ user: talent, userType: 'Business' }} header={header} />
                 </Grid>
               </Grid>
             </Container>

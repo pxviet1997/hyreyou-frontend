@@ -37,7 +37,7 @@ export const reqListAllRoleAndNoCandidate = (showRole) => ajax(`${BASE_URL}/busi
 
 export const reqTalentList = (listCandidate) => ajax(`${BASE_URL}/business/listRoleCandidate`, listCandidate, 'POST');
 
-export const reqShortlistTalent = (shortlistCandidate) => ajax(`${BASE_URL}/business/shortlistingCandidate`, shortlistCandidate, 'POST');
+export const reqShortlistTalent = (shortlistedTalent) => ajax(`${BASE_URL}/business/shortlist-talent`, shortlistedTalent, 'POST');
 
 export const reqRejectTalent = (rejectCandidate) => ajax(`${BASE_URL}/business/rejectCandidate`, rejectCandidate, 'POST');
 
@@ -45,4 +45,4 @@ export const reqAddCertification = (certification) => ajax(`${BASE_URL}/talent/a
 
 export const reqDownload = (downloadInfo) => ajax(`${BASE_URL}/talent/download`, downloadInfo);
 
-// export const reqRemoveJobHistory = (jobInfo) => ajax(`${BASE_URL}/talent/remove-job-history`, jobInfo, 'POST');
+export const reqMatchToTalent = (_id) => ajax(`${BASE_URL}/business/match-talent`, { _id }, 'POST');
