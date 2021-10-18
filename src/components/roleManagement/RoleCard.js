@@ -17,7 +17,7 @@ import RoleList from './RoleList';
 import AddRoleModal from './modal/AddRoleModal';
 import { useSelector } from 'react-redux';
 
-const RoleCardDetails = () => {
+const RoleCard = () => {
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const { user, error, message } = useSelector((state) => state.shared);
@@ -71,4 +71,4 @@ const RoleCardDetails = () => {
     </Card>
   );
 };
-export default RoleCardDetails;
+export default RoleCard;

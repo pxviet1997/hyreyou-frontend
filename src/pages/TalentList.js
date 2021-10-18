@@ -16,7 +16,7 @@ const TalentList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
-    dispatch(getTalentList({ roleId: state.roleId }));
+    dispatch(getTalentList({ roleId: state.roleId, type: state.type }));
   }, []);
 
   useEffect(async () => {
@@ -88,7 +88,7 @@ const TalentList = () => {
                             hover
                             key={row._id}
                             onClick={() => {
-                              navigate('talent', { state: { talentId: row._id, roleId: state.roleId } });
+                              navigate('talent', { state: { talentId: row._id, roleId: state.roleId, type: state.type } });
                             }}
                           >
                             <TableCell>

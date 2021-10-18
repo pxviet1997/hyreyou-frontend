@@ -1,5 +1,5 @@
 import {
-  reqGetTalent, reqUpdateBusiness, reqRejectTalent, reqShortlistTalent, reqCreateRole, reqTalentList, reqMatchToTalent
+  reqGetTalent, reqUpdateBusiness, reqRejectTalent, reqShortlistTalent, reqCreateRole, reqGetTalentList, reqMatchToTalent
 } from 'src/api';
 import {
   GET_TALENT, SET_CONFIRM_MESSAGE, SET_ERROR_MESSAGE, SET_BUSINESS_ERROR, UPDATE_BUSINESS_DETAIL_SUCCESS, UPDATE_BUSINESS_INFORMATION_SUCCESS,
@@ -79,9 +79,9 @@ export const createRole = (newRoleInfo) => async (dispatch) => {
   }
 };
 
-export const getTalentList = (listRoleCandidateInfo) => async (dispatch) => {
+export const getTalentList = (talentListInfo) => async (dispatch) => {
   try {
-    const response = await reqTalentList(listRoleCandidateInfo);
+    const response = await reqGetTalentList(talentListInfo);
     dispatch({ type: GET_TALENT_LIST, payload: response });
     dispatch({ type: SET_CONFIRM_MESSAGE, payload: response.message });
   } catch (error) {

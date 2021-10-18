@@ -7,7 +7,7 @@ import {
   CardHeader,
   Divider
 } from '@material-ui/core';
-import RoleCardDetails from 'src/components/roleManagement/RoleCardDetails';
+import RoleCard from 'src/components/roleManagement/RoleCard';
 
 const Role = () => (
   <>
@@ -24,7 +24,7 @@ const Role = () => (
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item lg={12} md={12} xs={12}>
-            <RoleCardDetails />
+            <RoleCard />
           </Grid>
         </Grid>
       </Container>

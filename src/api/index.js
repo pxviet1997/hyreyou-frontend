@@ -31,15 +31,13 @@ export const reqAddJobHistory = (newJob) => ajax(`${BASE_URL}/talent/add-job-his
 
 export const reqAddEducationHistory = (newEducation) => ajax(`${BASE_URL}/talent/add-education-history`, newEducation, 'POST');
 
-export const reqCreateRole = (addRole) => ajax(`${BASE_URL}/business/createRole`, addRole, 'POST');
+export const reqCreateRole = (addRole) => ajax(`${BASE_URL}/business/create-role`, addRole, 'POST');
 
-export const reqListAllRoleAndNoCandidate = (showRole) => ajax(`${BASE_URL}/business/listAllRoleAndNoCandidate`, showRole, 'POST');
-
-export const reqTalentList = (listCandidate) => ajax(`${BASE_URL}/business/listRoleCandidate`, listCandidate, 'POST');
+export const reqGetTalentList = (talentList) => ajax(`${BASE_URL}/business/get-talent-list`, talentList, 'POST');
 
 export const reqShortlistTalent = (shortlistedTalent) => ajax(`${BASE_URL}/business/shortlist-talent`, shortlistedTalent, 'POST');
 
-export const reqRejectTalent = (rejectCandidate) => ajax(`${BASE_URL}/business/rejectCandidate`, rejectCandidate, 'POST');
+export const reqRejectTalent = (rejectCandidate) => ajax(`${BASE_URL}/business/reject-talent`, rejectCandidate, 'POST');
 
 export const reqAddCertification = (certification) => ajax(`${BASE_URL}/talent/add-certification`, certification, 'POST');
 

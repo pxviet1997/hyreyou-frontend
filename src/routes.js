@@ -34,6 +34,8 @@ const routes = [
       { path: 'role', element: <Role /> },
       { path: 'role/talent-list', element: <TalentList /> },
       { path: 'role/talent-list/talent', element: <TalentProfileBusiness /> },
+      { path: 'short-list/talent-list', element: <TalentList /> },
+      { path: 'short-list/talent-list/talent', element: <TalentProfileBusiness /> },
       { path: 'short-list', element: <ShortList /> },
       { path: 'interview', element: <Interview /> },
       { path: '/', element: <Navigate to="/business/dashboard" /> },

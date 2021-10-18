@@ -7,6 +7,7 @@ import {
   CardHeader,
   Divider
 } from '@material-ui/core';
+import ShortListCard from 'src/components/shortListManagement/ShortListCard';
 
 const ShortList = () => (
   <>
@@ -23,10 +24,7 @@ const ShortList = () => (
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item lg={12} md={12} xs={12}>
-            <Card>
-              <CardHeader title="Short List" />
-              <Divider />
-            </Card>
+            <ShortListCard />
           </Grid>
         </Grid>
       </Container>

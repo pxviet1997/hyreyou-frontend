@@ -36,6 +36,10 @@ const TalentProfileBusiness = () => {
     }
   };
 
+  const sendOffer = () => {
+    console.log('Offer sent!');
+  };
+
   useEffect(async () => {
     const response = await reqGetTalent(state.talentId);
     setTalent({ ...response, roleId: state.roleId });
@@ -61,31 +65,52 @@ const TalentProfileBusiness = () => {
           </Grid>
         </Grid>
         <Grid container item lg={6} md={6} xs={6} direction="row" justifyContent="flex-end">
-          <Grid
-            item
-            py={2}
-          >
-            <Button
-              variant="outlined"
-              style={{ color: 'red' }}
-              onClick={reject}
-            >
-              Reject
-            </Button>
-          </Grid>
-          <Grid
-            item
-            py={2}
-            mr={4}
-          >
-            <Button
-              variant="outlined"
-              style={{ color: 'green' }}
-              onClick={shortList}
-            >
-              Shortlist
-            </Button>
-          </Grid>
+          {state.type === 'talentIds'
+            ? (
+              <>
+                <Grid
+                  item
+                  py={2}
+                >
+                  <Button
+                    variant="outlined"
+                    style={{ color: 'red' }}
+                    onClick={reject}
+                  >
+                    Reject
+                  </Button>
+                </Grid>
+                <Grid
+                  item
+                  py={2}
+                  mr={4}
+                  ml={2}
+                >
+                  <Button
+                    variant="outlined"
+                    style={{ color: 'green' }}
+                    onClick={shortList}
+                  >
+                    Shortlist
+                  </Button>
+                </Grid>
+              </>)
+            : (
+              <Grid
+                item
+                py={2}
+                mr={4}
+                ml={2}
+              >
+                <Button
+                  variant="outlined"
+                  style={{ color: 'green' }}
+                  onClick={sendOffer}
+                >
+                  Send Offer
+                </Button>
+              </Grid>
+            )}
         </Grid>
       </Grid>
     </Box>

@@ -71,7 +71,7 @@ const RoleList = () => {
                       hover
                       key={role.id}
                       onClick={() => {
-                        navigate('talent-list', { state: { roleId: role._id, roleTitle: role.title } });
+                        navigate('talent-list', { state: { roleId: role._id, roleTitle: role.title, type: 'talentIds' } });
                       }}
                     >
                       <TableCell>
