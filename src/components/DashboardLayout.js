@@ -52,7 +52,6 @@ const DashboardLayout = () => {
 
   useEffect(async () => {
     if (!user) return;
-    // console.log(user);
     setLoading(false);
   }, [user]);
 

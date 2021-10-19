@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Box, Button, Card, CardHeader, CircularProgress, Divider, Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel, Tooltip
+  Box, Button, Card, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel, Tooltip
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { useNavigate } from 'react-router-dom';
@@ -71,7 +71,7 @@ const RoleList = () => {
                       hover
                       key={role.id}
                       onClick={() => {
-                        navigate('talent-list', { state: { roleId: role._id, roleTitle: role.title, type: 'talentIds' } });
+                        navigate('detail', { state: { role, type: 'talentIds' } });
                       }}
                     >
                       <TableCell>

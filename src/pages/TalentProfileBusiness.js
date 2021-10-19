@@ -8,11 +8,13 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { reqGetTalent } from 'src/api';
 import { rejectTalent, shortlistTalent } from 'src/redux/actions/businessAction';
+import SendOfferModal from 'src/components/shortListManagement/model/SendOfferModal';
 
 const TalentProfileBusiness = () => {
   const [talent, setTalent] = useState();
   const { state } = useLocation();
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,6 +40,7 @@ const TalentProfileBusiness = () => {
 
   const sendOffer = () => {
     console.log('Offer sent!');
+    setOpen(true);
   };
 
   useEffect(async () => {
@@ -121,6 +124,7 @@ const TalentProfileBusiness = () => {
       <Helmet>
         <title>Talent Profile</title>
       </Helmet>
+      <SendOfferModal open={open} setOpen={setOpen} />
       {loading
         ? (
           <Box

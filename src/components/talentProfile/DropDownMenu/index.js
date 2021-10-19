@@ -1,23 +1,10 @@
-import PropTypes from 'prop-types';
-import { FieldArray, Formik } from 'formik';
-import { Helmet } from 'react-helmet';
-import * as Yup from 'yup';
 import {
-  Alert,
-  Box,
-  Container,
-  Grid,
-  TextField,
-  Button,
-  Snackbar,
   FormControl,
   InputLabel,
   Select,
   OutlinedInput,
   MenuItem,
 } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
 
 const DropDownMenu = ({
   value,
@@ -36,7 +23,7 @@ const DropDownMenu = ({
       },
     },
   };
-
+  console.log(value);
   return (
     <FormControl fullWidth>
       <InputLabel id={label}>{label}</InputLabel>
@@ -47,7 +34,6 @@ const DropDownMenu = ({
         onChange={(event) => {
           setValue(event.target.value);
         }}
-        // label={label}
         input={
           <OutlinedInput
             label={label}
@@ -56,7 +42,7 @@ const DropDownMenu = ({
         }
         MenuProps={MenuProps}
       >
-        {values.map((data) => (
+        {values && values.map((data) => (
           <MenuItem
             key={data}
             value={data}
@@ -64,11 +50,9 @@ const DropDownMenu = ({
               fontWeight:
                 isMultiple
                   ? value.indexOf(data) === -1
-                    ? 'normal'
-                    : 'bold'
+                    ? 'normal' : 'bold'
                   : value !== data
-                    ? 'normal'
-                    : 'bold'
+                    ? 'normal' : 'bold'
             }}
           >
             {data}

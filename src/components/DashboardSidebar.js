@@ -93,7 +93,6 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   }, [location.pathname]);
 
   useEffect(() => {
-    // const { profilePhoto } = user;
     if (!user) return;
     const image = userType === 'Talent'
       ? user.profilePhoto
@@ -133,7 +132,6 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
 
   const fileChangedHandler = (event) => {
     const file = event.target.files[0];
-    console.log(file);
     setSelectedFile({
       raw: file,
       preview: URL.createObjectURL(file)
@@ -142,13 +140,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   };
 
   const content = (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%'
-      }}
-    >
+    <>
       <Box
         sx={{
           alignItems: 'center',
@@ -212,13 +204,11 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             />
           ))}
         </List>
-
         <List style={{ marginTop: 'auto' }}>
           <NavItem href="/" title="Logout" icon={LogOutIcon} onClick={onLogoutClick} />
         </List>
       </Box>
-      <Box sx={{ flexGrow: 1 }} />
-    </Box>
+    </>
   );
 
   return (
@@ -229,11 +219,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           onClose={onMobileClose}
           open={openMobile}
           variant="temporary"
-          PaperProps={{
-            sx: {
-              width: 256
-            }
-          }}
+          PaperProps={{ sx: { width: 256 } }}
         >
           {content}
         </Drawer>

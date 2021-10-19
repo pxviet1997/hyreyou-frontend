@@ -1,19 +1,11 @@
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
-  AppBar, Toolbar, MenuList, MenuItem, FormControl, InputLabel, Typography, Paper, Grow,
+  AppBar, Toolbar,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
 import Logo from './Logo';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    width: 100,
-  }
-}));
-
 const MainNavbar = (props) => {
-  // const { userType } = useSelector((state) => state.auth);
   const { userType } = useSelector((state) => state.shared);
 
   let logoPath = '/';
@@ -28,24 +20,15 @@ const MainNavbar = (props) => {
     <AppBar
       elevation={0}
       {...props}
-      sx={{
-        paddingLeft: 0
-
-      }}
+      sx={{ paddingLeft: 0 }}
     >
       <Toolbar
-        sx={{
-          height: 64,
-        }}
-        style={{
-          paddingLeft: 0
-        }}
-
+        sx={{ height: 64 }}
+        style={{ paddingLeft: 0 }}
       >
         <RouterLink to={logoPath}>
           <Logo />
         </RouterLink>
-
       </Toolbar>
     </AppBar>
   );
