@@ -4,22 +4,15 @@ import {
   Container,
   Grid
 } from '@material-ui/core';
-import Role from 'src/components/dashboard//Role';
-import ShortList from 'src/components/dashboard//ShortList';
-import Interview from 'src/components/dashboard//Interview';
-import Contractor from 'src/components/dashboard//Contractor';
-// import LatestOrders from 'src/components/dashboard//LatestOrders';
-// import LatestProducts from 'src/components/dashboard//LatestProducts';
-// import Sales from 'src/components/dashboard//Sales';
-// import TasksProgress from 'src/components/dashboard//TasksProgress';
-// import TotalCustomers from 'src/components/dashboard//TotalCustomers';
-// import TotalProfit from 'src/components/dashboard//TotalProfit';
-// import TrafficByDevice from 'src/components/dashboard//TrafficByDevice';
+import Role from 'src/components/dashboard/OpenRoles';
+import ShortList from 'src/components/dashboard/ShortList';
+import Interview from 'src/components/dashboard/Interview';
+import Contractor from 'src/components/dashboard/Contractor';
 
 const DashboardBusiness = () => (
   <>
     <Helmet>
-      <title>Dashboard Business| Material Kit</title>
+      <title>Dashboard Business</title>
     </Helmet>
     <Box
       sx={{

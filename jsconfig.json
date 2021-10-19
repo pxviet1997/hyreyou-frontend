@@ -4,6 +4,7 @@
   },
   "include": [
     "src",
-    "__test__"
+    "__test__",
+    "src/components/dashboard/OpenRoles/.js"
   ]
 }

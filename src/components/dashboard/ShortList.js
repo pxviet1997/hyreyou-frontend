@@ -3,19 +3,14 @@ import {
   Box,
   Button,
   Card,
-  CardHeader,
   CardContent,
   Grid,
   Typography,
-  Chip,
-  Divider,
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
-  TableSortLabel,
-  Tooltip
+  Container,
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
@@ -25,6 +20,7 @@ import { Link } from 'react-router-dom';
 const ShortList = (props) => {
   const { user } = useSelector((state) => state.shared);
   const navigate = useNavigate();
+
   return (
     <Card
       sx={{ height: '350px' }}
@@ -36,7 +32,7 @@ const ShortList = (props) => {
           spacing={3}
           sx={{ justifyContent: 'space-between' }}
         >
-          <Grid item>
+          <Grid item lg={12} md={12} xs={12} ml={3} mt={2}>
             <Typography
               color="textPrimary"
               varient="h2"
@@ -44,28 +40,27 @@ const ShortList = (props) => {
               SHORT LISTS
             </Typography>
           </Grid>
-          <Grid item>
-            <PerfectScrollbar>
-              <Box sx={{ minWidth: 800 }}>
-                <Table>
-                  <TableBody>
-                    {user.roles.map((roles) => (
-                      <TableRow
-                        hover
-                        key={roles._id}
-                      >
-                        <TableCell>
-                          {roles.title}
-                        </TableCell>
-                        <TableCell>
-                          {[roles.shortlistTalentId].length}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Box>
-            </PerfectScrollbar>
+          <Grid item lg={12} md={12} xs={12}>
+            <Container maxwidth>
+              <Table>
+                <TableBody>
+                  {user.roles.slice(0, 4).map((role) => (
+                    <TableRow
+                      hover
+                      key={role._id}
+                      onClick={() => navigate('../short-list/detail', { state: { role, type: 'shortlistedTalentIds' } })}
+                    >
+                      <TableCell>
+                        {role.title}
+                      </TableCell>
+                      <TableCell>
+                        {role.shortlistedTalentIds.length}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Container>
           </Grid>
         </Grid>
       </CardContent>
@@ -73,7 +68,7 @@ const ShortList = (props) => {
         sx={{
           display: 'flex',
           justifyContent: 'flex-end',
-          p: 2
+          mr: 4
         }}
       >
         <Button
@@ -81,9 +76,6 @@ const ShortList = (props) => {
           endIcon={<ArrowRightIcon />}
           size="small"
           variant="text"
-          // onClick={() => {
-          //   // navigate('role');
-          // }}
         >
           <Link to="/business/short-list">
             View all

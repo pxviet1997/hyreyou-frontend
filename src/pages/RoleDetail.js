@@ -15,6 +15,7 @@ const RoleDetail = () => {
   const { talentList } = useSelector((storeState) => storeState.shared);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
 
   const initialValues = {
     title: role.title,
@@ -50,14 +51,47 @@ const RoleDetail = () => {
         <Container maxWidth="lg">
           <Card>
             <Box px={4}>
-              <Grid container item lg={6} md={6} xs={6} direction="row" justifyContent="flex-start">
-                <Grid item py={2} pl={2} display="flex" justify="center">
-                  <Button variant="contained" onClick={() => navigate(-1)} color="primary">
-                    Back
-                  </Button>
+              <Grid container>
+                <Grid container item lg={6} md={6} xs={6} direction="row" justifyContent="flex-start">
+                  <Grid item py={2} pl={2} display="flex" justify="center">
+                    <Button variant="contained" onClick={() => navigate('..')} color="primary">
+                      Back
+                    </Button>
+                  </Grid>
+                  <Grid item display="flex" justify="center">
+                    <CardHeader title={`Role - ${role.title}`} />
+                  </Grid>
                 </Grid>
-                <Grid item display="flex" justify="center">
-                  <CardHeader title={`Role - ${role.title}`} />
+                <Grid container item lg={6} md={6} xs={6} direction="row" justifyContent="flex-end">
+                  <Grid
+                    item
+                    py={2}
+                    mr={!isEditing && 2}
+                    ml={2}
+                  >
+                    <Button
+                      variant="contained"
+                      onClick={() => setIsEditing(!isEditing)}
+                    >
+                      {!isEditing ? 'Edit' : 'Cancel'}
+                    </Button>
+                  </Grid>
+                  {isEditing
+                    && (
+                      <Grid
+                        item
+                        py={2}
+                        mr={2}
+                        ml={2}
+                      >
+                        <Button
+                          variant="contained"
+                          onClick={() => setIsEditing(!isEditing)}
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                      </Grid>)}
                 </Grid>
               </Grid>
             </Box>
@@ -106,7 +140,7 @@ const RoleDetail = () => {
                                   required
                                   onChange={handleChange}
                                   value={values.title}
-                                  readOnly
+                                  inputProps={{ readOnly: !isEditing }}
                                 />
                               </Grid>
 
@@ -119,7 +153,7 @@ const RoleDetail = () => {
                                   required
                                   value={values.description}
                                   variant="outlined"
-                                  readOnly
+                                  inputProps={{ readOnly: !isEditing }}
                                 />
                               </Grid>
                               <Grid item md={12} xs={12}>
@@ -131,7 +165,7 @@ const RoleDetail = () => {
                                   required
                                   value={values.skillSet}
                                   variant="outlined"
-                                  readOnly
+                                  inputProps={{ readOnly: !isEditing }}
                                 />
                               </Grid>
                             </Grid>

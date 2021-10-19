@@ -3,28 +3,24 @@ import {
   Box,
   Button,
   Card,
-  CardHeader,
   CardContent,
   Grid,
   Typography,
-  Chip,
-  Divider,
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
-  TableSortLabel,
-  Tooltip
+  Container,
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
-const Role = (props) => {
+const OpenRoles = (props) => {
   const { user } = useSelector((state) => state.shared);
   const navigate = useNavigate();
+
   return (
     <Card
       sx={{ height: '350px' }}
@@ -33,10 +29,10 @@ const Role = (props) => {
       <CardContent>
         <Grid
           container
-          spacing={3}
+          spacing={2}
           sx={{ justifyContent: 'space-between' }}
         >
-          <Grid item>
+          <Grid item lg={12} md={12} xs={12} ml={3} mt={2}>
             <Typography
               color="textPrimary"
               varient="h2"
@@ -44,25 +40,23 @@ const Role = (props) => {
               OPEN ROLES
             </Typography>
           </Grid>
-          <Grid item>
-            <PerfectScrollbar>
-              <Box sx={{ minWidth: 800 }}>
-                <Table>
-                  <TableBody>
-                    {user.roles.map((role) => (
-                      <TableRow
-                        hover
-                        key={role._id}
-                      >
-                        <TableCell>
-                          {role.title}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Box>
-            </PerfectScrollbar>
+          <Grid item lg={12} md={12} xs={12}>
+            <Container maxWidth>
+              <Table>
+                <TableBody>
+                  {user.roles.slice(0, 4).map((role) => (
+                    <TableRow
+                      hover
+                      key={role._id}
+                      onClick={() => navigate('../role/detail', { state: { role, type: 'talentIds' } })}
+                    >
+                      <TableCell>{role.title}</TableCell>
+                      <TableCell>{role.talentIds.length}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Container>
           </Grid>
         </Grid>
       </CardContent>
@@ -70,7 +64,7 @@ const Role = (props) => {
         sx={{
           display: 'flex',
           justifyContent: 'flex-end',
-          p: 2
+          mr: 4
         }}
       >
         <Button
@@ -78,17 +72,12 @@ const Role = (props) => {
           endIcon={<ArrowRightIcon />}
           size="small"
           variant="text"
-          // onClick={() => {
-          //   // navigate('role');
-          // }}
         >
-          <Link to="/business/role">
-            View all
-          </Link>
+          <Link to="/business/role">View all</Link>
         </Button>
       </Box>
     </Card>
   );
 };
 
-export default Role;
+export default OpenRoles;
