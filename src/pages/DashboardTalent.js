@@ -41,7 +41,7 @@ const DashboardTalent = () => (
             xl={6}
             xs={12}
           >
-            <Offers />
+            <Matches />
           </Grid>
           <Grid
             item
@@ -68,7 +68,7 @@ const DashboardTalent = () => (
             xl={6}
             xs={12}
           >
-            <Matches />
+            <Offers />
           </Grid>
         </Grid>
       </Container>

@@ -47,11 +47,11 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         icon: BarChartIcon,
         title: 'Profile'
       },
-      {
-        href: '/talent/payment-info',
-        icon: BarChartIcon,
-        title: 'Payment Information'
-      },
+      // {
+      //   href: '/talent/payment-info',
+      //   icon: BarChartIcon,
+      //   title: 'Payment Information'
+      // },
       {
         href: '/talent/activity',
         icon: BarChartIcon,

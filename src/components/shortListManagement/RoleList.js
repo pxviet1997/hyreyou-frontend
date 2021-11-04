@@ -13,30 +13,8 @@ const RoleList = () => {
   const [loading, setLoading] = useState(true);
   const isFirstRun = useRef(true);
 
-  // useEffect(() => {
-  //   if (isFirstRun.current) {
-  //     isFirstRun.current = false;
-  //     return;
-  //   }
-  //   setLoading(false);
-  // }, [user]);
-
   return (
     <Card>
-      {/* {loading
-        ? (
-          <Box
-            sx={{
-              minHeight: '100%',
-              minWidth: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <CircularProgress />
-          </Box>)
-        : ( */}
       <Box sx={{ minWidth: 800, paddingX: 6 }}>
         <Table>
           <TableHead>

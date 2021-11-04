@@ -5,11 +5,8 @@ import {
   Container,
   Divider,
   Grid,
-  TextField,
-  Button,
   Card,
   CardHeader,
-  CardContent,
   Typography
 } from '@material-ui/core';
 
@@ -30,8 +27,11 @@ const Activity = () => (
           <Grid item lg={12} md={12} xs={12}>
             <Card>
               <Grid container spacing={3}>
-                <Grid item md={6} xs={8}>
+                <Grid item lg={12} md={12} xs={12}>
                   <CardHeader subheader="User Activity" title="Activity" />
+                </Grid>
+                <Grid item lg={12} md={12} xs={12} sx={{ marginLeft: 2 }}>
+                  <Typography>No new activity</Typography>
                 </Grid>
               </Grid>
               <Divider />

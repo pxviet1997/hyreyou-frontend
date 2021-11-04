@@ -12,10 +12,10 @@ import Matches from 'src/components/dashboard/Matches';
 import Reset from 'src/pages/Reset';
 import Forgot from 'src/pages/Forgot';
 import Interview from './pages/Interview';
-import Login from 'src/pages/Login';
+import SignIn from 'src/pages/SignIn';
 import NotFound from 'src/pages/NotFound';
 import PaymentInfo from 'src/pages/PaymentInfo';
-import Register from 'src/pages/Register';
+import SignUp from 'src/pages/SignUp';
 import ShortList from './pages/ShortList';
 import Role from './pages/Role';
 import SplashScreen from './pages/SplashScreen';
@@ -62,11 +62,11 @@ const routes = [
     path: '/',
     element: <MainLayout />,
     children: [
-      { path: 'login', element: <Login /> },
+      { path: 'login', element: <SignIn /> },
       { path: 'reset', element: <Reset /> },
       { path: 'forgot', element: <Forgot /> },
       { path: 'verify', element: <Verify /> },
-      { path: 'register', element: <Register /> },
+      { path: 'register', element: <SignUp /> },
       { path: '404', element: <NotFound /> },
       { path: '/', element: <SplashScreen /> },
       { path: '*', element: <Navigate to="/404" /> }
