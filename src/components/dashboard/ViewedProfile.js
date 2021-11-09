@@ -18,12 +18,20 @@ const ViewedProfile = (props) => (
         spacing={3}
         sx={{ justifyContent: 'space-between' }}
       >
-        <Grid item>
+        <Grid item lg={12}>
           <Typography
             color="textPrimary"
             varient="h2"
           >
             VIEWED PROFILE
+          </Typography>
+        </Grid>
+        <Grid item lg={12}>
+          <Typography
+            color="textPrimary"
+          // varient="h2"
+          >
+            Work in Progress
           </Typography>
         </Grid>
       </Grid>

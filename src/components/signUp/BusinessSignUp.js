@@ -63,9 +63,9 @@ const BusinessSignUp = () => {
         }),
       })}
       onSubmit={async (values) => {
-        const { policy, confirmPassword, ...newUser } = values;
+        const { policy, confirmPassword, ...newUserInfo } = values;
         setShowMessage(true);
-        dispatch(signUp({ ...newUser, userType: 'Business' }));
+        dispatch(signUp({ newUserInfo, userType: 'Business' }));
       }}
     >
       {({

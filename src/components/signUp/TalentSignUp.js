@@ -57,9 +57,9 @@ const TalentSignUp = () => {
         })
       }
       onSubmit={async (values) => {
-        const { policy, confirmPassword, ...newUser } = values;
+        const { policy, confirmPassword, ...newUserInfo } = values;
         setShowMessage(true);
-        dispatch(signUp({ ...newUser, userType: 'Talent' }));
+        dispatch(signUp({ newUserInfo, userType: 'Talent' }));
       }}
     >
       {({

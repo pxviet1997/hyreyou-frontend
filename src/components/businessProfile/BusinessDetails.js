@@ -29,7 +29,7 @@ const BusinessDetails = ({ data }) => {
     businessName: data.businessName || '',
     businessABN: data.businessABN || '',
     email: data.email || '',
-    contactNumber: data.mobileNumber || '',
+    contactNumber: data.contactNumber || '',
     address: {
       country: data.address ? data.address.country : '',
       city: data.address ? data.address.city : '',
